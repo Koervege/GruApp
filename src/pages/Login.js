@@ -1,18 +1,20 @@
 import React from 'react';
-import { user,motorcycle } from '../data';
+import { users,motorcycles, services, tows } from '../data';
 
 
 class Login extends  React.Component {
 
     state= {
-        users: user,
-        motorcycles: motorcycle,
+        users: users,
+        motorcycles: motorcycles,
+        services: services,
+        tows: tows,
+
     }
 
     render() {
-        const { users, motorcycles } = this.state;
-        console.log( users );
-        console.log( motorcycles )
+        const { users, motorcycles, tows, services } = this.state;
+       
         return(
             <p></p>
         )

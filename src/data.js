@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const user = [
+const users = [
 
     {
         _id: uuidv4(),
@@ -33,7 +33,7 @@ const user = [
 
 ];
 
-const motorcycle = [
+const motorcycles = [
     {
         _id: uuidv4(),
         plateNum: 'ASK989',
@@ -41,7 +41,7 @@ const motorcycle = [
         type: "sport",
         brand: 'Honda',
         cc: "750_cc",
-        userID: user[0]._id,
+        userID: users[0]._id,
 
     },
     {
@@ -50,7 +50,7 @@ const motorcycle = [
         weight: "150_Kg",
         type: "cross",
         cc: "250_cc",
-        userID: user[1]._id,
+        userID: users[1]._id,
 
     },
     {
@@ -59,12 +59,12 @@ const motorcycle = [
         weight: "350_Kg",
         type: "cuatrimoto",
         cc: "350_cc",
-        userID: user[2]._id,
+        userID: users[2]._id,
 
     }
 ];
 
-const supplier = [
+const suppliers = [
 
     {
         _id: uuidv4(),
@@ -97,14 +97,14 @@ const supplier = [
 
 ];
 
-const tow = [
+const tows = [
     {
         _id: uuidv4(),
         plateNum: 'NVW999',
         status: true,
         capacity: "1_Ton",
         photo: 'https://res.cloudinary.com/djugjzinn/image/upload/v1612582362/aapktdqebpjhzflqlgw4.jpg',
-        supplierID: supplier[0]._id,
+        supplierID: suppliers[0]._id,
 
     },
     {
@@ -113,7 +113,7 @@ const tow = [
         status: true,
         capacity: "1_Ton",              
         photo: 'https://res.cloudinary.com/djugjzinn/image/upload/v1612582362/aapktdqebpjhzflqlgw4.jpg',
-        supplierID: supplier[1]._id,
+        supplierID: suppliers[1]._id,
 
     },
     {
@@ -122,9 +122,54 @@ const tow = [
         status: true,
         capacity: "1_Ton",
         photo: 'https://res.cloudinary.com/djugjzinn/image/upload/v1612582362/aapktdqebpjhzflqlgw4.jpg',        
-        supplierID: supplier[2]._id,
+        supplierID: suppliers[2]._id,
 
     }
-]
+];
 
-export { user, motorcycle, supplier, tow}
+const services = [
+    {
+        _id: uuidv4(),
+        motoID: motorcycles[2]._id,
+        towID: tows[1]._id,
+        cost: 120000,
+        initLoc: "Parque Berrío",
+        finalLoc: "Aranjuez",
+        date: "December 17, 2020",
+        hr: "08:24",
+        rating: 3,
+        comments: "Un servicio que puede mejorar",
+        servStat: true,
+    },
+    {
+        _id: uuidv4(),
+        motoID: motorcycles[1]._id,
+        towID: tows[0]._id,
+        cost: 120000,
+        initLoc: "Laureles",
+        finalLoc: "Bomboná",
+        date: "January 15, 2021",
+        hr: "13:30",
+        rating: 5,
+        comments: "Un servicio muy melo caramelo",
+        servStat: true,
+    },
+    {
+        _id: uuidv4(),
+        motoID: motorcycles[2]._id,
+        towID: tows[2]._id,
+        cost: 80000,
+        initLoc: "Las palmas",
+        finalLoc: "Alpujarra",
+        date: "frebruary 3, 2021",
+        hr: "21:00",
+        rating: 2,
+        comments: "Servicio fatal, se demoran demasiado",
+        servStat: true,
+    },
+
+    
+];
+
+
+export { users, motorcycles, suppliers, tows, services }
