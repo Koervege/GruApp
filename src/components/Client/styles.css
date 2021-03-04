@@ -1,0 +1,11 @@
+img {
+  border-radius: 50%;
+  border: solid 5px white;
+  height: 50px;
+  width: 50px;
+}
+
+div {
+  display: flex;
+  justify-content: center;
+}
