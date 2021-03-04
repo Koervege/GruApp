@@ -5,7 +5,26 @@ img {
   width: 50px;
 }
 
-div {
+.onlySupplier {
   display: flex;
-  justify-content: center;
+  padding: 25px 100px;
+  margin: 10px 30px;
+  justify-content: space-between;
+  border: solid 1px gray;
+  border-radius: 5px;
+}
+
+.containerElement {
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  color: #f8ce0b;
+  display: inline;
+}
+
+.empty {
+  color: #f8ce0b;
+  display: inline;
 }

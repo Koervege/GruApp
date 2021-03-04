@@ -1,38 +1,21 @@
 import React from 'react';
-//import { users, suppliers, motorcycles, services, tows } from '../data';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faStar as StarOnly } from '@fortawesome/free-regular-svg-icons';
+import { suppliers, services, tows } from '../../data';
 import './styles.css';
-
+import Client from '../../components/Client';
 class ListMotorcycle extends React.Component {
-  /*state = {
-    users,
-    motorcycles,
+  state = {
     suppliers,
     tows,
     services,
-  }; */
+  };
 
   render() {
-    //const { users, motorcycles, suppliers, tows, services } = this.state;
+    const { suppliers, tows, services } = this.state;
     return (
-      <div>
-        <div className="star">
-          <FontAwesomeIcon icon={faStar} />
-        </div>
-        <div className="star">
-          <FontAwesomeIcon icon={faStar} />
-        </div>
-        <div className="star">
-          <FontAwesomeIcon icon={faStar} />
-        </div>
-        <div className="star">
-          <FontAwesomeIcon icon={faStar} />
-        </div>
-        <div className="star">
-          <FontAwesomeIcon icon={faStar} />
-        </div>
+      <div className="boxSupplier">
+        <button>Ha pagado XX.XXX COP</button>
+        <Client suppliers={suppliers} tows={tows} services={services} />
+        <button>Pedir Grúa</button>
       </div>
     );
   }

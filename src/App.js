@@ -1,11 +1,11 @@
 import './App.css';
-import Client from './components/Client';
+import ListMotorcycle from './pages/ListMotorcycle';
 
 function App() {
   return (
-    <div className="App">
-      <Client />
-    </div>
+    <>
+      <ListMotorcycle />
+    </>
   );
 }
 
