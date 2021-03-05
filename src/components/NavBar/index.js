@@ -1,12 +1,14 @@
 import React from "react";
 import { users } from "../../data";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMotorcycle } from '@fortawesome/free-solid-svg-icons'
 import './style.css';
 
 export default function NavBar() {
     return (
         <nav className="nav">
             <div className="nav__container">
-                <img src="./images/moto.png" alt="logo" width="90" />
+                <FontAwesomeIcon icon={faMotorcycle} size="3x" color="#fefefe"/>
                 <ul className="nav__list">
                     <li className="nav__items">
                         <a href="#top">Historial</a>
