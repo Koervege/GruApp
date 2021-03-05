@@ -1,10 +1,10 @@
 import './App.css';
-import ListMotorcycle from './pages/ListMotorcycle';
+import StyledInput from './components/StyledInput';
 
 function App() {
   return (
     <>
-      <ListMotorcycle />
+        <StyledInput placeholder="Email">Otro</StyledInput>
     </>
   );
 }
