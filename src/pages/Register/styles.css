@@ -1,0 +1,46 @@
+
+.regForm {
+    margin-top: 20%;
+}
+
+.registerText {
+    border: 0px;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    font-size: 15px;
+}
+
+.aligner {
+    display: flex;
+    flex-flow: inherit;
+}
+
+.registerCheck {
+    border: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 8em;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    margin-top: 16px;
+    margin-bottom: 20px;
+}
+
+
+#isTow {
+    margin-top:auto;
+}
+
+.buttonAlign {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.regButtons {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+}
