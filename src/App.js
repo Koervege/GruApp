@@ -5,8 +5,6 @@ function App() {
   return (
     <>
         <StyledInput placeholder="Email">Otro</StyledInput>
-
-      
     </>
   );
 }
