@@ -1,6 +1,22 @@
 
 .regForm {
-    margin-top: 20%;
+}
+
+div.regFrame {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 330px;
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.regLogo {
+    width: 30%;
+    height: 30%;
 }
 
 .registerText {
@@ -9,6 +25,10 @@
     flex-flow: column wrap;
     align-items: center;
     font-size: 15px;
+}
+
+.styledInput {
+    padding: 220px;
 }
 
 .aligner {
@@ -20,27 +40,56 @@
     border: 0px;
     margin-left: auto;
     margin-right: auto;
-    width: 8em;
+    width: 200px;
     display: flex;
     align-items: center;
-    padding-top: 10px;
-    margin-top: 16px;
-    margin-bottom: 20px;
 }
 
 
-#isTow {
-    margin-top:auto;
+.registerCheck>:nth-child(3) {
+   margin-left: 60px;
+}
+
+.radioLabel:hover {
+    color:darkolivegreen;
+}
+
+.radioLabel {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+input[name="isBike"] {
+    appearance: none;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #999;
+    transition: 0.2s all linear;
+    margin-right: 5px;
+    top: 4px;
+    color:tomato;
+}
+
+input[name="isBike"]:checked {
+    border: 6px solid #1982ea;
 }
 
 .buttonAlign {
+    margin-top: 20px;
     display: flex;
     align-content: center;
     justify-content: center;
 }
 
 .regButtons {
-    display: flex;
-    justify-content: space-between;
-    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
 }
+
+#acceptButton {
+    margin-right: 10%;
+    margin-left: 19%;
+}
+
