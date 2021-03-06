@@ -8,7 +8,9 @@ export default function NavBar() {
     return (
         <nav className="nav">
             <div className="nav__container">
-                <FontAwesomeIcon icon={faMotorcycle} size="3x" color="#fefefe"/>
+                <div className="nav__icon">
+                    <FontAwesomeIcon icon={faMotorcycle} size="3x"/>
+                </div>
                 <ul className="nav__list">
                     <li className="nav__items">
                         <a href="#top">Historial</a>
@@ -21,7 +23,7 @@ export default function NavBar() {
             <div className="nav__profile">
                 <span>{users[1].name}</span>
                 <a href="#top">
-                    <img className="nav__userPhoto" src={users[1].photo} alt="" width="90" />
+                    <img className="nav__userPhoto" src={users[1].photo} alt="profile_photo"/>
                 </a>
             </div>
         </nav>

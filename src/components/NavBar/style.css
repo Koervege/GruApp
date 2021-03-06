@@ -21,6 +21,11 @@ a {
     justify-content: space-between;
 }
 
+.nav__icon {
+    font-size: 3x;
+    color: #fefefe;
+}
+
 .nav__profile {
     display: flex;
     align-items: center;
@@ -47,4 +52,5 @@ a {
 .nav__userPhoto {
     border-radius: 100%;
     border: 3px solid #fefefe;
+    width: 90px;
 }
