@@ -1,10 +1,10 @@
 import './App.css';
 import StyledInput from './components/StyledInput';
-import Form from './pages/Register'
+import Landing from './pages/Landing'
 
 function App() {
   return (
-    <Form/>
+    <Landing/>
   );
 }
 
