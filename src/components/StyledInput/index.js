@@ -1,24 +1,32 @@
-import { Input, Label } from './styles';
+import { Input, Label, Container } from './styles';
 
-function StyledInput({  children, 
-                        type, 
-                        id, 
-                        name,
-                        placeholder,
-                        value }) {
+function StyledInput({ 
+     children, 
+     type, 
+     id, 
+     name,
+     placeholder,
+     value,
+     onChange 
+}) {
 return(
-    <>
+<Container>
+    <div>
         <Label htmlFor={id}>{children}</Label>
-        <Input  type={type} 
-                id={id} 
-                name={name}
-                placeholder={placeholder}
-                value={value}>
+    </div>
+        
+        <Input  
+            type={type}
+            onChange={onChange} 
+            id={id} 
+            name={name}
+            placeholder={placeholder}
+            value={value}>
         </Input>
-
-    </>
+</Container>
+         
     
-)
-    }
+    
+    )}
 
-export default StyledInput;
+export { StyledInput, Container };

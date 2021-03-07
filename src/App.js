@@ -1,10 +1,10 @@
 import './App.css';
-import StyledInput from './components/StyledInput';
+import Login  from './pages/Login/Login'
 
 function App() {
   return (
     <>
-        <StyledInput placeholder="Email">Otro</StyledInput>
+       <Login />
     </>
   );
 }

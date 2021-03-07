@@ -6,7 +6,7 @@ const users = [
         _id: uuidv4(),
         name: 'Allan Brito',
         cc: '10852349',
-        emai: "allanB@gmail.com",
+        email: "allanB@gmail.com",
         password: '1234',
         phoneNum: '313678547',
         photo: 'https://res.cloudinary.com/djugjzinn/image/upload/v1612582362/aapktdqebpjhzflqlgw4.jpg'
@@ -15,7 +15,7 @@ const users = [
         _id: uuidv4(),
         name: 'Marlon Brandon',
         cc: '799533350',
-        emai: "marliton@gmail.com",
+        email: "marliton@gmail.com",
         password: '1234',
         phoneNum: '3006262590',
         photo: 'https://res.cloudinary.com/djugjzinn/image/upload/v1612582362/aapktdqebpjhzflqlgw4.jpg'
@@ -25,7 +25,7 @@ const users = [
         _id: uuidv4(),
         name: 'Maria Arango',
         cc: '5678234',
-        emai: "maria789@gmail.com",
+        email: "maria789@gmail.com",
         password: '1234',
         phoneNum: '3213428310',
         photo: 'https://res.cloudinary.com/djugjzinn/image/upload/v1612582362/aapktdqebpjhzflqlgw4.jpg'
@@ -70,7 +70,7 @@ const suppliers = [
         _id: uuidv4(),
         name: 'Francisco Villa',
         cc: '897653f21',
-        emai: "pancho@gmail.com",
+        email: "pancho@gmail.com",
         password: '1234',
         phoneNum: '317098371',
         photo: 'https://res.cloudinary.com/djugjzinn/image/upload/v1612582362/aapktdqebpjhzflqlgw4.jpg'
@@ -79,7 +79,7 @@ const suppliers = [
         _id: uuidv4(),
         name: 'Carlos Santana',
         cc: '799533350',
-        emai: "marliton@gmail.com",
+        email: "carlitos@gmail.com",
         password: '1234',
         phoneNum: '3006262590',
         photo: 'https://res.cloudinary.com/djugjzinn/image/upload/v1612582362/aapktdqebpjhzflqlgw4.jpg'
@@ -89,7 +89,7 @@ const suppliers = [
         _id: uuidv4(),
         name: 'Miguel Hidalgo',
         cc: '7590876',
-        emai: "miguelin@gmail.com",
+        email: "miguelin@gmail.com",
         password: '1234',
         phoneNum: '3158750921',
         photo: 'https://res.cloudinary.com/djugjzinn/image/upload/v1612582362/aapktdqebpjhzflqlgw4.jpg'
