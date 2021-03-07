@@ -15,7 +15,8 @@ export const ContainerList = styled.article`
   justify-content: space-between;
   border: solid 1px gray;
   border-radius: 5px;
-  transition: height 2s;
+  height: 100px;
+  transition: height 1s;
 
   &:hover {
     height: 125px;

@@ -3,6 +3,7 @@ import { services, motorcycles, users } from '../../data';
 import { BoxSupplier } from '../ListMotorcycle/styles';
 import Provider from '../../components/Provider';
 import Button from '../../components/Button';
+import NavBar from '../../components/NavBar';
 class ListTow extends React.Component {
   state = {
     services,
@@ -13,11 +14,18 @@ class ListTow extends React.Component {
   render() {
     const { services, motorcycles, users } = this.state;
     return (
-      <BoxSupplier>
-        <Button color="primary">Ha ganado XX.XXX COP</Button>
-        <Provider services={services} motorcycles={motorcycles} users={users} />
-        <Button color="success">Servicio en proceso</Button>
-      </BoxSupplier>
+      <section>
+        <NavBar />
+        <BoxSupplier>
+          <Button color="primary">Ha ganado XX.XXX COP</Button>
+          <Provider
+            services={services}
+            motorcycles={motorcycles}
+            users={users}
+          />
+          <Button color="success">Servicio en proceso</Button>
+        </BoxSupplier>
+      </section>
     );
   }
 }
