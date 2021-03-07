@@ -1,5 +1,11 @@
-import './styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  Photo,
+  ContainerList,
+  ContainerElement,
+  SectionList,
+} from '../Provider/styles';
+import { ContainerStar, StarSolid, StarEmpty } from './styles';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
 
@@ -11,14 +17,14 @@ function Stars({ tows, services, supplierid }) {
   return (
     <section>
       {Array.from({ length: Math.floor(service.rating) }, (e, i) => (
-        <div key={i} className="star">
+        <StarSolid key={i}>
           <FontAwesomeIcon icon={faStar} />
-        </div>
+        </StarSolid>
       ))}
       {Array.from({ length: Math.ceil(5 - service.rating) }, (e, i) => (
-        <div key={i} className="empty">
+        <StarEmpty key={i}>
           <FontAwesomeIcon icon={emptyStar} />
-        </div>
+        </StarEmpty>
       ))}
     </section>
   );
@@ -26,22 +32,24 @@ function Stars({ tows, services, supplierid }) {
 
 function Client({ suppliers, tows, services }) {
   return (
-    <section>
+    <SectionList>
       {!!suppliers &&
         suppliers.length > 0 &&
         suppliers.map(({ _id, photo, name }) => {
           return (
-            <article key={_id} className="onlySupplier">
-              <p className="containerElement">{name}</p>
-              <div className="containerElement">
+            <ContainerList key={_id}>
+              <ContainerElement>{name}</ContainerElement>
+              <ContainerStar>
                 <Stars tows={tows} supplierid={_id} services={services} />
-              </div>
-              <p className="containerElement">1 servicio</p>
-              <img className="containerElement" src={photo} alt={name}></img>
-            </article>
+              </ContainerStar>
+              <ContainerElement>1 servicio</ContainerElement>
+              <ContainerElement>
+                <Photo src={photo} alt={name}></Photo>
+              </ContainerElement>
+            </ContainerList>
           );
         })}
-    </section>
+    </SectionList>
   );
 }
 

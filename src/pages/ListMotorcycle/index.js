@@ -1,7 +1,8 @@
 import React from 'react';
 import { suppliers, services, tows } from '../../data';
-import './styles.css';
+import { BoxSupplier } from './styles';
 import Client from '../../components/Client';
+import Button from '../../components/Button';
 class ListMotorcycle extends React.Component {
   state = {
     suppliers,
@@ -12,11 +13,11 @@ class ListMotorcycle extends React.Component {
   render() {
     const { suppliers, tows, services } = this.state;
     return (
-      <div className="boxSupplier">
-        <button>Ha pagado XX.XXX COP</button>
+      <BoxSupplier>
+        <Button color="primary">Ha pagado XX.XXX COP</Button>
         <Client suppliers={suppliers} tows={tows} services={services} />
-        <button>Pedir Grúa</button>
-      </div>
+        <Button color="success">Pedir Grúa</Button>
+      </BoxSupplier>
     );
   }
 }
