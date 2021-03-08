@@ -1,4 +1,4 @@
-import './styles.css';
+import { Photo, ContainerList, ContainerElement, SectionList } from './styles';
 
 function Search({ users, initLoc, finalLoc, date, motoid, motorcycles }) {
   const [moto] = motorcycles.filter((motorcycle) => motoid === motorcycle._id);
@@ -6,37 +6,36 @@ function Search({ users, initLoc, finalLoc, date, motoid, motorcycles }) {
   const [user] = users.filter((user) => moto.userID === user._id);
 
   return (
-    <section className="containerElements">
-      <div className="containerElement">{user.name}</div>
-      <div className="containerElement">{`${initLoc} / ${finalLoc} / ${date} / ${moto.type} / ${moto.cc}`}</div>
-      <div className="containerElement">
-        <img src={user.photo} alt={user.name}></img>
-      </div>
-    </section>
+    <ContainerList>
+      <ContainerElement>{user.name}</ContainerElement>
+      <ContainerElement>{`${initLoc} / ${finalLoc} / ${date} / ${moto.type} / ${moto.cc}`}</ContainerElement>
+      <ContainerElement>
+        <Photo src={user.photo} alt={user.name}></Photo>
+      </ContainerElement>
+    </ContainerList>
   );
 }
 
 function Provider({ services, motorcycles, users }) {
   return (
-    <section>
+    <SectionList>
       {!!services &&
         services.length > 0 &&
         services.map(({ _id, initLoc, finalLoc, date, motoID }) => {
           return (
-            <article key={_id} className="onlyService">
-              <Search
-                users={users}
-                services={services}
-                motoid={motoID}
-                motorcycles={motorcycles}
-                initLoc={initLoc}
-                finalLoc={finalLoc}
-                date={date}
-              />
-            </article>
+            <Search
+              key={_id}
+              users={users}
+              services={services}
+              motoid={motoID}
+              motorcycles={motorcycles}
+              initLoc={initLoc}
+              finalLoc={finalLoc}
+              date={date}
+            />
           );
         })}
-    </section>
+    </SectionList>
   );
 }
 
