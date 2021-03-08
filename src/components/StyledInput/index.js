@@ -13,16 +13,17 @@ return(
 <Container>
     <div>
         <Label htmlFor={id}>{children}</Label>
-    </div>
-        
-        <Input  
-            type={type}
-            onChange={onChange} 
-            id={id} 
-            name={name}
-            placeholder={placeholder}
-            value={value}>
+
+        <Input  type={type} 
+                id={id} 
+                onChange={onChange}
+                name={name}
+                placeholder={placeholder}
+                value={value}>
         </Input>
+     </div>
+
+       
 </Container>
          
     
