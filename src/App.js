@@ -1,11 +1,10 @@
 import './App.css';
-import Login  from './pages/Login/Login'
+import StyledInput from './components/StyledInput';
+import Form from './pages/Register'
 
 function App() {
   return (
-    <>
-       <Login />
-    </>
+    <Form/>
   );
 }
 
