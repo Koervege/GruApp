@@ -1,11 +1,10 @@
 import './App.css';
 import StyledInput from './components/StyledInput';
+import Landing from './pages/Landing'
 
 function App() {
   return (
-    <>
-        <StyledInput placeholder="Email">Otro</StyledInput>
-    </>
+    <Landing/>
   );
 }
 

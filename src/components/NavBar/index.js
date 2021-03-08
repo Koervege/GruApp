@@ -57,7 +57,6 @@ const NavUserPhoto = styled.img`
     width: 90px;
 `
 
-
 export default function NavBar() {
     return (
         <Nav>
