@@ -1,7 +1,9 @@
 import React from 'react';
 import { suppliers, services, tows } from '../../data';
-import './styles.css';
+import { BoxSupplier } from './styles';
 import Client from '../../components/Client';
+import Button from '../../components/Button';
+import NavBar from '../../components/NavBar';
 class ListMotorcycle extends React.Component {
   state = {
     suppliers,
@@ -12,11 +14,15 @@ class ListMotorcycle extends React.Component {
   render() {
     const { suppliers, tows, services } = this.state;
     return (
-      <div className="boxSupplier">
-        <button>Ha pagado XX.XXX COP</button>
-        <Client suppliers={suppliers} tows={tows} services={services} />
-        <button>Pedir Grúa</button>
-      </div>
+      <section>
+        <NavBar />
+        <BoxSupplier>
+          <Button color="primary">Ha pagado XX.XXX COP</Button>
+          <Client suppliers={suppliers} tows={tows} services={services} />
+          <Button color="success"> Servicio en proceso</Button>
+          <Button color="primary">Pedir Grúa</Button>
+        </BoxSupplier>
+      </section>
     );
   }
 }
