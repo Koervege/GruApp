@@ -18,7 +18,7 @@ export const LandingMap = styled.iframe`
 
 export const LandingImg = styled.img`
 
-    width: 300px;
+    width: 350px;
     height: 320px;
 `
 
