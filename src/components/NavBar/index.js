@@ -2,31 +2,85 @@ import React from "react";
 import { users } from "../../data";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMotorcycle } from '@fortawesome/free-solid-svg-icons'
-import './style.css';
+import styled from 'styled-components'
+
+const Nav = styled.nav`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 50px;
+    background-color: rgba(82, 161, 227);
+    font-size: 1.5em;
+    color: #fefefe;
+    text-transform: uppercase;
+`;
+
+const NavContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+`
+const NavIcon = styled.div`
+    font-size: 70px;
+    color: #fefefe;
+`
+const NavList = styled.ul`
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style: none;
+    text-decoration: none;
+`
+const NavItems = styled.li`
+    padding: 5px 10px;
+`
+
+const NavProfiles = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`
+
+const NavProfilesSpan = styled.span`
+    margin-right: 15px;
+`
+const ATags = styled.a`
+    text-decoration: none;
+    color: inherit;
+`
+
+const NavUserPhoto = styled.img`
+    border-radius: 100%;
+    border: 3px solid #fefefe;
+    width: 90px;
+`
+
 
 export default function NavBar() {
     return (
-        <nav className="nav">
-            <div className="nav__container">
-                <div className="nav__icon">
+        <Nav>
+            <NavContainer>
+                <NavIcon>
                     <FontAwesomeIcon icon={faMotorcycle}/>
-                </div>
-                <ul className="nav__list">
-                    <li className="nav__items">
-                        <a href="#top">Historial</a>
-                    </li>
-                    <li className="nav__items">
-                        <a href="#top">Notificaciones</a>
-                    </li>
-                </ul>
-            </div>
-            <div className="nav__profile">
-                <span>{users[1].name}</span>
-                <a href="#top">
-                    <img className="nav__userPhoto" src={users[1].photo} alt="profile_photo"/>
-                </a>
-            </div>
-        </nav>
+                </NavIcon>
+                <NavList>
+                    <NavItems>
+                        <ATags href="#top">Historial</ATags>
+                    </NavItems>
+                    <NavItems>
+                        <ATags href="#top">Notificaciones</ATags>
+                    </NavItems>
+                </NavList>
+            </NavContainer>
+            <NavProfiles>
+                <NavProfilesSpan>{users[1].name}</NavProfilesSpan>
+                <ATags href="#top">
+                    <NavUserPhoto src={users[1].photo} alt="profile_photo"/>
+                </ATags>
+            </NavProfiles>
+        </Nav>
     )
 }
 
