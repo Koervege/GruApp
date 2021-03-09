@@ -36,12 +36,12 @@ class Login extends React.Component {
     const { password } = this.state;
     if (moto !== undefined && password === moto.password) {
       let path = `listmotorcycle`;
-      this.props.history.push(path);
+      this.props.history.push(`${path}/${moto._id}`);
       return;
     }
     if (tow !== undefined && password === tow.password) {
       let path = `listtow`;
-      this.props.history.push(path);
+      this.props.history.push(`${path}/${tow._id}`);
       return;
     }
 

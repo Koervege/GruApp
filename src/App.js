@@ -18,8 +18,8 @@ function App() {
         <Route exact path="/" component={Landing} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/listtow" component={ListTow} />
-        <Route exact path="/listmotorcycle" component={ListMotorcycle} />
+        <Route exact path="/listtow/:id" component={ListTow} />
+        <Route exact path="/listmotorcycle/:id" component={ListMotorcycle} />
         <Redirect from="*" to="/" />
       </Switch>
     </Router>
