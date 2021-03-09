@@ -1,9 +1,8 @@
-a {
-    text-decoration: none;
-    color: inherit;
-}
+import styled from 'styled-components'
+import { Link } from 'react-router-dom';
 
-.nav {
+
+export const Nav = styled.nav`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -12,45 +11,46 @@ a {
     font-size: 1.5em;
     color: #fefefe;
     text-transform: uppercase;
-}
+`;
 
-.nav__container {
+export const NavContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-}
-
-.nav__icon {
+`
+export const NavIcon = styled.div`
     font-size: 70px;
     color: #fefefe;
-}
-
-.nav__profile {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.nav__profile span{
-    margin-right: 15px;
-}
-
-.nav__list {
+`
+export const NavList = styled.ul`
     display: flex;
     flex: 1 1 auto;
     flex-direction: row;
     justify-content: space-between;
     list-style: none;
     text-decoration: none;
-}
-
-.nav__items {
+`
+export const NavItems = styled.li`
     padding: 5px 10px;
-}
+`
 
-.nav__userPhoto {
+export const NavProfiles = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`
+
+export const NavProfilesSpan = styled.span`
+    margin-right: 15px;
+`
+export const ATags = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+`
+
+export const NavUserPhoto = styled.img`
     border-radius: 100%;
     border: 3px solid #fefefe;
     width: 90px;
-}
+`

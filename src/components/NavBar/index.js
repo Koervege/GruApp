@@ -1,32 +1,35 @@
 import React from "react";
-import { users } from "../../data";
+import { users, suppliers } from "../../data";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMotorcycle } from '@fortawesome/free-solid-svg-icons'
-import './style.css';
+import { faMotorcycle, faTruckPickup } from '@fortawesome/free-solid-svg-icons'
+import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto } from "./styles";
+import { BrowserRouter as Router } from "react-router-dom";
 
-export default function NavBar() {
+export default function NavBar({user}) {
     return (
-        <nav className="nav">
-            <div className="nav__container">
-                <div className="nav__icon">
-                    <FontAwesomeIcon icon={faMotorcycle}/>
-                </div>
-                <ul className="nav__list">
-                    <li className="nav__items">
-                        <a href="#top">Historial</a>
-                    </li>
-                    <li className="nav__items">
-                        <a href="#top">Notificaciones</a>
-                    </li>
-                </ul>
-            </div>
-            <div className="nav__profile">
-                <span>{users[1].name}</span>
-                <a href="#top">
-                    <img className="nav__userPhoto" src={users[1].photo} alt="profile_photo"/>
-                </a>
-            </div>
-        </nav>
+        <Router>
+            <Nav>
+                <NavContainer>
+                    <NavIcon>
+                        <FontAwesomeIcon icon={user ? faMotorcycle : faTruckPickup}/>
+                    </NavIcon>
+                    <NavList>
+                        <NavItems>
+                            <ATags to="/">Historial</ATags>
+                        </NavItems>
+                        <NavItems>
+                            <ATags to="/">Notificaciones</ATags>
+                        </NavItems>
+                    </NavList>
+                </NavContainer>
+                <NavProfiles>
+                    <NavProfilesSpan>{user ? users[1].name : suppliers[1].name}</NavProfilesSpan>
+                    <ATags to="/">
+                        <NavUserPhoto src={user ? users[1].photo : suppliers[1].photo} alt="profile_photo"/>
+                    </ATags>
+                </NavProfiles>
+            </Nav>
+        </Router>
     )
 }
 
