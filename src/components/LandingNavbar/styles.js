@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const LandNavbar = styled.nav`
   display: flex;
@@ -31,8 +32,11 @@ export const LandNavLoginCont = styled.div`
   justify-content: space-between;
 `;
 
-export const LandNavLogin = styled.pre`
+export const LandNavLogin = styled(Link)`
+	text-decoration: none;
+	color: white;
   text-align: center;
+  text-decoration: none;
   border-radius: 100%;
   border: 3px solid #fefefe;
   width: 100px;

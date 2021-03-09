@@ -5,7 +5,28 @@ import Button from '../../components/Button/index';
 import { StyledInput } from '../../components/StyledInput/index';
 import logo from '../../logo.png';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 10px;
+  outline: none;
+  font-size: 20px;
+  height: 40px;
+  min-width: 100px;
+  max-width: auto;
+  color: white;
+  border-style: none;
+  background: red;
+	padding: 10px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #f8ce0b;
+    color: black;
+  }
+`
 class Form extends React.Component {
   state = {
     email: '',
@@ -111,9 +132,7 @@ class Form extends React.Component {
             <Button color="primary" type="submit" id="acceptButton">
               Registrarse
             </Button>
-            <Button color="danger" type="cancel" id="cancelButton">
-              <Link to="/">Cancelar</Link>
-            </Button>
+            <StyledLink to="/">Cancelar</StyledLink>
           </div>
         </div>
       </form>

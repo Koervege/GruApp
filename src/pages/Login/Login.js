@@ -6,7 +6,31 @@ import Img from '../../components/Img';
 import { StyledInput, Container } from '../../components/StyledInput/index';
 import { users, suppliers } from '../../data';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import {ATags} from '../../components/NavBar/styles'
 
+const StyledLink = styled(Link)`
+	text-decoration: none;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+  border-radius: 5px;
+  margin: 10px;
+  outline: none;
+  font-size: 20px;
+  height: 40px;
+  min-width: 100px;
+  max-width: auto;
+  color: white;
+  border-style: none;
+  background: red;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #f8ce0b;
+    color: black;
+  }
+`
 class Login extends React.Component {
   state = {
     email: '',
@@ -75,15 +99,13 @@ class Login extends React.Component {
             <Button type="submit" color="primary">
               Login
             </Button>
-            <Button type="cancel" color="danger">
-              <Link to="/">Cancelar</Link>
-            </Button>
+            <StyledLink to="/">Cancelar</StyledLink>
           </Container>
         </form>
 
         <Container>
           <small>
-            Aun no estás registrado? <Link to="/register">Registrarse</Link>
+            Aun no estás registrado? <ATags to="/register">Registrarse</ATags>
           </small>
         </Container>
       </Frame>

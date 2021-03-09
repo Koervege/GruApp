@@ -2,7 +2,6 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMotorcycle } from '@fortawesome/free-solid-svg-icons';
 import { faTruckPickup } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
 import {
   LandNavContainer,
   LandNavIcons,
@@ -22,9 +21,7 @@ class LandingNavbar extends React.Component {
           </LandNavIcons>
         </LandNavContainer>
         <LandNavLoginCont>
-          <LandNavLogin>
-            <Link to="/login">Login</Link>
-          </LandNavLogin>
+        <LandNavLogin to="/login">Login</LandNavLogin>
         </LandNavLoginCont>
       </LandNavbar>
     );
