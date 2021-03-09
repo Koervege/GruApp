@@ -15,7 +15,7 @@ class ListTow extends React.Component {
     const { services, motorcycles, users } = this.state;
     return (
       <section>
-        <NavBar />
+        <NavBar userId={this.props.match.params.id} />
         <BoxSupplier>
           <Button color="primary">Ha ganado XX.XXX COP</Button>
           <Provider

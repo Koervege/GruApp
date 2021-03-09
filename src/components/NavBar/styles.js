@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 
-
 export const Nav = styled.nav`
     display: flex;
     flex-direction: row;
@@ -50,7 +49,8 @@ export const ATags = styled(Link)`
 `
 
 export const NavUserPhoto = styled.img`
-    border-radius: 100%;
+    border-radius: 50%;
     border: 3px solid #fefefe;
-    width: 90px;
+    width: 70px;
+		height: 70px;
 `

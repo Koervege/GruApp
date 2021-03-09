@@ -15,7 +15,7 @@ class ListMotorcycle extends React.Component {
     const { suppliers, tows, services } = this.state;
     return (
       <section>
-        <NavBar />
+        <NavBar userId={this.props.match.params.id} />
         <BoxSupplier>
           <Button color="primary">Ha pagado XX.XXX COP</Button>
           <Client suppliers={suppliers} tows={tows} services={services} />

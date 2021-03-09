@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Photo = styled.img`
   border-radius: 50%;
   border: solid 5px white;
-  height: 50px;
-  width: 50px;
+  height: 70px;
+  width: 70px;
   src: ${(props) => props.src};
 `;
 
