@@ -1,10 +1,9 @@
 import './App.css';
-import StyledInput from './components/StyledInput';
-import Landing from './pages/Landing'
+import NavBar from './components/NavBar';
 
 function App() {
   return (
-    <Landing/>
+    <NavBar/>
   );
 }
 
