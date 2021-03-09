@@ -35,11 +35,13 @@ class Login extends React.Component {
 
     const { password } = this.state;
     if (moto !== undefined && password === moto.password) {
-      alert(`Usuario Autenticado:\n${moto.name}\nMotocicleta`);
+      let path = `listmotorcycle`;
+      this.props.history.push(path);
       return;
     }
     if (tow !== undefined && password === tow.password) {
-      alert(`Usuario Autenticado:\n${tow.name}\nGrua`);
+      let path = `listtow`;
+      this.props.history.push(path);
       return;
     }
 
