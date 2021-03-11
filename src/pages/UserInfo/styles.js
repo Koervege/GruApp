@@ -4,10 +4,10 @@ import styled from 'styled-components';
 
 
 export const StyledLink = styled(Link)`
-	text-decoration: none;
-	display:flex;
-	justify-content: center;
-	align-items: center;
+  text-decoration: none;
+  display:flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 5px;
   margin: 10px;
   outline: none;
