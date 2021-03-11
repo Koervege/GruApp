@@ -8,14 +8,7 @@ export const Select = styled.select`
   margin: 0px auto;
   border: 2px solid #e0e0e0;
   outline-color: #1982ea;
-  option {
-    color: black;
-    background: white;
-    display: flex;
-    white-space: pre;
-    min-height: 20px;
-    padding: 0px 2px 1px;
-  }
+
 `;
 
 export const Label = styled.label`

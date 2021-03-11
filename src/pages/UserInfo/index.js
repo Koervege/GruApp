@@ -4,34 +4,10 @@ import Frame from '../../components/Frame';
 import Button from '../../components/Button';
 import Img from '../../components/Img';
 import { StyledInput, Container } from '../../components/StyledInput/index';
-import { StyledSelect, Select } from '../../components/StyledSelect/index';
-import { users, suppliers } from '../../data';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import {ATags} from '../../components/NavBar/styles'
+import { Select, Label } from '../../components/StyledSelect/index';
+import { StyledLink, StyledFieldset } from "./styles";
 
-const StyledLink = styled(Link)`
-	text-decoration: none;
-	display:flex;
-	justify-content: center;
-	align-items: center;
-  border-radius: 5px;
-  margin: 10px;
-  outline: none;
-  font-size: 20px;
-  height: 40px;
-  min-width: 100px;
-  max-width: auto;
-  color: white;
-  border-style: none;
-  background: red;
 
-  &:hover {
-    cursor: pointer;
-    background-color: #f8ce0b;
-    color: black;
-  }
-`
 class UserInfo extends React.Component {
   state = {
     name: '',
@@ -53,12 +29,12 @@ class UserInfo extends React.Component {
     });
   };
 
-  searchUser = (event) => {
+  sendInfo = (event) => {
     event.preventDefault();
   };
 
   render() {
-    const { name, lastName, phoneNum, plateNum, photo, vehiPhoto, brand } = this.state;
+    const { name, lastName, phoneNum, plateNum, photo, vehiPhoto, brand, type, cc } = this.state;
 
     return (
       <Frame>
@@ -68,8 +44,8 @@ class UserInfo extends React.Component {
         <Container>
           
         </Container>
-        <form onSubmit={this.searchUser}>
-        <fieldset>
+        <form onSubmit={this.sendInfo}>
+        <StyledFieldset>
           <legend>Usuario</legend>
           <StyledInput
             value={name}
@@ -99,32 +75,42 @@ class UserInfo extends React.Component {
             children="Foto perfil"
             type="text"
           />
-        </fieldset>
-        <fieldset>
+        </StyledFieldset>
+        <StyledFieldset>
           <legend>Grúa / Moto</legend>
-          <Select
-            /* value={brand}
-            id="brand"
-            name="brand"
-            onChange={this.handleChange}
-            labelChildren="Marca:" */
-          > 
-            <option value="Honda">Honda</option> 
-          </Select>
-
-          <label forHtml="brand">Marca:</label> 
-          <select name="brand" id="brand"> 
-            <option value="Honda">Honda</option> 
-            <option value="Kawasaki">Kawasaki</option> 
-            <option value="Auteco">Auteco</option> 
-          </select> 
-          <label forHtml="cc">Cilindraje:</label> 
-          <select name="cc" id="cc"> 
-            <option value="50cc - 100cc">50cc - 100cc</option> 
-            <option value="100cc - 200cc">100cc - 200cc</option> 
-            <option value="200cc - 300cc">200cc - 300cc</option> 
-            <option value="Más de 300cc">Más de 300cc</option> 
-          </select>
+          <Container>
+            <div>
+              <Label htmlFor="brand">Marca</Label>
+              <Select
+                value={brand}
+                id="brand"
+                name="brand"
+                onChange={this.handleChange}
+                type="text"
+              > 
+                <option value="Honda">Honda</option>
+                <option value="Kawasaki">Kawasaki</option> 
+                <option value="Auteco">Auteco</option>  
+              </Select>
+            </div>
+          </Container>
+          <Container>
+            <div>
+              <Label htmlFor="cc">Cilindraje</Label>
+              <Select
+                value={cc}
+                id="cc"
+                name="cc"
+                onChange={this.handleChange}
+                type="text"
+              > 
+                <option value="50cc - 100cc">50cc - 100cc</option> 
+                <option value="100cc - 200cc">100cc - 200cc</option> 
+                <option value="200cc - 300cc">200cc - 300cc</option> 
+                <option value="Más de 300cc">Más de 300cc</option> 
+              </Select>
+            </div>
+          </Container>
           <StyledInput
             value={plateNum}
             name="plateNum"
@@ -132,11 +118,21 @@ class UserInfo extends React.Component {
             children="Placa"
             type="text"
           />
-          <label forHtml="type">Tipo:</label> 
-          <select name="type" id="type"> 
-            <option value="moto">Moto</option> 
-            <option value="cuatrimoto">Cuatrimoto</option> 
-          </select>
+          <Container>
+            <div>
+              <Label htmlFor="type">Tipo</Label>
+              <Select
+                value={type}
+                id="type"
+                name="type"
+                onChange={this.handleChange}
+                type="text"
+              > 
+                <option value="moto">Moto</option> 
+                <option value="cuatrimoto">Cuatrimoto</option> 
+              </Select>
+            </div>
+          </Container>
           <StyledInput
             value={vehiPhoto}
             name="vehiPhoto"
@@ -144,7 +140,7 @@ class UserInfo extends React.Component {
             children="Foto vehículo "
             type="text"
           />  
-        </fieldset>
+        </StyledFieldset>
           <Container>
             <Button type="submit" color="primary">
               Aceptar

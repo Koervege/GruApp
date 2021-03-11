@@ -9,8 +9,6 @@ function StyledSelect({
 }) {
   return (
     <Container>
-      <div>
-        <Label htmlFor={id}>{labelChildren}</Label>
 
         <Select
           id={id}
@@ -19,9 +17,8 @@ function StyledSelect({
           value={value}
         >
         </Select>
-      </div>
     </Container>
   );
 }
 
-export { StyledSelect, Select };
+export { StyledSelect, Select, Label };
