@@ -1,35 +1,18 @@
 import React from 'react';
-import './styles.css';
-import Frame from '../../components/Frame/index';
-import Button from '../../components/Button/index';
-import { StyledInput } from '../../components/StyledInput/index';
-import logo from '../../logo.png';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import logo from '../../images/logo.png';
+import Frame from '../../components/Frame';
+import Button from '../../components/Button';
+import Img from '../../components/Img';
+import { StyledInput, Container } from '../../components/StyledInput/index';
+import { StyledLink, StyledFieldset, RadioInput, RadioLabel, RadioFieldset} from "./styles";
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  border-radius: 5px;
-  margin: 10px;
-  outline: none;
-  font-size: 20px;
-  height: 40px;
-  min-width: 100px;
-  max-width: auto;
-  color: white;
-  border-style: none;
-  background: red;
-	padding: 10px;
 
-  &:hover {
-    cursor: pointer;
-    background-color: #f8ce0b;
-    color: black;
-  }
-`
-class Form extends React.Component {
+class Register extends React.Component {
   state = {
+    name: '',
+    lastName: '',
     email: '',
+    phoneNum: '',
     password: '',
     passwordConfirm: '',
   };
@@ -44,100 +27,105 @@ class Form extends React.Component {
   };
 
   render() {
-    const { email, password, passwordConfirm } = this.state;
+    const { name, lastName, phoneNum, email, password, passwordConfirm } = this.state;
 
-    return (
-      <form onSubmit={this.handleSubmit} className="regForm">
-        <div className="logoContainer">
-          <img src={logo} className="regLogo" alt="logoGruApp"></img>
-        </div>
+     return (
+      <Frame>
+        <Container>
+        <Img src={logo} radius="150" width="150" height="150" alt="logo" />
+        </Container>
 
-        <Frame className="regFrame">
-          <fieldset className="registerText">
-            <div className="aligner">
-              <StyledInput
-                className="styledInput"
-                type="text"
-                name="email"
-                id="email"
-                onChange={this.handleChange}
-                placeholder="email@gruapp.com"
-                value={email}
-              >
-                Correo electrónico
-              </StyledInput>
-            </div>
-          </fieldset>
-          <fieldset className="registerText">
-            <div className="aligner">
-              <StyledInput
-                className="styledInput"
-                htmlFor="password"
-                type="password"
-                name="password"
-                id="password"
-                onChange={this.handleChange}
-                placeholder="Contraseña"
-                value={password}
-              >
-                {' '}
-                Contraseña
-              </StyledInput>
-            </div>
-          </fieldset>
-          <fieldset className="registerText">
-            <div className="aligner">
-              <StyledInput
-                className="styledInput"
-                htmlFor="passwordConfirm"
-                type="password"
-                name="passwordConfirm"
-                id="passwordConfirm"
-                onChange={this.handleChange}
-                placeholder="Contraseña"
-                value={passwordConfirm}
-              >
-                Confirma tu contraseña
-              </StyledInput>
-            </div>
-          </fieldset>
-
-          <fieldset className="registerCheck">
-            <label htmlFor="isBike" className="radioLabel">
-              Moto
-            </label>
-            <input
-              type="radio"
-              name="isBike"
-              id="isBike"
-              value="isBike"
+        <form onSubmit={this.handleSubmit}>
+          <StyledFieldset>
+            <legend>Regístrate</legend>
+            <StyledInput
+              value={name}
+              name="name"
+              id="name"
               onChange={this.handleChange}
+              children="Nombre"
+              type="text"
             />
-
-            <label htmlFor="isTow" className="radioLabel">
-              Grua
-            </label>
-            <input
-              type="radio"
-              name="isBike"
-              id="isTow"
-              value="isTow"
+            <StyledInput
+              value={lastName}
+              name="lastName"
+              id="lastName"
               onChange={this.handleChange}
+              children="Apellido"
+              type="text"
             />
-          </fieldset>
-        </Frame>
+            <StyledInput
+              value={email}
+              name="email"
+              id="email"
+              onChange={this.handleChange}
+              children="E - mail"
+              type="text"
+            />
+            <StyledInput
+              value={phoneNum}
+              name="phoneNum"
+              id="phoneNum"
+              onChange={this.handleChange}
+              children="Teléfono"
+              type="tel"
+            />
+            <StyledInput
+              value={password}
+              name="password"
+              id="password"
+              onChange={this.handleChange}
+              children="Contraseña"
+              type="password"
+            />
+            <StyledInput
+              value={passwordConfirm}
+              name="passwordConfirm"
+              id="passwordConfirm"
+              onChange={this.handleChange}
+              children="Confírmala"
+              type="password"
+            /> 
 
-        <div className="buttonAlign">
-          <div className="regButtons">
-            <Button color="primary" type="submit" id="acceptButton">
-              Registrarse
-            </Button>
-            <StyledLink to="/">Cancelar</StyledLink>
-          </div>
-        </div>
-      </form>
-    );
+            <Container>
+              <RadioLabel htmlFor="isBike" className="radioLabel">
+                Moto
+              </RadioLabel>
+              <RadioInput
+                type="radio"
+                name="isBike"
+                id="isBike"
+                value="isBike"
+                onChange={this.handleChange}
+              />
+
+              <RadioLabel htmlFor="isTow" className="radioLabel">
+                Grua
+              </RadioLabel>
+              <RadioInput
+                type="radio"
+                name="isBike"
+                id="isTow"
+                value="isTow"
+                onChange={this.handleChange}
+              />
+            </Container>
+          </StyledFieldset>
+        </form>
+
+        <RadioFieldset className="registerCheck">
+            
+          </RadioFieldset>
+
+        <Container>
+          <Button type="submit" color="primary">
+            Aceptar
+          </Button>
+          <StyledLink to="/">Cancelar</StyledLink>
+        </Container>
+      </Frame>
+     )
+    }
   }
-}
 
-export default Form;
+  export default Register
