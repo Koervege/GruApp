@@ -24,16 +24,6 @@ class Register extends React.Component {
     this.setState({ [name]: value });
   };
 
-  validateSubmit = (state) => {
-    
-    let result = '';
-    for (let p in state) {
-      if (p === '') {
-        result = 0
-      }
-    }
-  }
-
   handleSubmit = (e) => {
     e.preventDefault();
 
