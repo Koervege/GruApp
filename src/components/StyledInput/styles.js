@@ -10,6 +10,10 @@ export const Input = styled.input `
     margin: 0px auto;
     border:2px solid #e0e0e0;
     outline-color: #1982ea;
+
+    &:valid {
+        border-color:green 
+    }
     
 `
 
