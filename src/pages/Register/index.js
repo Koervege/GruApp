@@ -3,18 +3,20 @@ import logo from '../../images/logo.png';
 import Frame from '../../components/Frame';
 import Button from '../../components/Button';
 import Img from '../../components/Img';
+import axios from 'axios'
 import { StyledInput, Container } from '../../components/StyledInput/index';
-import { StyledLink, StyledFieldset, RadioInput, RadioLabel, RadioFieldset} from "./styles";
-
+import { StyledLink, StyledFieldset, RadioInput, RadioLabel} from "./styles";
 
 class Register extends React.Component {
+
   state = {
-    name: '',
+    firstName: '',
     lastName: '',
     email: '',
     phoneNum: '',
     password: '',
     passwordConfirm: '',
+    userType: '',
   };
 
   handleChange = (e) => {
@@ -24,10 +26,32 @@ class Register extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    const { firstName, lastName, email, phoneNum, password, userType } = this.state
+
+    axios({
+      method: 'POST',
+      baseURL: process.env.REACT_APP_SERVER_URL,
+      url: `/${userType}s/signup`,
+      data: {
+        name: firstName+lastName,
+        email,
+        phoneNum,
+        password,
+      }
+    })
+      .then(({ data }) => {
+        localStorage.setItem('token', data.token)
+        this.props.history.push(`/userinfo/`);
+      })
+      .catch(err => {
+        alert('Ocurrió un error. Inténtalo de nuevo más tarde.')
+      })
+      
   };
 
   render() {
-    const { name, lastName, phoneNum, email, password, passwordConfirm } = this.state;
+    const { firstName, lastName, phoneNum, email, password, passwordConfirm } = this.state;
 
      return (
       <Frame>
@@ -39,12 +63,13 @@ class Register extends React.Component {
           <StyledFieldset>
             <legend>Regístrate</legend>
             <StyledInput
-              value={name}
-              name="name"
-              id="name"
+              value={firstName}
+              name="firstName"
+              id="firstName"
               onChange={this.handleChange}
               children="Nombre"
               type="text"
+              required="required"
             />
             <StyledInput
               value={lastName}
@@ -53,6 +78,7 @@ class Register extends React.Component {
               onChange={this.handleChange}
               children="Apellido"
               type="text"
+              required="required"
             />
             <StyledInput
               value={email}
@@ -61,6 +87,7 @@ class Register extends React.Component {
               onChange={this.handleChange}
               children="E - mail"
               type="text"
+              required="required"
             />
             <StyledInput
               value={phoneNum}
@@ -69,6 +96,7 @@ class Register extends React.Component {
               onChange={this.handleChange}
               children="Teléfono"
               type="tel"
+              required="required"
             />
             <StyledInput
               value={password}
@@ -77,6 +105,7 @@ class Register extends React.Component {
               onChange={this.handleChange}
               children="Contraseña"
               type="password"
+              required="required"
             />
             <StyledInput
               value={passwordConfirm}
@@ -85,6 +114,7 @@ class Register extends React.Component {
               onChange={this.handleChange}
               children="Confírmala"
               type="password"
+              required="required"
             /> 
 
             <Container>
@@ -93,36 +123,34 @@ class Register extends React.Component {
               </RadioLabel>
               <RadioInput
                 type="radio"
-                name="isBike"
+                name="userType"
                 id="isBike"
-                value="isBike"
+                value="user"
                 onChange={this.handleChange}
+                required="required"
               />
 
               <RadioLabel htmlFor="isTow" className="radioLabel">
-                Grua
+                Grúa
               </RadioLabel>
               <RadioInput
                 type="radio"
-                name="isBike"
+                name="userType"
                 id="isTow"
-                value="isTow"
+                value="supplier"
                 onChange={this.handleChange}
+                required="required"
               />
             </Container>
           </StyledFieldset>
+
+          <Container>
+            <Button type="submit" color="primary">
+              Aceptar
+            </Button>
+            <StyledLink to="/">Cancelar</StyledLink>
+          </Container>
         </form>
-
-        <RadioFieldset className="registerCheck">
-            
-          </RadioFieldset>
-
-        <Container>
-          <Button type="submit" color="primary">
-            Aceptar
-          </Button>
-          <StyledLink to="/">Cancelar</StyledLink>
-        </Container>
       </Frame>
      )
     }

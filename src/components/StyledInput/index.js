@@ -8,6 +8,7 @@ function StyledInput({
   placeholder,
   value,
   onChange,
+  required,
 }) {
   return (
     <Container>
@@ -21,6 +22,7 @@ function StyledInput({
           name={name}
           placeholder={placeholder}
           value={value}
+          required={required}
         ></Input>
       </div>
     </Container>
