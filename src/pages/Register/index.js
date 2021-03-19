@@ -41,6 +41,7 @@ class Register extends React.Component {
       }
     })
       .then(({ data }) => {
+        localStorage.setItem('token', data.token)
         this.props.history.push(`/userinfo/`);
       })
       .catch(err => {
