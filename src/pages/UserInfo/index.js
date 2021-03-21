@@ -3,10 +3,13 @@ import logo from '../../images/logo.png';
 import Frame from '../../components/Frame';
 import Button from '../../components/Button';
 import Img from '../../components/Img';
+import MotoInfo from '../../components/MotoInfo';
+import TowInfo from '../../components/TowInfo';
 import { StyledInput, Container } from '../../components/StyledInput/index';
 import { Select, Label } from '../../components/StyledSelect/index';
 import { StyledLink, StyledFieldset } from "./styles";
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 class UserInfo extends React.Component {
@@ -95,61 +98,7 @@ class UserInfo extends React.Component {
         </StyledFieldset>
         <StyledFieldset>
           <legend>{this.state.vehicleType}</legend>
-          <Container>
-            <div>
-              <Label htmlFor="brand">Marca</Label>
-              <Select
-                value={brand}
-                id="brand"
-                name="brand"
-                onChange={this.handleChange}
-                type="text"
-              > 
-                <option value="Honda">Honda</option>
-                <option value="Kawasaki">Kawasaki</option> 
-                <option value="Auteco">Auteco</option>  
-              </Select>
-            </div>
-          </Container>
-          <Container>
-            <div>
-              <Label htmlFor="cc">Cilindraje</Label>
-              <Select
-                value={cc}
-                id="cc"
-                name="cc"
-                onChange={this.handleChange}
-                type="text"
-              > 
-                <option value="50cc - 100cc">50cc - 100cc</option> 
-                <option value="100cc - 200cc">100cc - 200cc</option> 
-                <option value="200cc - 300cc">200cc - 300cc</option> 
-                <option value="Más de 300cc">Más de 300cc</option> 
-              </Select>
-            </div>
-          </Container>
-          <StyledInput
-            value={plateNum}
-            name="plateNum"
-            onChange={this.handleChange}
-            children="Placa"
-            type="text"
-          />
-          <Container>
-            <div>
-              <Label htmlFor="type">Tipo</Label>
-              <Select
-                value={type}
-                id="type"
-                name="type"
-                onChange={this.handleChange}
-                type="text"
-              > 
-                <option value="moto">Moto</option> 
-                <option value="cuatrimoto">Cuatrimoto</option> 
-              </Select>
-            </div>
-          </Container>
+          {this.state.vehicleType === 'Moto'? (<MotoInfo/>) : (<TowInfo/>)}
           <StyledInput
             value={vehiPhoto}
             name="vehiPhoto"
