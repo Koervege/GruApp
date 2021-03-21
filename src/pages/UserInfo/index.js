@@ -16,13 +16,13 @@ class UserInfo extends React.Component {
 
   state = {
     name: '',
-    lastName: '',
     phoneNum:'',
     brand:'',
     cc:'',
     capacity:'',
     plateNum:'',
     type:'',
+    weight:'',
     photo: '',
     vehiPhoto: '',
     vehicleType:'',
@@ -54,6 +54,42 @@ class UserInfo extends React.Component {
     });
   };
 
+  handleChangePlateNum = (param) => {
+    this.setState({
+      plateNum: param
+    })
+  }
+
+  handleChangeCapacity = (param) => {
+    this.setState({
+      capacity: param
+    })
+  }
+
+  handleChangeBrand = (param) => {
+    this.setState({
+      brand: param
+    })
+  }
+
+  handleChangeCyl = (param) => {
+    this.setState({
+      cc: param
+    })
+  }
+
+  handleChangeType = (param) => {
+    this.setState({
+      type: param
+    })
+  }
+
+  handleChangeWeight = (param) => {
+    this.setState({
+      weight: param
+    })
+  }
+
   sendInfo = (event) => {
     event.preventDefault();
 
@@ -61,7 +97,7 @@ class UserInfo extends React.Component {
   };
 
   render() {
-    const { name, lastName, phoneNum, plateNum, photo, vehiPhoto, brand, type, cc } = this.state;
+    const { name, phoneNum, photo, vehiPhoto, vehicleType } = this.state;
 
     return (
       <Frame>
@@ -97,8 +133,8 @@ class UserInfo extends React.Component {
           />
         </StyledFieldset>
         <StyledFieldset>
-          <legend>{this.state.vehicleType}</legend>
-          {this.state.vehicleType === 'Moto'? (<MotoInfo/>) : (<TowInfo/>)}
+          <legend>{vehicleType}</legend>
+          {vehicleType === 'Moto'? (<MotoInfo handleChangeBrand={this.handleChangeBrand} handleChangeCyl={this.handleChangeCyl} handleChangeType={this.handleChangeType} handleChangeWeight={this.handleChangeWeight}/>) : (<TowInfo handleChangePlateNum={this.handleChangePlateNum} handleChangeCapacity={this.handleChangeCapacity} handleChangeBrand={this.handleChangeBrand}/>)}
           <StyledInput
             value={vehiPhoto}
             name="vehiPhoto"

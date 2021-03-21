@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyledInput, Container } from '../../components/StyledInput/index';
 import { Select, Label } from '../../components/StyledSelect/index';
 
-export default function MotoInfo() {
+export default function MotoInfo(props) {
 
   const brands = ['Honda', 'Kawasaki', 'Auteco'];
   const ccs = ['50cc - 100cc', '100cc - 200cc', '200cc - 300cc', 'Más de 300cc'];
@@ -16,22 +16,27 @@ export default function MotoInfo() {
 
   const handleChangeBrand = (e) => {
     setBrand(e.currentTarget.value);
+    props.handleChangeBrand(e.currentTarget.value);
   }
 
   const handleChangeCyl = (e) => {
     setcylCap(e.currentTarget.value);
+    props.handleChangeCyl(e.currentTarget.value);
   }
 
   const handleChangeType = (e) => {
     setMotoType(e.currentTarget.value);
+    props.handleChangeType(e.currentTarget.value);
   }
 
   const handleChangePlateNum = (e) => {
     setPlateNum(e.currentTarget.value);
+    props.handleChangePlateNum(e.currentTarget.value);
   }
 
   const handleChangeWeight = (e) => {
     setWeight(e.currentTarget.value);
+    props.handleChangeWeight(e.currentTarget.value);
   }
 
   return (
@@ -98,7 +103,7 @@ export default function MotoInfo() {
             value={weight}
             name="weight"
             onChange={e => handleChangeWeight(e)}
-            children="Peso"
+            children="Peso (Kg)"
             type="text"
           />
     </React.Fragment>

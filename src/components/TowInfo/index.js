@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyledInput, Container } from '../../components/StyledInput/index';
 import { Select, Label } from '../../components/StyledSelect/index';
 
-export default function MotoInfo() {
+export default function TowInfo(props) {
 
   const brands = ['Hyundai', 'JAC', 'Foton', 'Chevrolet'];
   const capacity = ['150 Kg', '200 Kg', '300 Kg', '400 Kg'];
@@ -13,14 +13,17 @@ export default function MotoInfo() {
 
   const handleChangeBrand = (e) => {
     setBrand(e.currentTarget.value);
+    props.handleChangeBrand(e.currentTarget.value);
   }
 
   const handleChangeCapacity = (e) => {
     setcKg(e.currentTarget.value);
+    props.handleChangeCapacity(e.currentTarget.value);
   }
 
   const handleChangePlateNum = (e) => {
     setPlateNum(e.currentTarget.value);
+    props.handleChangePlateNum(e.currentTarget.value);
   }
 
   return (
@@ -44,7 +47,7 @@ export default function MotoInfo() {
           </Container>
           <Container>
             <div>
-              <Label htmlFor="capacity">Cilindraje</Label>
+              <Label htmlFor="capacity">Capacidad Grúa</Label>
               <Select
                 value={kg}
                 id="capacity"
