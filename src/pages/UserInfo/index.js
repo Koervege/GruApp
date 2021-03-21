@@ -134,7 +134,25 @@ class UserInfo extends React.Component {
         </StyledFieldset>
         <StyledFieldset>
           <legend>{vehicleType}</legend>
-          {vehicleType === 'Moto'? (<MotoInfo handleChangeBrand={this.handleChangeBrand} handleChangeCyl={this.handleChangeCyl} handleChangeType={this.handleChangeType} handleChangeWeight={this.handleChangeWeight}/>) : (<TowInfo handleChangePlateNum={this.handleChangePlateNum} handleChangeCapacity={this.handleChangeCapacity} handleChangeBrand={this.handleChangeBrand}/>)}
+          {
+            vehicleType === 'Moto'? 
+              (
+                <MotoInfo 
+                  handleChangeBrand={this.handleChangeBrand} 
+                  handleChangeCyl={this.handleChangeCyl} 
+                  handleChangeType={this.handleChangeType} 
+                  handleChangeWeight={this.handleChangeWeight}
+                />
+              ) 
+              : 
+              (
+                <TowInfo 
+                  handleChangePlateNum={this.handleChangePlateNum} 
+                  handleChangeCapacity={this.handleChangeCapacity} 
+                  handleChangeBrand={this.handleChangeBrand}
+                />
+              )
+          }
           <StyledInput
             value={vehiPhoto}
             name="vehiPhoto"
