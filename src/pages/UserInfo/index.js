@@ -6,10 +6,8 @@ import Img from '../../components/Img';
 import MotoInfo from '../../components/MotoInfo';
 import TowInfo from '../../components/TowInfo';
 import { StyledInput, Container } from '../../components/StyledInput/index';
-import { Select, Label } from '../../components/StyledSelect/index';
 import { StyledLink, StyledFieldset } from "./styles";
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 
 class UserInfo extends React.Component {
@@ -29,7 +27,6 @@ class UserInfo extends React.Component {
   };
 
   async componentDidMount() {
-    const token = localStorage.getItem('token');
     const userType = localStorage.getItem('userType');
     const email = localStorage.getItem('email');
     const { data } = await axios({
@@ -46,6 +43,28 @@ class UserInfo extends React.Component {
       this.setState({ vehicleType: 'Grúa', name, phoneNum })
     }
   }
+
+  eraseUser = async(event) => {
+    event.preventDefault();
+    const token = localStorage.getItem('token');
+    const userType = localStorage.getItem('userType');
+
+    await axios({
+      method: 'DELETE',
+      baseURL:process.env.REACT_APP_SERVER_URL,
+      url: `/${userType}s`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      } 
+    })
+    this.setState({
+      name: '',
+      phoneNum:'',
+    })
+    this.props.history.push(`/login/`);
+    localStorage.clear();
+  };
+
 
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -116,13 +135,16 @@ class UserInfo extends React.Component {
             onChange={this.handleChange}
             children="Nombre"
             type="text"
+            disabled
           />
+          <Button type="button" color="danger" onClick={this.eraseUser}>Borrar Usuario</Button>
           <StyledInput
             value={phoneNum}
             name="phoneNum"
             onChange={this.handleChange}
             children="Telefono"
             type="tel"
+            disabled
           />
           <StyledInput
             value={photo}
