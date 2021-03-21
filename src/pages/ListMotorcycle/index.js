@@ -1,16 +1,50 @@
 import React from 'react';
-import { suppliers, services, tows } from '../../data';
+import axios from 'axios';
 import { BoxSupplier } from './styles';
 import Client from '../../components/Client';
 import Button from '../../components/Button';
 import NavBar from '../../components/NavBar';
 class ListMotorcycle extends React.Component {
   state = {
-    suppliers,
-    tows,
-    services,
+    suppliers: '',
+    tows: '',
+    services: '',
   };
 
+  async componentDidMount() {
+    try {
+      const { data: { suppliers },} = await axios({
+        method: 'GET',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/suppliers',
+      });
+
+      const { data: {tows} } = await axios({
+        method: 'GET',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/tows',
+      });
+
+      
+      const { data: {services} } = await axios({
+        method: 'GET',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/services',
+      });
+
+      this.setState({
+        suppliers,
+        tows,
+        services,
+      });
+      
+    } catch (error) {
+      localStorage.removeItem('token');
+      // localStorage.clear()
+      //this.props.history.push('/login');
+    }
+  }
+  
   render() {
     const { suppliers, tows, services } = this.state;
     return (

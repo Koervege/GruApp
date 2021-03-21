@@ -10,9 +10,8 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
 
 function Stars({ tows, services, supplierid }) {
-  const [tow] = tows.filter((tow) => supplierid === tow.supplierID);
-
-  const [service] = services.filter((service) => tow._id === service.towID);
+  const [tow] = tows.filter((tow) => supplierid === tow.supplier._id);
+  const [service] = services.filter((service) => tow._id === service.towID._id);
 
   return (
     <section>
