@@ -9,6 +9,7 @@ class ListMotorcycle extends React.Component {
     suppliers: '',
     tows: '',
     services: '',
+    error:'',
   };
 
   async componentDidMount() {
@@ -39,9 +40,10 @@ class ListMotorcycle extends React.Component {
       });
       
     } catch (error) {
-      localStorage.removeItem('token');
-      // localStorage.clear()
-      //this.props.history.push('/login');
+      this.setState({
+        error,
+      });
+      alert(error);
     }
   }
   
