@@ -9,18 +9,16 @@ import { ContainerStar, StarSolid, StarEmpty } from './styles';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
 
-function Stars({ tows, services, supplierid }) {
-  const [tow] = tows.filter((tow) => supplierid === tow.supplier._id);
-  const [service] = services.filter((service) => tow._id === service.towID._id);
-
+function Stars({ rating }) {
+  
   return (
     <section>
-      {Array.from({ length: Math.floor(service.rating) }, (e, i) => (
+      {Array.from({ length: Math.floor(rating) }, (e, i) => (
         <StarSolid key={i}>
           <FontAwesomeIcon icon={faStar} />
         </StarSolid>
       ))}
-      {Array.from({ length: Math.ceil(5 - service.rating) }, (e, i) => (
+      {Array.from({ length: Math.ceil(5 - rating) }, (e, i) => (
         <StarEmpty key={i}>
           <FontAwesomeIcon icon={emptyStar} />
         </StarEmpty>
@@ -29,21 +27,24 @@ function Stars({ tows, services, supplierid }) {
   );
 }
 
-function Client({ suppliers, tows, services }) {
+function Client({ services }) {
   return (
     <SectionList>
-      {!!suppliers &&
-        suppliers.length > 0 &&
-        suppliers.map(({ _id, photo, name }) => {
+      {!!services &&
+        services.length > 0 &&
+        services.map(({ _id, rating, towID }) => {
           return (
             <ContainerList key={_id}>
-              <ContainerElement>{name}</ContainerElement>
+              <ContainerElement>{towID.supplier.name}</ContainerElement>
               <ContainerStar>
-                <Stars tows={tows} supplierid={_id} services={services} />
+                <Stars rating={rating} />
               </ContainerStar>
               <ContainerElement>1 servicio</ContainerElement>
               <ContainerElement>
-                <Photo src={photo} alt={name}></Photo>
+                <Photo
+                  src={towID.supplier.photo}
+                  alt={towID.supplier.name}
+                ></Photo>
               </ContainerElement>
             </ContainerList>
           );
