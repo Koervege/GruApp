@@ -6,9 +6,11 @@ import Img from '../../components/Img';
 import { StyledInput, Container } from '../../components/StyledInput/index';
 import { Select, Label } from '../../components/StyledSelect/index';
 import { StyledLink, StyledFieldset } from "./styles";
+import axios from 'axios';
 
 
 class UserInfo extends React.Component {
+
   state = {
     name: '',
     lastName: '',
@@ -20,7 +22,27 @@ class UserInfo extends React.Component {
     type:'',
     photo: '',
     vehiPhoto: '',
+    vehicleType:'',
   };
+
+  async componentDidMount() {
+    const token = localStorage.getItem('token');
+    const userType = localStorage.getItem('userType');
+    const email = localStorage.getItem('email');
+    const { data } = await axios({
+      method: 'GET',
+      baseURL:process.env.REACT_APP_SERVER_URL,
+      url: `/${userType}s?email=${email}`
+    })
+
+    if (userType === 'user') {
+      const { name, phoneNum } = data.users[0];
+      this.setState({ vehicleType: 'Moto', name, phoneNum })
+    } else {
+      const { name, phoneNum } = data.suppliers[0];
+      this.setState({ vehicleType: 'Grúa', name, phoneNum })
+    }
+  }
 
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -31,6 +53,8 @@ class UserInfo extends React.Component {
 
   sendInfo = (event) => {
     event.preventDefault();
+
+
   };
 
   render() {
@@ -55,13 +79,6 @@ class UserInfo extends React.Component {
             type="text"
           />
           <StyledInput
-            value={lastName}
-            name="lastName"
-            onChange={this.handleChange}
-            children="Apellido"
-            type="text"
-          />
-          <StyledInput
             value={phoneNum}
             name="phoneNum"
             onChange={this.handleChange}
@@ -77,7 +94,7 @@ class UserInfo extends React.Component {
           />
         </StyledFieldset>
         <StyledFieldset>
-          <legend>Grúa / Moto</legend>
+          <legend>{this.state.vehicleType}</legend>
           <Container>
             <div>
               <Label htmlFor="brand">Marca</Label>

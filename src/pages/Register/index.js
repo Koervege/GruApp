@@ -34,14 +34,16 @@ class Register extends React.Component {
       baseURL: process.env.REACT_APP_SERVER_URL,
       url: `/${userType}s/signup`,
       data: {
-        name: firstName+lastName,
+        name: `${firstName} ${lastName}`,
         email,
         phoneNum,
         password,
       }
     })
       .then(({ data }) => {
-        localStorage.setItem('token', data.token)
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userType', userType);
+        localStorage.setItem('email', email);
         this.props.history.push(`/userinfo/`);
       })
       .catch(err => {
