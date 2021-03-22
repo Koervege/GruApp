@@ -9,7 +9,6 @@ function StyledInput({
   value,
   onChange,
   required,
-  readonly,
   disabled,
 }) {
   return (
@@ -25,7 +24,6 @@ function StyledInput({
           placeholder={placeholder}
           value={value}
           required={required}
-          readonly={readonly}
           disabled = {disabled ? true : false}
         ></Input>
       </div>

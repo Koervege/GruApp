@@ -24,6 +24,7 @@ class UserInfo extends React.Component {
     photo: '',
     vehiPhoto: '',
     vehicleType:'',
+    edit: false,
   };
 
   async componentDidMount() {
@@ -109,24 +110,72 @@ class UserInfo extends React.Component {
     })
   }
 
-  sendInfo = (event) => {
+  handleEdit = (e) => {
+    this.setState({
+      edit: e.target.type === 'checkbox' ? e.target.checked : e.target.value,
+    })
+  }
+
+  sendInfo = async(event) => {
     event.preventDefault();
-
-
+    const userType = localStorage.getItem('userType');
+    const token = localStorage.getItem('token');
+    if (this.state.edit) {
+      const { data } = await axios({
+        method: 'PUT',
+        baseURL:process.env.REACT_APP_SERVER_URL,
+        url: `/${userType}s`,
+        data: {
+          name: this.state.name,
+          phoneNum: this.state.phoneNum,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        } 
+      })
+      alert(data.message)
+    }
+    const { data } = await axios({
+      method: 'POST',
+      baseURL:process.env.REACT_APP_SERVER_URL,
+      url: userType === 'user' ? '/motorcycles/create' : '/tows',
+      data: userType === 'user' ? 
+        {
+          brand: this.state.brand,
+          cc: this.state.cc,
+          type: this.state.type,
+          plateNum: this.state.plateNum,
+          weight: this.state.weight,
+        }
+        : {
+          brand: this.state.brand,
+          capacity: this.state.capacity,
+          plateNum: this.state.plateNum,
+          status: true,
+        },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      } 
+    })
   };
 
   render() {
-    const { name, phoneNum, photo, vehiPhoto, vehicleType } = this.state;
+    const { name, phoneNum, photo, vehiPhoto, vehicleType, edit } = this.state;
 
     return (
       <Frame>
         <Container>
           <Img src={logo} radius="100" width="100" height="100" alt="logo" />
         </Container>
-        <Container>
-          
-        </Container>
+
         <form onSubmit={this.sendInfo}>
+        <StyledInput
+            name="edit"
+            onChange={this.handleEdit}
+            children="Editar"
+            type="checkbox"
+            checked={edit}
+          />
         <StyledFieldset>
           <legend>Usuario</legend>
           <StyledInput
@@ -135,7 +184,7 @@ class UserInfo extends React.Component {
             onChange={this.handleChange}
             children="Nombre"
             type="text"
-            disabled
+            disabled={!edit}
           />
           <Button type="button" color="danger" onClick={this.eraseUser}>Borrar Usuario</Button>
           <StyledInput
@@ -144,7 +193,7 @@ class UserInfo extends React.Component {
             onChange={this.handleChange}
             children="Telefono"
             type="tel"
-            disabled
+            disabled={!edit}
           />
           <StyledInput
             value={photo}
@@ -152,6 +201,7 @@ class UserInfo extends React.Component {
             onChange={this.handleChange}
             children="Foto perfil"
             type="text"
+            disabled={!edit}
           />
         </StyledFieldset>
         <StyledFieldset>
@@ -160,18 +210,19 @@ class UserInfo extends React.Component {
             vehicleType === 'Moto'? 
               (
                 <MotoInfo 
-                  handleChangeBrand={this.handleChangeBrand} 
+                  handleChangeBrand={this.handleChangeBrand}
                   handleChangeCyl={this.handleChangeCyl} 
                   handleChangeType={this.handleChangeType} 
+                  handleChangePlateNum={this.handleChangePlateNum} 
                   handleChangeWeight={this.handleChangeWeight}
                 />
               ) 
               : 
               (
                 <TowInfo 
-                  handleChangePlateNum={this.handleChangePlateNum} 
-                  handleChangeCapacity={this.handleChangeCapacity} 
-                  handleChangeBrand={this.handleChangeBrand}
+                handleChangeBrand={this.handleChangeBrand}
+                handleChangeCapacity={this.handleChangeCapacity} 
+                handleChangePlateNum={this.handleChangePlateNum} 
                 />
               )
           }
