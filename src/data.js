@@ -69,7 +69,7 @@ const suppliers = [
     cc: '897653f21',
     email: 'pancho@gmail.com',
     password: '1234',
-    phoneNum: '317098371',
+    phoneNum: '3170983712',
     photo:
       'https://i.pinimg.com/originals/4a/24/fa/4a24fa84b13864d45016a70be1914420.jpg',
   },
@@ -155,7 +155,7 @@ const services = [
   },
   {
     _id: uuidv4(),
-    motoID: motorcycles[2]._id,
+    motoID: motorcycles[0]._id,
     towID: tows[2]._id,
     cost: 80000,
     initLoc: 'Las palmas',
