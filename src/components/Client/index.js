@@ -9,8 +9,10 @@ import { ContainerStar, StarSolid, StarEmpty } from './styles';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
 
-function Stars({ rating }) {
-  
+function Stars({ services }) {
+  let count = '';
+  const rating = services.map((service) => count += service.rating) / services.length;
+
   return (
     <section>
       {Array.from({ length: Math.floor(rating) }, (e, i) => (
@@ -27,23 +29,25 @@ function Stars({ rating }) {
   );
 }
 
-function Client({ services }) {
+function Client({ tows }) {
   return (
     <SectionList>
-      {!!services &&
-        services.length > 0 &&
-        services.map(({ _id, rating, towID }) => {
+      {!!tows &&
+        tows.length > 0 &&
+        tows.map(({ _id, supplier, serviceIds }) => {
           return (
             <ContainerList key={_id}>
-              <ContainerElement>{towID.supplier.name}</ContainerElement>
+              <ContainerElement>{supplier.name}</ContainerElement>
               <ContainerStar>
-                <Stars rating={rating} />
+                <Stars services={serviceIds} />
               </ContainerStar>
-              <ContainerElement>1 servicio</ContainerElement>
+              <ContainerElement>
+                {`${serviceIds.length} servicio${serviceIds.length === 1 ? '' : 's'}`}
+                </ContainerElement>
               <ContainerElement>
                 <Photo
-                  src={towID.supplier.photo}
-                  alt={towID.supplier.name}
+                  src={supplier.photo}
+                  alt={supplier.name}
                 ></Photo>
               </ContainerElement>
             </ContainerList>

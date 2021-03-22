@@ -6,21 +6,21 @@ import Button from '../../components/Button';
 import NavBar from '../../components/NavBar';
 class ListMotorcycle extends React.Component {
   state = {
-    services: '',
+    tows: '',
     error:'',
   };
 
   async componentDidMount() {
     try {
 
-      const { data: {services} } = await axios({
+      const { data: {tows} } = await axios({
         method: 'GET',
         baseURL: process.env.REACT_APP_SERVER_URL,
-        url: '/services',
+        url: '/tows',
       });
 
       this.setState({
-        services,
+        tows,
       });
       
     } catch (error) {
@@ -32,13 +32,13 @@ class ListMotorcycle extends React.Component {
   }
   
   render() {
-    const { services } = this.state;
+    const { tows } = this.state;
     return (
       <section>
         <NavBar userId={this.props.match.params.id} />
         <BoxSupplier>
           <Button color="primary">Ha pagado XX.XXX COP</Button>
-          <Client services={services} />
+          <Client tows={tows} />
           <Button color="success"> Servicio en proceso</Button>
           <Button color="primary">Pedir Grúa</Button>
         </BoxSupplier>
