@@ -26,6 +26,19 @@ class UserInfo extends React.Component {
     vehicleType:'',
     edit: false,
   };
+  
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleEdit = (e) => {
+    this.setState({
+      edit: e.target.type === 'checkbox' ? e.target.checked : e.target.value,
+    })
+  }
 
   async componentDidMount() {
     const userType = localStorage.getItem('userType');
@@ -65,56 +78,6 @@ class UserInfo extends React.Component {
     this.props.history.push(`/login/`);
     localStorage.clear();
   };
-
-
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  handleChangePlateNum = (param) => {
-    this.setState({
-      plateNum: param
-    })
-  }
-
-  handleChangeCapacity = (param) => {
-    this.setState({
-      capacity: param
-    })
-  }
-
-  handleChangeBrand = (param) => {
-    this.setState({
-      brand: param
-    })
-  }
-
-  handleChangeCyl = (param) => {
-    this.setState({
-      cc: param
-    })
-  }
-
-  handleChangeType = (param) => {
-    this.setState({
-      type: param
-    })
-  }
-
-  handleChangeWeight = (param) => {
-    this.setState({
-      weight: param
-    })
-  }
-
-  handleEdit = (e) => {
-    this.setState({
-      edit: e.target.type === 'checkbox' ? e.target.checked : e.target.value,
-    })
-  }
 
   sendInfo = async(event) => {
     event.preventDefault();
@@ -160,7 +123,7 @@ class UserInfo extends React.Component {
   };
 
   render() {
-    const { name, phoneNum, photo, vehiPhoto, vehicleType, edit } = this.state;
+    const { name, phoneNum, brand, cc, capacity, plateNum, type, weight, photo, vehiPhoto, vehicleType, edit } = this.state;
 
     return (
       <Frame>
@@ -209,20 +172,22 @@ class UserInfo extends React.Component {
           {
             vehicleType === 'Moto'? 
               (
-                <MotoInfo 
-                  handleChangeBrand={this.handleChangeBrand}
-                  handleChangeCyl={this.handleChangeCyl} 
-                  handleChangeType={this.handleChangeType} 
-                  handleChangePlateNum={this.handleChangePlateNum} 
-                  handleChangeWeight={this.handleChangeWeight}
+                <MotoInfo
+                  brand={brand}
+                  cc={cc}
+                  type={type}
+                  plateNum={plateNum}
+                  weight={weight}
+                  onChange={this.handleChange}
                 />
               ) 
               : 
               (
-                <TowInfo 
-                handleChangeBrand={this.handleChangeBrand}
-                handleChangeCapacity={this.handleChangeCapacity} 
-                handleChangePlateNum={this.handleChangePlateNum} 
+                <TowInfo
+                  brand={brand}
+                  capacity={capacity}
+                  plateNum={plateNum}
+                  onChange={this.handleChange}
                 />
               )
           }
