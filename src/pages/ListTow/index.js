@@ -9,7 +9,8 @@ import NavBar from '../../components/NavBar';
 
 function ListTow() {
   const dispatch = useDispatch();
-  const { services, error } = useSelector(({ servicesReducer }) => ({
+  const { loading, services, error } = useSelector(({ servicesReducer }) => ({
+    loading: servicesReducer.loading,
     services: servicesReducer.services,
     error: servicesReducer.error,
   }));
@@ -19,6 +20,7 @@ function ListTow() {
   }, []);
 
   const idURL = useParams();
+  if(loading) return <p>loading...</p>
   if (error) return <p>Algo salió mal!</p>;
   return (
     <section>
