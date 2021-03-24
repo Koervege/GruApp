@@ -167,7 +167,10 @@ class UserInfo extends React.Component {
             disabled={!edit}
           />
         </StyledFieldset>
-        <StyledFieldset>
+        <Button type='button' color='success'>
+          {vehicleType === 'Moto'? 'Agregar Moto': 'Agregar Grúa'}
+        </Button>
+        {/* !!plateNum &&  */(<StyledFieldset>
           <legend>{vehicleType}</legend>
           {
             vehicleType === 'Moto'? 
@@ -179,6 +182,7 @@ class UserInfo extends React.Component {
                   plateNum={plateNum}
                   weight={weight}
                   onChange={this.handleChange}
+                  disabled={!edit}
                 />
               ) 
               : 
@@ -198,7 +202,7 @@ class UserInfo extends React.Component {
             children="Foto vehículo "
             type="text"
           />  
-        </StyledFieldset>
+        </StyledFieldset>)}
           <Container>
             <Button type="submit" color="primary">
               Aceptar

@@ -9,6 +9,7 @@ export default function TowInfo(props) {
 
   const handleChange = (e) => {
     props.onChange(e);
+    console.log(props.disabled);
   }
 
   return (
@@ -56,6 +57,7 @@ export default function TowInfo(props) {
         children="Placa"
         type="text"
         required
+        disabled
       />
     </React.Fragment>
   );
