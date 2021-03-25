@@ -125,7 +125,7 @@ class Register extends React.Component {
                 type="radio"
                 name="userType"
                 id="isBike"
-                value="user"
+                value="client"
                 onChange={this.handleChange}
                 required="required"
               />

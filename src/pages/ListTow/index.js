@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BoxSupplier } from '../ListMotorcycle/styles';
@@ -19,12 +18,11 @@ function ListTow() {
     dispatch(getServices());
   }, []);
 
-  const idURL = useParams();
   if(loading) return <p>loading...</p>
   if (error) return <p>Algo salió mal!</p>;
   return (
     <section>
-      <NavBar userId={idURL.id} />
+      <NavBar />
       <BoxSupplier>
         <Button color="primary">Ha ganado XX.XXX COP</Button>
         <Provider services={services} />
