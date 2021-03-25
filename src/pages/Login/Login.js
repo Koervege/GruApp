@@ -6,7 +6,7 @@ import Img from '../../components/Img';
 import { StyledInput, Container } from '../../components/StyledInput/index';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import signToken from './signin-http';
+import axios from 'axios'; 
 import {ATags} from '../../components/NavBar/styles'
 
 const StyledLink = styled(Link)`
@@ -48,15 +48,15 @@ class Login extends React.Component {
     event.preventDefault();
 
     try {
-      const token = await signToken('/users/signin', this.state);
+      const { data: { token, userType } }= await axios({
+        method: 'POST',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/users/signin',
+        data: this.state
+      });
       localStorage.setItem('token', token);
     } catch (err) {
-      try {
-        const token = await signToken('/suppliers/signin', this.state);
-        localStorage.setItem('token', token);
-      } catch (err) {
-          alert('Usuario o contraseña equivocados');
-      }
+      alert('Usuario o contraseña equivocados');
     }
   };
 
@@ -75,6 +75,7 @@ class Login extends React.Component {
             onChange={this.handleChange}
             children="Email"
             type="email"
+            required="required"
           />
           <StyledInput
             name="password"
@@ -82,6 +83,7 @@ class Login extends React.Component {
             value={password}
             onChange={this.handleChange}
             type="password"
+            required="required"
           />
           <Container>
             <Button type="submit" color="primary">
