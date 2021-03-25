@@ -1,39 +1,36 @@
 import React from "react";
-import { users, suppliers } from "../../data";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMotorcycle, faTruckPickup } from '@fortawesome/free-solid-svg-icons'
 import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto } from "./styles";
 
 export default function NavBar(userId) {
-  let [user] = users.filter((user) => userId.userId === user._id);
-  let iconNav = faMotorcycle;
-  if (!user) {
-    [user] = suppliers.filter((supplier) => userId.userId === supplier._id);
-    iconNav = faTruckPickup;
-  }
   return (
-      <Nav>
-        <NavContainer>
-          <NavIcon>
-            <ATags to="/">
-              <FontAwesomeIcon icon={iconNav} />
-            </ATags>
-          </NavIcon>
-          <NavList>
-            <NavItems>
-              <ATags to="/">Historial</ATags>
-            </NavItems>
-            <NavItems>
-              <ATags to="/">Notificaciones</ATags>
-            </NavItems>
-          </NavList>
-        </NavContainer>
-        <NavProfiles>
-          <NavProfilesSpan>{user.name}</NavProfilesSpan>
+    <Nav>
+      <NavContainer>
+        <NavIcon>
           <ATags to="/">
-            <NavUserPhoto src={user.photo} alt="profile_photo" />
+            <FontAwesomeIcon icon={faMotorcycle} />
+            <FontAwesomeIcon icon={faTruckPickup} />
           </ATags>
-        </NavProfiles>
-      </Nav>
+        </NavIcon>
+        <NavList>
+          <NavItems>
+            <ATags to="/">Historial</ATags>
+          </NavItems>
+          <NavItems>
+            <ATags to="/">Notificaciones</ATags>
+          </NavItems>
+        </NavList>
+      </NavContainer>
+      <NavProfiles>
+        <NavProfilesSpan>Pepito Perez</NavProfilesSpan>
+        <ATags to="/">
+          <NavUserPhoto
+            src="https://www.moriwoki.com/wp-content/uploads/2020/04/Los-mejores-cascos-de-moto-para-mujer-integral.jpg"
+            alt="profile_photo"
+          />
+        </ATags>
+      </NavProfiles>
+    </Nav>
   );
 }

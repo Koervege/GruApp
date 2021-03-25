@@ -4,9 +4,9 @@ import Frame from '../../components/Frame';
 import Button from '../../components/Button';
 import Img from '../../components/Img';
 import { StyledInput, Container } from '../../components/StyledInput/index';
-import { users, suppliers } from '../../data';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios'; 
 import {ATags} from '../../components/NavBar/styles'
 
 const StyledLink = styled(Link)`
@@ -35,6 +35,7 @@ class Login extends React.Component {
   state = {
     email: '',
     password: '',
+    error: '',
   };
 
   handleChange = (event) => {
@@ -44,32 +45,28 @@ class Login extends React.Component {
     });
   };
 
-  searchUser = (event) => {
+  searchUser = async (event) => {
     event.preventDefault();
 
-    const [moto] = users.filter((user) => user.email === this.state.email);
-    const [tow] = suppliers.filter(
-      (supplier) => supplier.email === this.state.email
-    );
-
-    if (!moto && !tow) {
-      alert('Usuario no existe');
-      return;
+    try {
+      const { data: { token, userType } }= await axios({
+        method: 'POST',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/users/signin',
+        data: this.state
+      });
+      
+      localStorage.setItem('token', token);
+      userType === 'client' ? 
+        this.props.history.push('/listmotorcycle') 
+        :
+        this.props.history.push('/listtow'); 
+    } catch (err) {
+        this.setState({
+          error: err,
+        });
+        alert('Usuario o contraseña equivocados');
     }
-
-    const { password } = this.state;
-    if (moto !== undefined && password === moto.password) {
-      let path = `listmotorcycle`;
-      this.props.history.push(`${path}/${moto._id}`);
-      return;
-    }
-    if (tow !== undefined && password === tow.password) {
-      let path = `listtow`;
-      this.props.history.push(`${path}/${tow._id}`);
-      return;
-    }
-
-    alert('Contraseña Invalida');
   };
 
   render() {
@@ -87,6 +84,7 @@ class Login extends React.Component {
             onChange={this.handleChange}
             children="Email"
             type="email"
+            required="required"
           />
           <StyledInput
             name="password"
@@ -94,6 +92,7 @@ class Login extends React.Component {
             value={password}
             onChange={this.handleChange}
             type="password"
+            required="required"
           />
           <Container>
             <Button type="submit" color="primary">

@@ -9,19 +9,18 @@ import { ContainerStar, StarSolid, StarEmpty } from './styles';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
 
-function Stars({ tows, services, supplierid }) {
-  const [tow] = tows.filter((tow) => supplierid === tow.supplierID);
-
-  const [service] = services.filter((service) => tow._id === service.towID);
+function Stars({ services }) {
+  let count = '';
+  const rating = services.map((service) => count += service.rating) / services.length;
 
   return (
     <section>
-      {Array.from({ length: Math.floor(service.rating) }, (e, i) => (
+      {Array.from({ length: Math.floor(rating) }, (e, i) => (
         <StarSolid key={i}>
           <FontAwesomeIcon icon={faStar} />
         </StarSolid>
       ))}
-      {Array.from({ length: Math.ceil(5 - service.rating) }, (e, i) => (
+      {Array.from({ length: Math.ceil(5 - rating) }, (e, i) => (
         <StarEmpty key={i}>
           <FontAwesomeIcon icon={emptyStar} />
         </StarEmpty>
@@ -30,21 +29,26 @@ function Stars({ tows, services, supplierid }) {
   );
 }
 
-function Client({ suppliers, tows, services }) {
+function Client({ tows }) {
   return (
     <SectionList>
-      {!!suppliers &&
-        suppliers.length > 0 &&
-        suppliers.map(({ _id, photo, name }) => {
+      {!!tows &&
+        tows.length > 0 &&
+        tows.map(({ _id, supplier, serviceIds }) => {
           return (
             <ContainerList key={_id}>
-              <ContainerElement>{name}</ContainerElement>
+              <ContainerElement>{supplier.name}</ContainerElement>
               <ContainerStar>
-                <Stars tows={tows} supplierid={_id} services={services} />
+                <Stars services={serviceIds} />
               </ContainerStar>
-              <ContainerElement>1 servicio</ContainerElement>
               <ContainerElement>
-                <Photo src={photo} alt={name}></Photo>
+                {`${serviceIds.length} servicio${serviceIds.length === 1 ? '' : 's'}`}
+                </ContainerElement>
+              <ContainerElement>
+                <Photo
+                  src={supplier.photo}
+                  alt={supplier.name}
+                ></Photo>
               </ContainerElement>
             </ContainerList>
           );
