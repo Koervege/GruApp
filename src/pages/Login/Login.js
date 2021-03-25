@@ -6,7 +6,7 @@ import Img from '../../components/Img';
 import { StyledInput, Container } from '../../components/StyledInput/index';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
+import axios from 'axios'; 
 import {ATags} from '../../components/NavBar/styles'
 
 const StyledLink = styled(Link)`
@@ -49,13 +49,13 @@ class Login extends React.Component {
     event.preventDefault();
 
     try {
-      const { data: { token, userType } } = await axios({
+      const { data: { token, userType } }= await axios({
         method: 'POST',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/users/signin',
-        data: this.state,
+        data: this.state
       });
-
+      
       localStorage.setItem('token', token);
       userType === 'client' ? 
         this.props.history.push('/listmotorcycle') 
@@ -84,6 +84,7 @@ class Login extends React.Component {
             onChange={this.handleChange}
             children="Email"
             type="email"
+            required="required"
           />
           <StyledInput
             name="password"
@@ -91,6 +92,7 @@ class Login extends React.Component {
             value={password}
             onChange={this.handleChange}
             type="password"
+            required="required"
           />
           <Container>
             <Button type="submit" color="primary">

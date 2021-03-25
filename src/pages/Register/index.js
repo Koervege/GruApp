@@ -24,36 +24,34 @@ class Register extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
 
     const { firstName, lastName, email, phoneNum, password, userType } = this.state
-
-    axios({
-      method: 'POST',
-      baseURL: process.env.REACT_APP_SERVER_URL,
-      url: `/${userType}s/signup`,
-      data: {
-        name: firstName+lastName,
-        email,
-        phoneNum,
-        password,
-      }
-    })
-      .then(({ data }) => {
-        localStorage.setItem('token', data.token)
-        this.props.history.push(`/userinfo/`);
-      })
-      .catch(err => {
-        alert('Ocurrió un error. Inténtalo de nuevo más tarde.')
-      })
-      
-  };
+    
+    try{
+      const { data: { token } } = await axios({
+        method: 'POST',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: `/${userType}s/signup`,
+        data: {
+          name: `${firstName} ${lastName}`,
+          email,
+          phoneNum,
+          password,
+        }
+      });
+      localStorage.setItem('token', token)
+      this.props.history.push(`/userinfo/`);
+    } catch(error) {
+      alert('Ocurrió un error. Inténtalo de nuevo más tarde.')
+    }
+  }
 
   render() {
     const { firstName, lastName, phoneNum, email, password, passwordConfirm } = this.state;
 
-     return (
+    return (
       <Frame>
         <Container>
         <Img src={logo} radius="150" width="150" height="150" alt="logo" />
@@ -151,8 +149,7 @@ class Register extends React.Component {
             <StyledLink to="/">Cancelar</StyledLink>
           </Container>
         </form>
-      </Frame>
-     )
+      </Frame>)
     }
   }
 
