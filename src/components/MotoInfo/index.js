@@ -8,10 +8,6 @@ export default function MotoInfo(props) {
   const ccs = ['50cc - 100cc', '100cc - 200cc', '200cc - 300cc', 'Más de 300cc'];
   const motoTypes = ['Moto', 'Cuatrimoto'];
 
-  const handleChange = (e) => {
-    props.onChange(e);
-  }
-
   return (
     <React.Fragment>
       <Container>
@@ -21,9 +17,10 @@ export default function MotoInfo(props) {
             value={props.brand}
             id="brand"
             name="brand"
-            onChange={handleChange}
+            onChange={props.onChange}
             type="text"
             required
+            disabled={props.edit}
           >
           <option value="">-- Seleccione la Marca --</option> 
           {
@@ -36,12 +33,13 @@ export default function MotoInfo(props) {
         <div>
           <Label htmlFor="cc">Cilindraje</Label>
           <Select
-            value={props.cylCap}
+            value={props.cc}
             id="cc"
             name="cc"
-            onChange={handleChange}
+            onChange={props.onChange}
             type="text"
             required
+            disabled={props.edit}
           >
           <option value="">-- Seleccione el Cilindraje --</option> 
           {
@@ -54,12 +52,13 @@ export default function MotoInfo(props) {
         <div>
           <Label htmlFor="type">Tipo</Label>
           <Select
-            value={props.motoType}
+            value={props.type}
             id="type"
             name="type"
-            onChange={handleChange}
+            onChange={props.onChange}
             type="text"
             required
+            disabled={props.edit}
           > 
           <option value="">-- Seleccione tipo de Moto --</option> 
           {
@@ -71,18 +70,20 @@ export default function MotoInfo(props) {
       <StyledInput
         value={props.plateNum}
         name="plateNum"
-        onChange={handleChange}
+        onChange={props.onChange}
         children="Placa"
         type="text"
         required
+        disabled={props.edit}
       />
       <StyledInput
         value={props.weight}
         name="weight"
-        onChange={handleChange}
+        onChange={props.onChange}
         children="Peso (Kg)"
         type="text"
         required
+        disabled={props.edit}
       />
     </React.Fragment>
   );

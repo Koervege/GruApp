@@ -7,11 +7,6 @@ export default function TowInfo(props) {
   const brands = ['Hyundai', 'JAC', 'Foton', 'Chevrolet'];
   const capacity = ['150 Kg', '200 Kg', '300 Kg', '400 Kg'];
 
-  const handleChange = (e) => {
-    props.onChange(e);
-    console.log(props.disabled);
-  }
-
   return (
     <React.Fragment>
       <Container>
@@ -21,9 +16,10 @@ export default function TowInfo(props) {
             value={props.brand}
             id="brand"
             name="brand"
-            onChange={handleChange}
+            onChange={props.onChange}
             type="text"
             required
+            disabled={props.edit}
           >
           <option value="">-- Seleccione la Marca --</option> 
           {
@@ -39,9 +35,10 @@ export default function TowInfo(props) {
             value={props.capacity}
             id="capacity"
             name="capacity"
-            onChange={handleChange}
+            onChange={props.onChange}
             type="text"
             required
+            disabled={props.edit}
           >
           <option value="">-- Seleccione capacidad Máxima --</option> 
           {
@@ -53,11 +50,11 @@ export default function TowInfo(props) {
       <StyledInput
         value={props.plateNum}
         name="plateNum"
-        onChange={handleChange}
+        onChange={props.onChange}
         children="Placa"
         type="text"
         required
-        disabled
+        disabled={props.edit}
       />
     </React.Fragment>
   );

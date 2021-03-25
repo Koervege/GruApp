@@ -25,6 +25,8 @@ class UserInfo extends React.Component {
     vehiPhoto: '',
     vehicleType:'',
     edit: false,
+    editVehi: false,
+    hideInfo: true,
   };
   
   handleChange = (event) => {
@@ -37,6 +39,7 @@ class UserInfo extends React.Component {
   handleEdit = (e) => {
     this.setState({
       edit: e.target.type === 'checkbox' ? e.target.checked : e.target.value,
+      editVehi: !this.state.editVehi,
     })
   }
 
@@ -51,9 +54,17 @@ class UserInfo extends React.Component {
 
     if (userType === 'user') {
       const { name, phoneNum } = data.users[0];
+      if (data.users[0].bikeIDs[0]) {
+        const { brand, cc, type, plateNum, weight } = data.users[0].bikeIDs[0];
+        this.setState({ brand, cc, type, plateNum, weight })
+      }
       this.setState({ vehicleType: 'Moto', name, phoneNum })
     } else {
       const { name, phoneNum } = data.suppliers[0];
+      if (data.suppliers[0].tows[0]) {
+        const { brand, capacity, plateNum} = data.suppliers[0].tows[0];
+        this.setState({ brand, capacity, plateNum, hideInfo: false, })
+      }
       this.setState({ vehicleType: 'Grúa', name, phoneNum })
     }
   }
@@ -97,33 +108,56 @@ class UserInfo extends React.Component {
         } 
       })
       alert(data.message)
+      await axios({
+        method : 'PUT',
+        baseURL:process.env.REACT_APP_SERVER_URL,
+        url: userType === 'user' ? '/motorcycles/update' : '/tows',
+        data: userType === 'user' ? 
+          {
+            brand: this.state.brand,
+            cc: this.state.cc,
+            type: this.state.type,
+            plateNum: this.state.plateNum,
+            weight: this.state.weight,
+          }
+          : {
+            brand: this.state.brand,
+            capacity: this.state.capacity,
+            plateNum: this.state.plateNum,
+            status: true,
+          },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        } 
+      })
+    } else {
+      await axios({
+        method: 'POST',
+        baseURL:process.env.REACT_APP_SERVER_URL,
+        url: userType === 'user' ? '/motorcycles/create' : '/tows',
+        data: userType === 'user' ? 
+          {
+            brand: this.state.brand,
+            cc: this.state.cc,
+            type: this.state.type,
+            plateNum: this.state.plateNum,
+            weight: this.state.weight,
+          }
+          : {
+            brand: this.state.brand,
+            capacity: this.state.capacity,
+            plateNum: this.state.plateNum,
+            status: true,
+          },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        } 
+      })
     }
-    const { data } = await axios({
-      method: 'POST',
-      baseURL:process.env.REACT_APP_SERVER_URL,
-      url: userType === 'user' ? '/motorcycles/create' : '/tows',
-      data: userType === 'user' ? 
-        {
-          brand: this.state.brand,
-          cc: this.state.cc,
-          type: this.state.type,
-          plateNum: this.state.plateNum,
-          weight: this.state.weight,
-        }
-        : {
-          brand: this.state.brand,
-          capacity: this.state.capacity,
-          plateNum: this.state.plateNum,
-          status: true,
-        },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      } 
-    })
   };
 
   render() {
-    const { name, phoneNum, brand, cc, capacity, plateNum, type, weight, photo, vehiPhoto, vehicleType, edit } = this.state;
+    const { name, phoneNum, brand, cc, capacity, plateNum, type, weight, photo, vehiPhoto, vehicleType, edit, hideInfo, editVehi } = this.state;
 
     return (
       <Frame>
@@ -149,7 +183,7 @@ class UserInfo extends React.Component {
             type="text"
             disabled={!edit}
           />
-          <Button type="button" color="danger" onClick={this.eraseUser}>Borrar Usuario</Button>
+          <Button type="button" color="danger" onClick={(this.eraseUser)}>Borrar Usuario</Button>
           <StyledInput
             value={phoneNum}
             name="phoneNum"
@@ -167,10 +201,12 @@ class UserInfo extends React.Component {
             disabled={!edit}
           />
         </StyledFieldset>
-        <Button type='button' color='success'>
+        { !plateNum && 
+        <Button type='button' color='success' onClick={() => this.setState({hideInfo:false, editVehi:true})}>
           {vehicleType === 'Moto'? 'Agregar Moto': 'Agregar Grúa'}
         </Button>
-        {/* !!plateNum &&  */(<StyledFieldset>
+        }
+        {(<StyledFieldset>
           <legend>{vehicleType}</legend>
           {
             vehicleType === 'Moto'? 
@@ -182,7 +218,7 @@ class UserInfo extends React.Component {
                   plateNum={plateNum}
                   weight={weight}
                   onChange={this.handleChange}
-                  disabled={!edit}
+                  edit={!editVehi}
                 />
               ) 
               : 
@@ -192,6 +228,7 @@ class UserInfo extends React.Component {
                   capacity={capacity}
                   plateNum={plateNum}
                   onChange={this.handleChange}
+                  edit={!editVehi}
                 />
               )
           }
@@ -201,6 +238,7 @@ class UserInfo extends React.Component {
             onChange={this.handleChange}
             children="Foto vehículo "
             type="text"
+            disabled={!editVehi}
           />  
         </StyledFieldset>)}
           <Container>
