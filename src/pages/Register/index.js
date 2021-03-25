@@ -28,7 +28,7 @@ class Register extends React.Component {
     e.preventDefault();
 
     const { firstName, lastName, email, phoneNum, password, userType } = this.state
-    
+   
     try{
       const { data: { token } } = await axios({
         method: 'POST',
