@@ -7,36 +7,45 @@ import NavBar from '../../components/NavBar';
 class ListMotorcycle extends React.Component {
   state = {
     tows: '',
+    userID: '',
     error:'',
   };
 
   async componentDidMount() {
     try {
+      const token = localStorage.getItem('token');
 
-      const { data: {tows} } = await axios({
+      const { data: {tows, userID} } = await axios({
         method: 'GET',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/tows',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
 
       this.setState({
         tows,
+        userID,
       });
       
     } catch (error) {
       this.setState({
         error,
       });
+      localStorage.removeItem('token');
+      this.props.history.push('/login');
       alert(error);
     }
   }
   
   render() {
-    const { tows } = this.state;
+    const { tows, userID } = this.state;
     return (
       <section>
         <NavBar />
         <BoxSupplier>
+          <p>{userID}</p>
           <Button color="primary">Ha pagado XX.XXX COP</Button>
           <Client tows={tows} />
           <Button color="success"> Servicio en proceso</Button>
