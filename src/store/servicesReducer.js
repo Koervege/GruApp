@@ -9,15 +9,18 @@ export function getServices() {
   return async function (dispatch) {
     dispatch({ type: SERVICES_LOADING });
     try {
-      const {
-        data: { services },
-      } = await axios({
+      const token = localStorage.getItem('token');
+
+      const { data: { services, userID } } = await axios({
         method: 'GET',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/services',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
-      dispatch({ type: SERVICES_SUCCESS, payload: services });
+      dispatch({ type: SERVICES_SUCCESS, payload: [services, userID] });
     } catch (error) {
       dispatch({ type: SERVICES_ERROR, payload: error });
     } finally {
@@ -29,6 +32,7 @@ export function getServices() {
 const initialState = {
   loading: false,
   services: [],
+  userID: '',
   error: null,
 };
 
@@ -42,7 +46,8 @@ export function servicesReducer(state = initialState, action) {
     case SERVICES_SUCCESS:
       return {
         ...state,
-        services: action.payload,
+        services: action.payload[0],
+        userID: action.payload[1],
       };
     case SERVICES_ERROR:
       return {
