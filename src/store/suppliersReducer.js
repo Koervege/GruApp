@@ -23,7 +23,7 @@ export function getSuppliers() {
 
 const initialState = {
   suppliers: [],
-  error: null,
+  errorSuppliers: null,
 };
 
 export function clientsReducer(state = initialState, action) {
@@ -36,7 +36,7 @@ export function clientsReducer(state = initialState, action) {
     case SUPPLIERS_ERROR:
       return {
         ...state,
-        error: action.payload,
+        errorSuppliers: action.payload,
       };
     default:
       return state;

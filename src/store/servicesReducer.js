@@ -33,7 +33,7 @@ const initialState = {
   loading: false,
   services: [],
   userID: '',
-  error: null,
+  errorServices: null,
 };
 
 export function servicesReducer(state = initialState, action) {
@@ -52,7 +52,7 @@ export function servicesReducer(state = initialState, action) {
     case SERVICES_ERROR:
       return {
         ...state,
-        error: action.payload,
+        errorServices: action.payload,
       };
     case SERVICES_FINISHED:
       return {

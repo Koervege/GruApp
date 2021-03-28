@@ -22,7 +22,7 @@ export function getClients() {
 
 const initialState = {
   clients: [],
-  error: null,
+  errorClients: null,
 };
 
 export function clientsReducer(state = initialState, action) {
@@ -35,7 +35,7 @@ export function clientsReducer(state = initialState, action) {
     case CLIENTS_ERROR:
       return {
         ...state,
-        error: action.payload,
+        errorClients: action.payload,
       };
     default:
       return state;
