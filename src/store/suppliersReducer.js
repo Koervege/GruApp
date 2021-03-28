@@ -26,7 +26,7 @@ const initialState = {
   errorSuppliers: null,
 };
 
-export function clientsReducer(state = initialState, action) {
+export function suppliersReducer(state = initialState, action) {
   switch (action.type) {
     case SUPPLIERS_SUCCESS:
       return {
