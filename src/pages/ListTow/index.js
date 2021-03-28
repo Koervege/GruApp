@@ -8,10 +8,11 @@ import NavBar from '../../components/NavBar';
 
 function ListTow() {
   const dispatch = useDispatch();
-  const { loading, services, error } = useSelector(({ servicesReducer }) => ({
+  const { loading, services, userID, errorServices } = useSelector(({ servicesReducer }) => ({
     loading: servicesReducer.loading,
     services: servicesReducer.services,
-    error: servicesReducer.error,
+    userID: servicesReducer.userID,
+    errorServices: servicesReducer.errorServices,
   }));
 
   useEffect(() => {
@@ -19,10 +20,10 @@ function ListTow() {
   }, []);
 
   if(loading) return <p>loading...</p>
-  if (error) return <p>Algo salió mal!</p>;
+  if (errorServices) return <p>Algo salió mal!</p>;
   return (
     <section>
-      <NavBar />
+      <NavBar userID={userID}/>
       <BoxSupplier>
         <Button color="primary">Ha ganado XX.XXX COP</Button>
         <Provider services={services} />

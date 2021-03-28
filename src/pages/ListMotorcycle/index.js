@@ -41,11 +41,10 @@ class ListMotorcycle extends React.Component {
   
   render() {
     const { tows, userID } = this.state;
+    console.log(tows);
     return (
       <section>
-        <NavBar />
         <BoxSupplier>
-          <p>{userID}</p>
           <Button color="primary">Ha pagado XX.XXX COP</Button>
           <Client tows={tows} />
           <Button color="success"> Servicio en proceso</Button>
