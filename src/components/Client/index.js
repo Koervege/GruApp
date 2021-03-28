@@ -34,20 +34,20 @@ function Client({ tows }) {
     <SectionList>
       {!!tows &&
         tows.length > 0 &&
-        tows.map(({ _id, supplier, serviceIds }) => {
+        tows.map(({ _id, supplierID, serviceIDs }) => {
           return (
             <ContainerList key={_id}>
-              <ContainerElement>{supplier.name}</ContainerElement>
+              <ContainerElement>{supplierID.name}</ContainerElement>
               <ContainerStar>
-                <Stars services={serviceIds} />
+                <Stars services={serviceIDs} />
               </ContainerStar>
               <ContainerElement>
-                {`${serviceIds.length} servicio${serviceIds.length === 1 ? '' : 's'}`}
+                {`${serviceIDs.length} servicio${serviceIDs.length === 1 ? '' : 's'}`}
                 </ContainerElement>
               <ContainerElement>
                 <Photo
-                  src={supplier.photo}
-                  alt={supplier.name}
+                  src={supplierID.photo}
+                  alt={supplierID.name}
                 ></Photo>
               </ContainerElement>
             </ContainerList>
