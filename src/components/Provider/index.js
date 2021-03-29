@@ -8,12 +8,12 @@ function Provider({ services }) {
         services.map(({ _id, initLoc, finalLoc, date, bikeID }) => {
           return (
             <ContainerList key={_id}>
-              <ContainerElement>{bikeID.userId.name}</ContainerElement>
+              <ContainerElement>{bikeID.userID.name}</ContainerElement>
               <ContainerElement>{`${initLoc} / ${finalLoc} / ${date} / ${bikeID.type} / ${bikeID.cc} cc`}</ContainerElement>
               <ContainerElement>
                 <Photo
-                  src={bikeID.userId.photo}
-                  alt={bikeID.userId.name}
+                  src={bikeID.userID.photo}
+                  alt={bikeID.userID.name}
                 ></Photo>
               </ContainerElement>
             </ContainerList>
