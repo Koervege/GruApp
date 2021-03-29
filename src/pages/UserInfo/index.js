@@ -9,7 +9,6 @@ import { StyledInput, Container } from '../../components/StyledInput/index';
 import { StyledLink, StyledFieldset } from "./styles";
 import axios from 'axios';
 
-
 class UserInfo extends React.Component {
 
   state = {
@@ -27,6 +26,8 @@ class UserInfo extends React.Component {
     edit: false,
     editVehi: false,
     hideInfo: true,
+    userType:'',
+    userId:'',
   };
   
   handleChange = (event) => {
@@ -43,26 +44,44 @@ class UserInfo extends React.Component {
     })
   }
 
-  async componentDidMount() {
-    const userType = localStorage.getItem('userType');
-    const email = localStorage.getItem('email');
+  async getUserInfo(){
+    try {
+      const token = localStorage.getItem('token');
+      const { data } = await axios({
+        method: 'GET',
+        baseURL:process.env.REACT_APP_SERVER_URL,
+        url: `/users`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        } 
+      })
+      this.setState({userType: data.userType, userId: data.userId}, ()=>{console.log('listo');})
+    } catch (error) {
+      //localStorage.removeItem('token')
+    }
+  }
+
+async componentDidMount() {
+    this.getUserInfo()
+    const { userId, userType } = this.state
+    console.log('hola' + userType);
     const { data } = await axios({
       method: 'GET',
       baseURL:process.env.REACT_APP_SERVER_URL,
-      url: `/${userType}s?email=${email}`
+      url: `/${userType}s?_id=${userId}`
     })
 
-    if (userType === 'user') {
-      const { name, phoneNum } = data.users[0];
-      if (data.users[0].bikeIDs[0]) {
-        const { brand, cc, type, plateNum, weight } = data.users[0].bikeIDs[0];
+    if (userType === 'client') {
+      const { name, phoneNum } = data.clients[0];
+      if (data.clients[0].bikeIDs[0]) {
+        const { brand, cc, type, plateNum, weight } = data.clients[0].bikeIDs[0];
         this.setState({ brand, cc, type, plateNum, weight })
       }
       this.setState({ vehicleType: 'Moto', name, phoneNum })
     } else {
       const { name, phoneNum } = data.suppliers[0];
-      if (data.suppliers[0].tows[0]) {
-        const { brand, capacity, plateNum} = data.suppliers[0].tows[0];
+      if (data.suppliers[0].towIDs[0]) {
+        const { brand, capacity, plateNum} = data.suppliers[0].towIDs[0];
         this.setState({ brand, capacity, plateNum, hideInfo: false, })
       }
       this.setState({ vehicleType: 'Grúa', name, phoneNum })
@@ -72,7 +91,7 @@ class UserInfo extends React.Component {
   eraseUser = async(event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
-    const userType = localStorage.getItem('userType');
+    const userType = this.state.userData.userType;
 
     await axios({
       method: 'DELETE',
@@ -92,50 +111,50 @@ class UserInfo extends React.Component {
 
   sendInfo = async(event) => {
     event.preventDefault();
-    const userType = localStorage.getItem('userType');
     const token = localStorage.getItem('token');
+    const userType = this.state.userData.userType;
+    const dataUser = new FormData();
+    dataUser.append('name', this.state.name);
+    dataUser.append('phoneNum', this.state.phoneNum);
     if (this.state.edit) {
       const { data } = await axios({
         method: 'PUT',
         baseURL:process.env.REACT_APP_SERVER_URL,
         url: `/${userType}s`,
-        data: {
-          name: this.state.name,
-          phoneNum: this.state.phoneNum,
-        },
+        data: dataUser,
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         } 
       })
       alert(data.message)
+      const dataMoto = new FormData();
+      dataMoto.append('brand', this.state.brand);
+      dataMoto.append('cc', this.state.cc);
+      dataMoto.append('type', this.state.type);
+      dataMoto.append('plateNum', this.state.plateNum);
+      dataMoto.append('weight', this.state.weight);
+      const dataTow = new FormData();
+      dataTow.append('brand', this.state.brand);
+      dataTow.append('capacity', this.state.capacity);
+      dataTow.append('plateNum', this.state.plateNum);
+      dataTow.append('status', true);
       await axios({
         method : 'PUT',
         baseURL:process.env.REACT_APP_SERVER_URL,
-        url: userType === 'user' ? '/motorcycles/update' : '/tows',
-        data: userType === 'user' ? 
-          {
-            brand: this.state.brand,
-            cc: this.state.cc,
-            type: this.state.type,
-            plateNum: this.state.plateNum,
-            weight: this.state.weight,
-          }
-          : {
-            brand: this.state.brand,
-            capacity: this.state.capacity,
-            plateNum: this.state.plateNum,
-            status: true,
-          },
+        url: userType === 'client' ? '/motorcycles' : '/tows',
+        data: userType === 'client' ? dataMoto : dataTow,
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         } 
       })
     } else {
       await axios({
         method: 'POST',
         baseURL:process.env.REACT_APP_SERVER_URL,
-        url: userType === 'user' ? '/motorcycles/create' : '/tows',
-        data: userType === 'user' ? 
+        url: userType === 'client' ? '/motorcycles' : '/tows',
+        data: userType === 'client' ? 
           {
             brand: this.state.brand,
             cc: this.state.cc,
