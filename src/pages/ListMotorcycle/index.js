@@ -35,7 +35,7 @@ class ListMotorcycle extends React.Component {
       });
       localStorage.removeItem('token');
       this.props.history.push('/login');
-      alert(error);
+      alert('Algo salió mal, por favor vuelve a ingresar a la aplicación con tu usuario y contraseña.');
     }
   }
   

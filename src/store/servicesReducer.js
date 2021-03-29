@@ -4,6 +4,7 @@ const SERVICES_LOADING = 'SERVICES_LOADING';
 const SERVICES_SUCCESS = 'SERVICES_SUCCESS';
 const SERVICES_ERROR = 'SERVICES_ERROR';
 const SERVICES_FINISHED = 'SERVICES_FINISHED';
+const SERVICES_DELETE_ERROR = 'SERVICES_DELETE_ERROR';
 
 export function getServices() {
   return async function (dispatch) {
@@ -27,6 +28,12 @@ export function getServices() {
       dispatch({ type: SERVICES_FINISHED});
     }
   };
+}
+
+export function deleteError(){
+  return function(dispatch) {
+    dispatch({ type: SERVICES_DELETE_ERROR })
+  }
 }
 
 const initialState = {
@@ -59,6 +66,11 @@ export function servicesReducer(state = initialState, action) {
         ...state,
         loading: false,
       };
+    case SERVICES_DELETE_ERROR:
+      return {
+        ...state,
+        errorServices: null,
+      }
     default:
       return state;
   }

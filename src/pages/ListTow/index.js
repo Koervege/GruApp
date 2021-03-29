@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { BoxSupplier } from '../ListMotorcycle/styles';
-import { getServices } from '../../store/servicesReducer';
+import { getServices, deleteError } from '../../store/servicesReducer';
 import Provider from '../../components/Provider';
 import Button from '../../components/Button';
 import NavBar from '../../components/NavBar';
@@ -19,9 +20,18 @@ function ListTow() {
     dispatch(getServices());
   }, []);
 
-  if(loading) return <p>loading...</p>
-  if (errorServices) return <p>Algo salió mal!</p>;
+  let history = useHistory();
   
+  if(loading) return <p>loading...</p>
+  if (errorServices) {
+    localStorage.removeItem('token');
+    history.push('/login');
+    alert(
+      'Algo salió mal, por favor vuelve a ingresar a la aplicación con tu usuario y contraseña.'
+    );
+    dispatch(deleteError());
+  }
+
   return (
     <section>
       <NavBar userID={userID}/>
