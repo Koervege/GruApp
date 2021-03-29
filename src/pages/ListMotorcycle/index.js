@@ -41,9 +41,9 @@ class ListMotorcycle extends React.Component {
   
   render() {
     const { tows, userID } = this.state;
-    console.log(tows);
     return (
       <section>
+        <NavBar userID={userID}/>
         <BoxSupplier>
           <Button color="primary">Ha pagado XX.XXX COP</Button>
           <Client tows={tows} />

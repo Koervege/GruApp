@@ -24,14 +24,11 @@ export default function NavBar(userID) {
     alert('Algo salió mal!');
     this.props.history.push('/login');
   }
-
   useEffect(() => {
     dispatch(getClients());
     dispatch(getSuppliers());
   }, []);
   
-  console.log(suppliers);
-  console.log(clients)
 
   let [user] = clients.filter((client) => userID.userID === client._id);
   let iconNav = faMotorcycle;
@@ -40,34 +37,31 @@ export default function NavBar(userID) {
     [user] = suppliers.filter((supplier) => userID.userID === supplier._id);
     iconNav = faTruckPickup;
   }
-  console.log(user)
-
-  return (
-    <Nav>
-      <NavContainer>
-        <NavIcon>
+  if(user){
+    return (
+      <Nav>
+        <NavContainer>
+          <NavIcon>
+            <ATags to="/">
+              <FontAwesomeIcon icon={iconNav} />
+            </ATags>
+          </NavIcon>
+          <NavList>
+            <NavItems>
+              <ATags to="/">Historial</ATags>
+            </NavItems>
+            <NavItems>
+              <ATags to="/">Notificaciones</ATags>
+            </NavItems>
+          </NavList>
+        </NavContainer>
+        <NavProfiles>
+          <NavProfilesSpan>{user.name}</NavProfilesSpan>
           <ATags to="/">
-            <FontAwesomeIcon icon={iconNav} />
+            <NavUserPhoto src={user.photo} alt="profile_photo" />
           </ATags>
-        </NavIcon>
-        <NavList>
-          <NavItems>
-            <ATags to="/">Historial</ATags>
-          </NavItems>
-          <NavItems>
-            <ATags to="/">Notificaciones</ATags>
-          </NavItems>
-        </NavList>
-      </NavContainer>
-      <NavProfiles>
-        <NavProfilesSpan>Pepito Perez</NavProfilesSpan>
-        <ATags to="/">
-          <NavUserPhoto
-            src="https://res.cloudinary.com/djugjzinn/image/upload/v1612582362/aapktdqebpjhzflqlgw4.jpg"
-            alt="profile_photo"
-          />
-        </ATags>
-      </NavProfiles>
-    </Nav>
-  );
+        </NavProfiles>
+      </Nav>
+    );
+  }else return <p>Loading...</p>
 }
