@@ -1,13 +1,15 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { servicesReducer } from './servicesReducer';
+import { towsReducer } from './towsReducer';
 import { clientsReducer } from './clientsReducer';
+import { servicesReducer } from './servicesReducer';
 import { suppliersReducer } from './suppliersReducer';
 
 
 const rootReducer = combineReducers({
-  servicesReducer,
+  towsReducer,
   clientsReducer,
+  servicesReducer,
   suppliersReducer,
 });
 
