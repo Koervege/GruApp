@@ -1,3 +1,4 @@
+import swal from 'sweetalert';
 import { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
@@ -26,9 +27,13 @@ function ListTow() {
   if (errorServices) {
     localStorage.removeItem('token');
     history.push('/login');
-    alert(
-      'Algo salió mal, por favor vuelve a ingresar a la aplicación con tu usuario y contraseña.'
-    );
+    swal({
+      title: 'Algo salió mal!',
+      text:
+        'Por favor, ingresa de nuevo a la aplicación con tu usuario y contraseña.',
+      icon: 'error',
+    });
+
     dispatch(deleteError());
   }
 
