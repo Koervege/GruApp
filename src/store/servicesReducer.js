@@ -30,9 +30,9 @@ export function getServices() {
   };
 }
 
-export function deleteError(){
-  return function(dispatch) {
-    dispatch({ type: SERVICES_DELETE_ERROR })
+export function deleteError() {
+  return {
+    type: SERVICES_DELETE_ERROR,
   }
 }
 
