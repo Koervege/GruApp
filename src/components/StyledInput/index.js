@@ -10,6 +10,7 @@ function StyledInput({
   onChange,
   required,
   disabled,
+  pattern,
 }) {
   return (
     <Container>
@@ -25,6 +26,7 @@ function StyledInput({
           value={value}
           required={required}
           disabled = {disabled ? true : false}
+          pattern = {pattern}
         ></Input>
       </div>
     </Container>
