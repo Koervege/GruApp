@@ -1,50 +1,53 @@
-import React from 'react';
-import axios from 'axios';
+import swal from 'sweetalert';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { BoxSupplier } from './styles';
 import Client from '../../components/Client';
 import Button from '../../components/Button';
 import NavBar from '../../components/NavBar';
-class ListMotorcycle extends React.Component {
-  state = {
-    tows: '',
-    error:'',
-  };
+import { getTows, deleteErrorTows } from '../../store/towsReducer';
 
-  async componentDidMount() {
-    try {
+function ListMotorcycle () {
+  const dispatch = useDispatch();
+  const { loading, tows, userID, errorTows } = useSelector(({ towsReducer }) => ({
+    loading: towsReducer.loading,
+    tows: towsReducer.tows,
+    userID: towsReducer.userID,
+    errorTows: towsReducer.errorTows,
+  }));
 
-      const { data: {tows} } = await axios({
-        method: 'GET',
-        baseURL: process.env.REACT_APP_SERVER_URL,
-        url: '/tows',
-      });
+  useEffect(() => {
+    dispatch(getTows());
+  }, []);
 
-      this.setState({
-        tows,
-      });
-      
-    } catch (error) {
-      this.setState({
-        error,
-      });
-      alert(error);
-    }
+  let history = useHistory();
+
+  if (loading) return <p>loading ...</p>;
+
+  if (errorTows) {
+    localStorage.removeItem('token');
+    history.push('/login');
+    swal({
+      title: 'Algo salió mal!',
+      text:
+        'Por favor, ingresa de nuevo a la aplicación con tu usuario y contraseña.',
+      icon: 'error',
+    });
+    dispatch(deleteErrorTows());
   }
-  
-  render() {
-    const { tows } = this.state;
-    return (
-      <section>
-        <NavBar />
-        <BoxSupplier>
-          <Button color="primary">Ha pagado XX.XXX COP</Button>
-          <Client tows={tows} />
-          <Button color="success"> Servicio en proceso</Button>
-          <Button color="primary">Pedir Grúa</Button>
-        </BoxSupplier>
-      </section>
-    );
-  }
+  return (
+    <section>
+      <NavBar userID={userID} />
+      <BoxSupplier>
+        <Button color="primary">Ha pagado XX.XXX COP</Button>
+        <Client tows={tows} />
+        <Button color="success"> Servicio en proceso</Button>
+        <Button color="primary">Pedir Grúa</Button>
+      </BoxSupplier>
+    </section>
+  );
 }
+
 
 export default ListMotorcycle;
