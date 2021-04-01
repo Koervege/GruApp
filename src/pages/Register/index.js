@@ -117,7 +117,7 @@ function Register() {
             value={password}
             name="password"
             id="password"
-            onChange={e => [setPassword(e.target.value), handlePasswordMatch(e)]}
+            onChange={e => setPassword(e.target.value)}
             children="Contraseña"
             type="password"
             required="required"
@@ -126,7 +126,7 @@ function Register() {
             value={passwordConfirm}
             name="passwordConfirm"
             id="passwordConfirm"
-            onChange={e => setPasswordConfirm(e.target.value)}
+            onChange={e => [setPasswordConfirm(e.target.value), handlePasswordMatch(e)]}
             children="Confírmala"
             type="password"
             required="required"
