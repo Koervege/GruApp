@@ -26,8 +26,8 @@ class UserInfo extends React.Component {
     edit: false,
     editVehi: false,
     hideInfo: true,
-    userType:'',
-    userId:'',
+    userType:'supplier',
+    userId:'60641194244bbd20a84bcec5',
   };
   
   handleChange = (event) => {
@@ -47,7 +47,7 @@ class UserInfo extends React.Component {
   async getUserInfo(){
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios({
+      const { data: { userId, userType } } = await axios({
         method: 'GET',
         baseURL:process.env.REACT_APP_SERVER_URL,
         url: `/users`,
@@ -55,7 +55,7 @@ class UserInfo extends React.Component {
           Authorization: `Bearer ${token}`,
         } 
       })
-      this.setState({userType: data.userType, userId: data.userId}, ()=>{console.log('listo');})
+      this.setState({userType, userId}, ()=>{console.log('listo', userType);})
     } catch (error) {
       //localStorage.removeItem('token')
     }
