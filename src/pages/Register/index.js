@@ -33,10 +33,10 @@ function Register() {
   function handlePasswordMatch(e) {
     if(e.target.value !== password) {
       setPasswordError('Las contraseñas no son iguales');
-    } else {
-      setPasswordError(null)
-    }
-  }
+      return;
+    };
+    setPasswordError(null);
+  };
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -47,9 +47,9 @@ function Register() {
         text:
         'Por favor revisa las contraseñas e intenta enviar nuevamente.',
         icon: 'error',
-      })
-      return
-    }
+      });
+      return;
+    };
 
     dispatch(registerUser(firstName, lastName, email, phoneNum, password, userTypeForm));
 
@@ -61,8 +61,10 @@ function Register() {
         'Ocurrió un error al enviar tu información. Inténtalo de nuevo más tarde.',
         icon: 'error',
       });
-    } else history.push(`/userinfo/`);
-  }
+      return;
+    };
+    history.push(`/userinfo/`);
+  };
 
   if(loading) return <p>Un momento por favor...</p>
   return (
