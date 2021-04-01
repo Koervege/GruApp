@@ -20,7 +20,6 @@ function Register() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [userTypeForm, setUserTypeForm] = useState('');
-  const [passwordError, setPasswordError] = useState(null);
 
   const dispatch = useDispatch();
   const { loading, errorUsers } = useSelector(({ usersReducer }) => ({
@@ -30,18 +29,10 @@ function Register() {
 
   let history = useHistory();
 
-  function handlePasswordMatch(e) {
-    if(e.target.value !== password) {
-      setPasswordError('Las contraseñas no son iguales');
-      return;
-    };
-    setPasswordError(null);
-  };
-
   function handleSubmit(e) {
     e.preventDefault();
     
-    if(passwordError) {
+    if(password !== passwordConfirm) {
       swal({
         title: 'Las contraseñas no son las mismas',
         text:
@@ -126,7 +117,7 @@ function Register() {
             value={passwordConfirm}
             name="passwordConfirm"
             id="passwordConfirm"
-            onChange={e => [setPasswordConfirm(e.target.value), handlePasswordMatch(e)]}
+            onChange={e => setPasswordConfirm(e.target.value)}
             children="Confírmala"
             type="password"
             required="required"
