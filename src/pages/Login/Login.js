@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import axios from 'axios'; 
 import {ATags} from '../../components/NavBar/styles'
 import { useForm } from '../../hooks/useForm';
-import { useState } from 'react/cjs/react.development';
+import { useState } from 'react';
 import { useHistory } from "react-router-dom";
 
 const StyledLink = styled(Link)`
@@ -41,11 +41,9 @@ function Login() {
     password: '',
   });
 
-  const [error, setError] = useState('');
-
-  const { email, password } = formValues;
-
-  let history = useHistory();
+const [error, setError] = useState('');
+const { email, password } = formValues;
+let history = useHistory();
 
 const searchUser = async (event) => {
   event.preventDefault();
