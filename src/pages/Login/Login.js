@@ -46,23 +46,9 @@ function Login() {
   const { email, password } = formValues;
 
   let history = useHistory();
-  // state = {
-  //   email: '',
-  //   password: '',
-  //   error: '',
-  // };
 
-  // handleChange = (event) => {
-  //   const { name, value } = event.target;
-  //   this.setState({
-  //     [name]: value,
-  //   });
-  // };
-
- const searchUser = async (event) => {
-    event.preventDefault();
-    console.log(formValues);
-
+const searchUser = async (event) => {
+  event.preventDefault();
     try {
       const { data: { token, userType,userFront } }= await axios({
         method: 'POST',
@@ -70,7 +56,6 @@ function Login() {
         url: '/users/signin',
         data:formValues
       });
-      console.log(token, userType)
       localStorage.setItem('token', token);
       (userType === 'client')?
         history.push('/listmotorcycle')
@@ -83,47 +68,42 @@ function Login() {
     }
   };
 
-  // render() {
-  //   const { email, password } = this.state;
-
-    return (
-      <Frame>
+  return (
+    <Frame>
+      <Container>
+        <Img src={logo} radius="100" width="100" height="100" alt="logo" />
+      </Container>
+      <form onSubmit={ searchUser }>
+        <StyledInput
+          value={ email }
+          name="email"
+          onChange={ handleInputChange }
+          children="Email"
+          type="email"
+          required="required"
+        />
+        <StyledInput
+          name="password"
+          children="Pass"
+          value={ password }
+          onChange={ handleInputChange }
+          type="password"
+          required="required"
+        />
         <Container>
-          <Img src={logo} radius="100" width="100" height="100" alt="logo" />
+          <Button type="submit" color="primary">
+            Login
+          </Button>
+          <StyledLink to="/">Cancelar</StyledLink>
         </Container>
-        <form onSubmit={ searchUser }>
-          <StyledInput
-            value={ email }
-            name="email"
-            onChange={ handleInputChange }
-            children="Email"
-            type="email"
-            required="required"
-          />
-          <StyledInput
-            name="password"
-            children="Pass"
-            value={ password }
-            onChange={ handleInputChange }
-            type="password"
-            required="required"
-          />
-          <Container>
-            <Button type="submit" color="primary">
-              Login
-            </Button>
-            <StyledLink to="/">Cancelar</StyledLink>
-          </Container>
-        </form>
-
-        <Container>
-          <small>
-            Aun no estás registrado? <ATags to="/register">Registrarse</ATags>
-          </small>
-        </Container>
-      </Frame>
+      </form>
+      <Container>
+        <small>
+          Aun no estás registrado? <ATags to="/register">Registrarse</ATags>
+        </small>
+      </Container>
+    </Frame>
     );
-  
-}
+}  
 
 export default Login;
