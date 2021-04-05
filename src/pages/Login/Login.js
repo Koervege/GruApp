@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios'; 
 import {ATags} from '../../components/NavBar/styles'
+import { useForm } from '../../hooks/useForm';
+import { useState } from 'react/cjs/react.development';
+import { useHistory } from "react-router-dom";
 
 const StyledLink = styled(Link)`
 	text-decoration: none;
@@ -31,57 +34,68 @@ const StyledLink = styled(Link)`
     color: black;
   }
 `
-class Login extends React.Component {
-  state = {
+function Login() {
+
+  const [formValues, handleInputChange] = useForm({
     email: '',
     password: '',
-    error: '',
-  };
+  });
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
-  };
+  const [error, setError] = useState('');
 
-  searchUser = async (event) => {
+  const { email, password } = formValues;
+
+  let history = useHistory();
+  // state = {
+  //   email: '',
+  //   password: '',
+  //   error: '',
+  // };
+
+  // handleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   this.setState({
+  //     [name]: value,
+  //   });
+  // };
+
+ const searchUser = async (event) => {
     event.preventDefault();
+    console.log(formValues);
 
     try {
-      const { data: { token, userType } }= await axios({
+      const { data: { token, userType,userFront } }= await axios({
         method: 'POST',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/users/signin',
-        data: this.state
+        data:formValues
       });
-      
+      console.log(token, userType)
       localStorage.setItem('token', token);
-      userType === 'client' ? 
-        this.props.history.push('/listmotorcycle') 
+      (userType === 'client')?
+        history.push('/listmotorcycle')
         :
-        this.props.history.push('/listtow'); 
+        history.push('/listtow'); 
     } catch (err) {
-        this.setState({
-          error: err,
-        });
+        setError(err);
+        console.log(error);
         alert('Usuario o contraseña equivocados');
     }
   };
 
-  render() {
-    const { email, password } = this.state;
+  // render() {
+  //   const { email, password } = this.state;
 
     return (
       <Frame>
         <Container>
           <Img src={logo} radius="100" width="100" height="100" alt="logo" />
         </Container>
-        <form onSubmit={this.searchUser}>
+        <form onSubmit={ searchUser }>
           <StyledInput
-            value={email}
+            value={ email }
             name="email"
-            onChange={this.handleChange}
+            onChange={ handleInputChange }
             children="Email"
             type="email"
             required="required"
@@ -89,8 +103,8 @@ class Login extends React.Component {
           <StyledInput
             name="password"
             children="Pass"
-            value={password}
-            onChange={this.handleChange}
+            value={ password }
+            onChange={ handleInputChange }
             type="password"
             required="required"
           />
@@ -109,7 +123,7 @@ class Login extends React.Component {
         </Container>
       </Frame>
     );
-  }
+  
 }
 
 export default Login;
