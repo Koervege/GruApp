@@ -63,7 +63,6 @@ const searchUser = async (event) => {
         history.push('/listtow'); 
     } catch (err) {
         setError(err);
-        console.log(error);
         alert('Usuario o contraseña equivocados');
     }
   };
