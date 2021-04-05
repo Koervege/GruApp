@@ -9,7 +9,7 @@ export function registerUser(firstName, lastName, email, phoneNum, password, use
   return async function(dispatch) {
     try{
       dispatch({ type: USERS_LOADING })
-      const { data: { token, userType, userFront } } = await axios({
+      const { data: { token, userFront } } = await axios({
         method: 'POST',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: `/${userTypeForm}s/signup`,
@@ -21,7 +21,7 @@ export function registerUser(firstName, lastName, email, phoneNum, password, use
         }
       });
       localStorage.setItem('token', token)
-      dispatch({ type: USERS_SUCCESS, payload: [userFront, userType] })
+      dispatch({ type: USERS_SUCCESS, payload: {userFront, userType: userTypeForm} })
     } catch(error) {
       dispatch({ type: USERS_ERROR, payload: error })
     }
@@ -44,7 +44,7 @@ export function getLoggedUser() {
         }
       })
       localStorage.setItem('token', token)
-      dispatch({ type: USERS_SUCCESS, payload: [userFront, userType] })
+      dispatch({ type: USERS_SUCCESS, payload: {userFront, userType} })
     } catch(error) {
       dispatch({ type: USERS_ERROR, payload: error })
     }

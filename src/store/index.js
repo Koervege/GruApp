@@ -5,6 +5,7 @@ import { clientsReducer } from './clientsReducer';
 import { servicesReducer } from './servicesReducer';
 import { suppliersReducer } from './suppliersReducer';
 import { usersReducer } from './usersReducer'
+import {composeWithDevTools} from 'redux-devtools-extension'
 
 
 const rootReducer = combineReducers({
@@ -15,4 +16,4 @@ const rootReducer = combineReducers({
   usersReducer
 });
 
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)) );

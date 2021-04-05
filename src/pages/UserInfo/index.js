@@ -9,12 +9,21 @@ import { StyledInput, Container } from '../../components/StyledInput/index';
 import { StyledLink, StyledFieldset } from "./styles";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 function UserInfo() {
+
+  const dispatch = useDispatch();
   let history = useHistory();
+  const { userType, userFront } = useSelector(({ usersReducer }) => ({
+    userType: usersReducer.userType,
+    userFront: usersReducer.userFront,
+  }));
+
   const [state, setState] = useState(
     {
-      name: '',
+      name:'',
       phoneNum:'',
       brand:'',
       cc:'',
@@ -28,8 +37,6 @@ function UserInfo() {
       edit: false,
       editVehi: false,
       hideInfo: true,
-      userType:'supplier',
-      userId:'60651ab0c407935cc4a51f94',
       error: null,
     }
   );
@@ -51,14 +58,13 @@ function UserInfo() {
   }
 
   const getVehiInfo = async() => {
-    const { userId, userType } = state
+    const userId = userFront._id
     try {
       const { data } = await axios({
         method: 'GET',
         baseURL:process.env.REACT_APP_SERVER_URL,
         url: `/${userType}s?_id=${userId}`
       })
-      console.log(data);
       if (userType === 'client') {
         if (data.clients[0].bikeIDs[0]) {
           const { brand, cc, type, plateNum, weight } = data.clients[0].bikeIDs[0];
@@ -76,42 +82,19 @@ function UserInfo() {
       console.log(error, 'No posee vehiculos registrados');
     }
   }
-  
-  useEffect(()=>{
-    const token = localStorage.getItem('token');
-    axios({
-      method: 'GET',
-      baseURL:process.env.REACT_APP_SERVER_URL,
-      url: `/users`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      } 
-    })
-    .then(({ data }) => {
-      setState(prevState =>({
-        ...prevState,
-        userType: data.userType,
-        userId: data.userFront._id,
-        phoneNum: data.userFront.phoneNum,
-        name: data.userFront.name,
-      }));
-    })
-    .catch(error => {
-      setState(prevState =>({
-        ...prevState,
-        error,
-      }));
-    })
-  }, [])
-  
+
   useEffect(() => {
+    setState(prevState =>({
+      ...prevState,
+      phoneNum: userFront.phoneNum,
+      name: userFront.name,
+    }));
     getVehiInfo()
-  },[state.userId])
+  },[userType])
 
   const eraseUser = async(event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
-    const userType = state.userType;
 
     await axios({
       method: 'DELETE',
@@ -128,7 +111,6 @@ function UserInfo() {
   const sendInfo = async(event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
-    const userType = state.userType;
     const dataUser = new FormData();
     dataUser.append('name', state.name);
     dataUser.append('phoneNum', state.phoneNum);
