@@ -1,4 +1,4 @@
-import swal from '@sweetalert/with-react';
+import Swal from 'sweetalert2';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
@@ -12,51 +12,28 @@ import Button from '../../components/Button';
 import { ContainerStar, StarSolid, StarEmpty } from './styles';
 
 function createService() {
-  swal(
-    <div>
-      <legend>Regístrate</legend>
-      <form>
-        <fieldset>
-          <label htmlFor="initLoc">Inicio</label>
-          <input type="text" name="initLoc" id="initLoc" placeholder="Inicio" />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="finalLoc">Destino</label>
-          <input
-            type="text"
-            name="finalLoc"
-            id="finalLoc"
-            placeholder="Destino"
-          />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="date">Fecha de servicio</label>
-          <input 
-            type="date" 
-            name="date" 
-            id="date" />
-        </fieldset>
-      </form>
-    </div>,
-    {
-      buttons: {
-        cancel: 'Cancelar',
-        catch: {
-          text: 'Crear servicio',
-          value: 'catch',
-        },
+  (async () => {
+    const { value: formValues } = await Swal.fire({
+      title: 'Crea tu servicio',
+      html:
+        '<input id="swal-input1" placeholder="Inicio" class="swal2-input">' +
+        '<input id="swal-input2" placeholder="Destino" class="swal2-input">' +
+        '<input type="date" id="swal-input3" class="swal2-input">',
+      focusConfirm: false,
+      preConfirm: () => {
+        return [
+          document.getElementById('swal-input1').value,
+          document.getElementById('swal-input2').value,
+          document.getElementById('swal-input3').value,
+        ];
       },
-    }
-  ).then((value) => {
-    switch (value) {
-      case 'catch':
-        swal('Felicitaciones', 'Se envío al conductor tu solicitud', 'success');
-        break;
+    });
 
-      default:
-        swal('Has cancelado la creación del servicio');
+    if (formValues) {
+      console.log(formValues)
+      Swal.fire(JSON.stringify(formValues));
     }
-  });
+  })();
 }
 
 function Stars({ services }) {
