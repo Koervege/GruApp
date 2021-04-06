@@ -58,28 +58,30 @@ function UserInfo() {
   }
 
   const getVehiInfo = async() => {
-    const userId = userFront._id
-    try {
-      const { data } = await axios({
-        method: 'GET',
-        baseURL:process.env.REACT_APP_SERVER_URL,
-        url: `/${userType}s?_id=${userId}`
-      })
-      if (userType === 'client') {
-        if (data.clients[0].bikeIDs[0]) {
-          const { brand, cc, type, plateNum, weight } = data.clients[0].bikeIDs[0];
-          setState(prevState =>({ ...prevState, brand, cc, type, plateNum, weight }))
+    if(userType) {
+      const userId = userFront._id
+      try {
+        const { data } = await axios({
+          method: 'GET',
+          baseURL:process.env.REACT_APP_SERVER_URL,
+          url: `/${userType}s?_id=${userId}`
+        })
+        if (userType === 'client') {
+          if (data.clients[0].bikeIDs[0]) {
+            const { brand, cc, type, plateNum, weight } = data.clients[0].bikeIDs[0];
+            setState(prevState =>({ ...prevState, brand, cc, type, plateNum, weight }))
+          }
+          setState(prevState =>({ ...prevState, vehicleType: 'Moto'}))
+        } else {
+          if (data.suppliers[0].towIDs[0]) {
+            const { brand, capacity, plateNum} = data.suppliers[0].towIDs[0];
+            setState(prevState =>({ ...prevState, brand, capacity, plateNum, hideInfo: false, }))
+          }
+          setState(prevState =>({ ...prevState, vehicleType: 'Grúa'}))
         }
-        setState(prevState =>({ ...prevState, vehicleType: 'Moto'}))
-      } else {
-        if (data.suppliers[0].towIDs[0]) {
-          const { brand, capacity, plateNum} = data.suppliers[0].towIDs[0];
-          setState(prevState =>({ ...prevState, brand, capacity, plateNum, hideInfo: false, }))
-        }
-        setState(prevState =>({ ...prevState, vehicleType: 'Grúa'}))
+      } catch (error) {
+        console.log(error, 'No posee vehiculos registrados');
       }
-    } catch (error) {
-      console.log(error, 'No posee vehiculos registrados');
     }
   }
 
@@ -172,6 +174,12 @@ function UserInfo() {
         } 
       })
       alert('vehiculo creador')
+
+      if(userType === 'client') {
+        history.push('/listMotorcycle/')
+      } else {
+        history.push('/listTow/')
+      }
     }
   }; 
 
