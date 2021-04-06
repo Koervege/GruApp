@@ -84,7 +84,7 @@ function Login() {
       </Container>
       <form onSubmit={ searchUser }>
         <StyledFieldset>
-          <legend>Indetifícate</legend>
+          <legend>Indentifícate</legend>
           <StyledInput
             value={ email }
             name="email"
