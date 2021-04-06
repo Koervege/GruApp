@@ -255,7 +255,6 @@ function UserInfo() {
             disabled={!editUser}
           />
           <StyledInput
-            //value={photo}
             name="photo"
             onChange={handleChange}
             children="Foto perfil"
