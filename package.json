@@ -55,5 +55,8 @@
   },
   "resolutions": {
     "styled-components": "^5"
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.9"
   }
 }

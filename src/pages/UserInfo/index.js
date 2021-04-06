@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../../images/logo.png';
 import Frame from '../../components/Frame';
 import Button from '../../components/Button';
@@ -8,71 +8,93 @@ import TowInfo from '../../components/TowInfo';
 import { StyledInput, Container } from '../../components/StyledInput/index';
 import { StyledLink, StyledFieldset } from "./styles";
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 
-class UserInfo extends React.Component {
+function UserInfo() {
 
-  state = {
-    name: '',
-    phoneNum:'',
-    brand:'',
-    cc:'',
-    capacity:'',
-    plateNum:'',
-    type:'',
-    weight:'',
-    photo: '',
-    vehiPhoto: '',
-    vehicleType:'',
-    edit: false,
-    editVehi: false,
-    hideInfo: true,
-  };
-  
-  handleChange = (event) => {
+  const dispatch = useDispatch();
+  let history = useHistory();
+  const { userType, userFront } = useSelector(({ usersReducer }) => ({
+    userType: usersReducer.userType,
+    userFront: usersReducer.userFront,
+  }));
+
+  const [state, setState] = useState(
+    {
+      name:'',
+      phoneNum:'',
+      brand:'',
+      cc:'',
+      capacity:'',
+      plateNum:'',
+      type:'',
+      weight:'',
+      photo: '',
+      vehiPhoto: '',
+      vehicleType:'',
+      edit: false,
+      editVehi: false,
+      hideInfo: true,
+      error: null,
+    }
+  );
+
+  const handleChange = (event) => {
     const { name, value } = event.target;
-    this.setState({
+    setState(prevState => ({
+      ...prevState,
       [name]: value,
-    });
+    }));
   };
 
-  handleEdit = (e) => {
-    this.setState({
+  const handleEdit = (e) => {
+    setState(prevState =>({
+      ...prevState,
       edit: e.target.type === 'checkbox' ? e.target.checked : e.target.value,
-      editVehi: !this.state.editVehi,
-    })
+      editVehi: !state.editVehi,
+    }));
   }
 
-  async componentDidMount() {
-    const userType = localStorage.getItem('userType');
-    const email = localStorage.getItem('email');
-    const { data } = await axios({
-      method: 'GET',
-      baseURL:process.env.REACT_APP_SERVER_URL,
-      url: `/${userType}s?email=${email}`
-    })
-
-    if (userType === 'user') {
-      const { name, phoneNum } = data.users[0];
-      if (data.users[0].bikeIDs[0]) {
-        const { brand, cc, type, plateNum, weight } = data.users[0].bikeIDs[0];
-        this.setState({ brand, cc, type, plateNum, weight })
+  const getVehiInfo = async() => {
+    const userId = userFront._id
+    try {
+      const { data } = await axios({
+        method: 'GET',
+        baseURL:process.env.REACT_APP_SERVER_URL,
+        url: `/${userType}s?_id=${userId}`
+      })
+      if (userType === 'client') {
+        if (data.clients[0].bikeIDs[0]) {
+          const { brand, cc, type, plateNum, weight } = data.clients[0].bikeIDs[0];
+          setState(prevState =>({ ...prevState, brand, cc, type, plateNum, weight }))
+        }
+        setState(prevState =>({ ...prevState, vehicleType: 'Moto'}))
+      } else {
+        if (data.suppliers[0].towIDs[0]) {
+          const { brand, capacity, plateNum} = data.suppliers[0].towIDs[0];
+          setState(prevState =>({ ...prevState, brand, capacity, plateNum, hideInfo: false, }))
+        }
+        setState(prevState =>({ ...prevState, vehicleType: 'Grúa'}))
       }
-      this.setState({ vehicleType: 'Moto', name, phoneNum })
-    } else {
-      const { name, phoneNum } = data.suppliers[0];
-      if (data.suppliers[0].tows[0]) {
-        const { brand, capacity, plateNum} = data.suppliers[0].tows[0];
-        this.setState({ brand, capacity, plateNum, hideInfo: false, })
-      }
-      this.setState({ vehicleType: 'Grúa', name, phoneNum })
+    } catch (error) {
+      console.log(error, 'No posee vehiculos registrados');
     }
   }
 
-  eraseUser = async(event) => {
+  useEffect(() => {
+    setState(prevState =>({
+      ...prevState,
+      phoneNum: userFront.phoneNum,
+      name: userFront.name,
+    }));
+    getVehiInfo()
+  },[userType])
+
+  const eraseUser = async(event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
-    const userType = localStorage.getItem('userType');
 
     await axios({
       method: 'DELETE',
@@ -82,82 +104,78 @@ class UserInfo extends React.Component {
         Authorization: `Bearer ${token}`,
       } 
     })
-    this.setState({
-      name: '',
-      phoneNum:'',
-    })
-    this.props.history.push(`/login/`);
+    history.push(`/login/`);
     localStorage.clear();
-  };
+  }; 
 
-  sendInfo = async(event) => {
+  const sendInfo = async(event) => {
     event.preventDefault();
-    const userType = localStorage.getItem('userType');
     const token = localStorage.getItem('token');
-    if (this.state.edit) {
+    const dataUser = new FormData();
+    dataUser.append('name', state.name);
+    dataUser.append('phoneNum', state.phoneNum);
+    if (state.edit) {
       const { data } = await axios({
         method: 'PUT',
         baseURL:process.env.REACT_APP_SERVER_URL,
         url: `/${userType}s`,
-        data: {
-          name: this.state.name,
-          phoneNum: this.state.phoneNum,
-        },
+        data: dataUser,
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         } 
       })
       alert(data.message)
+      const dataMoto = new FormData();
+      dataMoto.append('brand', state.brand);
+      dataMoto.append('cc', state.cc);
+      dataMoto.append('type', state.type);
+      dataMoto.append('plateNum', state.plateNum);
+      dataMoto.append('weight', state.weight);
+      const dataTow = new FormData();
+      dataTow.append('brand', state.brand);
+      dataTow.append('capacity', state.capacity);
+      dataTow.append('plateNum', state.plateNum);
+      dataTow.append('status', true);
       await axios({
         method : 'PUT',
         baseURL:process.env.REACT_APP_SERVER_URL,
-        url: userType === 'user' ? '/motorcycles/update' : '/tows',
-        data: userType === 'user' ? 
-          {
-            brand: this.state.brand,
-            cc: this.state.cc,
-            type: this.state.type,
-            plateNum: this.state.plateNum,
-            weight: this.state.weight,
-          }
-          : {
-            brand: this.state.brand,
-            capacity: this.state.capacity,
-            plateNum: this.state.plateNum,
-            status: true,
-          },
+        url: userType === 'client' ? '/motorcycles' : '/tows',
+        data: userType === 'client' ? dataMoto : dataTow,
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         } 
       })
     } else {
       await axios({
         method: 'POST',
         baseURL:process.env.REACT_APP_SERVER_URL,
-        url: userType === 'user' ? '/motorcycles/create' : '/tows',
-        data: userType === 'user' ? 
+        url: userType === 'client' ? '/motorcycles' : '/tows',
+        data: userType === 'client' ? 
           {
-            brand: this.state.brand,
-            cc: this.state.cc,
-            type: this.state.type,
-            plateNum: this.state.plateNum,
-            weight: this.state.weight,
+            brand: state.brand,
+            cc: state.cc,
+            type: state.type,
+            plateNum: state.plateNum,
+            weight: state.weight,
           }
-          : {
-            brand: this.state.brand,
-            capacity: this.state.capacity,
-            plateNum: this.state.plateNum,
+          : 
+          {
+            brand: state.brand,
+            capacity: state.capacity,
+            plateNum: state.plateNum,
             status: true,
           },
         headers: {
           Authorization: `Bearer ${token}`,
         } 
       })
+      alert('vehiculo creador')
     }
-  };
+  }; 
 
-  render() {
-    const { name, phoneNum, brand, cc, capacity, plateNum, type, weight, photo, vehiPhoto, vehicleType, edit, hideInfo, editVehi } = this.state;
+    const { name, phoneNum, brand, cc, capacity, plateNum, type, weight, photo, vehiPhoto, vehicleType, edit, editVehi } = state;
 
     return (
       <Frame>
@@ -165,10 +183,10 @@ class UserInfo extends React.Component {
           <Img src={logo} radius="100" width="100" height="100" alt="logo" />
         </Container>
 
-        <form onSubmit={this.sendInfo}>
+        <form onSubmit={sendInfo}>
         <StyledInput
             name="edit"
-            onChange={this.handleEdit}
+            onChange={handleEdit}
             children="Editar"
             type="checkbox"
             checked={edit}
@@ -178,16 +196,16 @@ class UserInfo extends React.Component {
           <StyledInput
             value={name}
             name="name"
-            onChange={this.handleChange}
+            onChange={handleChange}
             children="Nombre"
             type="text"
             disabled={!edit}
           />
-          <Button type="button" color="danger" onClick={(this.eraseUser)}>Borrar Usuario</Button>
+          <Button type="button" color="danger" onClick={eraseUser}>Borrar Usuario</Button>
           <StyledInput
             value={phoneNum}
             name="phoneNum"
-            onChange={this.handleChange}
+            onChange={handleChange}
             children="Telefono"
             type="tel"
             disabled={!edit}
@@ -195,14 +213,14 @@ class UserInfo extends React.Component {
           <StyledInput
             value={photo}
             name="photo"
-            onChange={this.handleChange}
+            onChange={handleChange}
             children="Foto perfil"
             type="text"
             disabled={!edit}
           />
         </StyledFieldset>
         { !plateNum && 
-        <Button type='button' color='success' onClick={() => this.setState({hideInfo:false, editVehi:true})}>
+        <Button type='button' color='success' onClick={() => setState(prevState =>({...prevState, hideInfo:false, editVehi:true}))}>
           {vehicleType === 'Moto'? 'Agregar Moto': 'Agregar Grúa'}
         </Button>
         }
@@ -217,7 +235,7 @@ class UserInfo extends React.Component {
                   type={type}
                   plateNum={plateNum}
                   weight={weight}
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                   edit={!editVehi}
                 />
               ) 
@@ -227,7 +245,7 @@ class UserInfo extends React.Component {
                   brand={brand}
                   capacity={capacity}
                   plateNum={plateNum}
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                   edit={!editVehi}
                 />
               )
@@ -235,7 +253,7 @@ class UserInfo extends React.Component {
           <StyledInput
             value={vehiPhoto}
             name="vehiPhoto"
-            onChange={this.handleChange}
+            onChange={handleChange}
             children="Foto vehículo "
             type="text"
             disabled={!editVehi}
@@ -250,7 +268,7 @@ class UserInfo extends React.Component {
         </form>
       </Frame>
     );
-  }
+  
 }
 
 export default UserInfo;
