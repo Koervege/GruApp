@@ -6,11 +6,13 @@ import Img from '../../components/Img';
 import { StyledInput, Container } from '../../components/StyledInput/index';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios'; 
+import { useSelector, useDispatch } from 'react-redux';
 import {ATags} from '../../components/NavBar/styles'
 import { useForm } from '../../hooks/useForm';
-import { useState } from 'react';
 import { useHistory } from "react-router-dom";
+import swal from 'sweetalert';
+import { loginUser, deleteError } from '../../store/loginReducer'
+import { StyledFieldset } from '../Register/styles';
 
 const StyledLink = styled(Link)`
 	text-decoration: none;
@@ -40,30 +42,40 @@ function Login() {
     email: '',
     password: '',
   });
+  
+  const dispatch = useDispatch();
+  const { loading, errorLogin, userType } = useSelector(({ loginReducer }) => ({
+    loading: loginReducer.loading,
+    errorLogin: loginReducer.errorLogin,
+    userType: loginReducer.userType,
+  }));  
 
-const [error, setError] = useState('');
-const { email, password } = formValues;
-let history = useHistory();
+  
+  const { email, password } = formValues;
+  let history = useHistory();
 
-const searchUser = async (event) => {
-  event.preventDefault();
-    try {
-      const { data: { token, userType,userFront } }= await axios({
-        method: 'POST',
-        baseURL: process.env.REACT_APP_SERVER_URL,
-        url: '/users/signin',
-        data:formValues
+  const searchUser = async (event) => {
+    event.preventDefault();
+
+    dispatch(loginUser(email, password));
+
+    if(errorLogin) {
+      dispatch(deleteError());
+      swal({
+        title: 'Algo salió mal!',
+        text:
+        'Usuario o contraseña inválidos',
+        icon: 'error',
       });
-      localStorage.setItem('token', token);
-      (userType === 'client')?
-        history.push('/listmotorcycle')
-        :
-        history.push('/listtow'); 
-    } catch (err) {
-        setError(err);
-        alert('Usuario o contraseña equivocados');
-    }
-  };
+      return;
+    };
+  
+    (userType === 'client')?
+      history.push('/listmotorcycle')
+      :
+      history.push('/listtow'); 
+
+    };
 
   return (
     <Frame>
@@ -71,28 +83,31 @@ const searchUser = async (event) => {
         <Img src={logo} radius="100" width="100" height="100" alt="logo" />
       </Container>
       <form onSubmit={ searchUser }>
-        <StyledInput
-          value={ email }
-          name="email"
-          onChange={ handleInputChange }
-          children="Email"
-          type="email"
-          required="required"
-        />
-        <StyledInput
-          name="password"
-          children="Pass"
-          value={ password }
-          onChange={ handleInputChange }
-          type="password"
-          required="required"
-        />
-        <Container>
-          <Button type="submit" color="primary">
-            Login
-          </Button>
-          <StyledLink to="/">Cancelar</StyledLink>
-        </Container>
+        <StyledFieldset>
+          <legend>Indentifícate</legend>
+          <StyledInput
+            value={ email }
+            name="email"
+            onChange={ handleInputChange }
+            children="Email"
+            type="email"
+            required="required"
+          />
+          <StyledInput
+            name="password"
+            children="Pass"
+            value={ password }
+            onChange={ handleInputChange }
+            type="password"
+            required="required"
+          />
+          <Container>
+            <Button type="submit" color="primary">
+              Login
+            </Button>
+            <StyledLink to="/">Cancelar</StyledLink>
+          </Container>
+        </StyledFieldset>  
       </form>
       <Container>
         <small>
