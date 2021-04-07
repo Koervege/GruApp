@@ -6,8 +6,13 @@ import Img from '../../components/Img';
 import { StyledInput, Container } from '../../components/StyledInput/index';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios'; 
+import { useSelector, useDispatch } from 'react-redux';
 import {ATags} from '../../components/NavBar/styles'
+import { useForm } from '../../hooks/useForm';
+import { useHistory } from "react-router-dom";
+import swal from 'sweetalert';
+import { loginUser, deleteError } from '../../store/loginReducer'
+import { StyledFieldset } from '../Register/styles';
 
 const StyledLink = styled(Link)`
 	text-decoration: none;
@@ -31,57 +36,59 @@ const StyledLink = styled(Link)`
     color: black;
   }
 `
-class Login extends React.Component {
-  state = {
+function Login() {
+
+  const [formValues, handleInputChange] = useForm({
     email: '',
     password: '',
-    error: '',
-  };
+  });
+  
+  const dispatch = useDispatch();
+  const { loading, errorLogin, userType } = useSelector(({ loginReducer }) => ({
+    loading: loginReducer.loading,
+    errorLogin: loginReducer.errorLogin,
+    userType: loginReducer.userType,
+  }));  
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
-  };
+  
+  const { email, password } = formValues;
+  let history = useHistory();
 
-  searchUser = async (event) => {
+  const searchUser = async (event) => {
     event.preventDefault();
 
-    try {
-      const { data: { token, userType } }= await axios({
-        method: 'POST',
-        baseURL: process.env.REACT_APP_SERVER_URL,
-        url: '/users/signin',
-        data: this.state
+    dispatch(loginUser(email, password));
+
+    if(errorLogin) {
+      dispatch(deleteError());
+      swal({
+        title: 'Algo salió mal!',
+        text:
+        'Usuario o contraseña inválidos',
+        icon: 'error',
       });
-      
-      localStorage.setItem('token', token);
-      userType === 'client' ? 
-        this.props.history.push('/listmotorcycle') 
-        :
-        this.props.history.push('/listtow'); 
-    } catch (err) {
-        this.setState({
-          error: err,
-        });
-        alert('Usuario o contraseña equivocados');
-    }
-  };
+      return;
+    };
+  
+    (userType === 'client')?
+      history.push('/listmotorcycle')
+      :
+      history.push('/listtow'); 
 
-  render() {
-    const { email, password } = this.state;
+    };
 
-    return (
-      <Frame>
-        <Container>
-          <Img src={logo} radius="100" width="100" height="100" alt="logo" />
-        </Container>
-        <form onSubmit={this.searchUser}>
+  return (
+    <Frame>
+      <Container>
+        <Img src={logo} radius="100" width="100" height="100" alt="logo" />
+      </Container>
+      <form onSubmit={ searchUser }>
+        <StyledFieldset>
+          <legend>Indentifícate</legend>
           <StyledInput
-            value={email}
+            value={ email }
             name="email"
-            onChange={this.handleChange}
+            onChange={ handleInputChange }
             children="Email"
             type="email"
             required="required"
@@ -89,8 +96,8 @@ class Login extends React.Component {
           <StyledInput
             name="password"
             children="Pass"
-            value={password}
-            onChange={this.handleChange}
+            value={ password }
+            onChange={ handleInputChange }
             type="password"
             required="required"
           />
@@ -100,16 +107,15 @@ class Login extends React.Component {
             </Button>
             <StyledLink to="/">Cancelar</StyledLink>
           </Container>
-        </form>
-
-        <Container>
-          <small>
-            Aun no estás registrado? <ATags to="/register">Registrarse</ATags>
-          </small>
-        </Container>
-      </Frame>
+        </StyledFieldset>  
+      </form>
+      <Container>
+        <small>
+          Aun no estás registrado? <ATags to="/register">Registrarse</ATags>
+        </small>
+      </Container>
+    </Frame>
     );
-  }
-}
+}  
 
 export default Login;
