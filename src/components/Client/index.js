@@ -1,18 +1,17 @@
 import Swal from 'sweetalert2';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { createService, deleteError } from '../../store/servicesReducer'
+import { deleteError } from '../../store/servicesReducer'
 import {
   Photo,
   ContainerList,
   ContainerElement,
   SectionList,
 } from '../Provider/styles';
+import Stars from '../Stars'
 import Button from '../../components/Button';
-import { ContainerStar, StarSolid, StarEmpty } from './styles';
+import ModalService from '../CreateServiceModal';
+import { ContainerStar } from './styles';
 
 function Client({ tows }) {
   const dispatch = useDispatch();
@@ -21,75 +20,6 @@ function Client({ tows }) {
     loading: servicesReducer.loading,
     errorServices: servicesReducer.errorServices,
   }));
-
-  function modalService(towID) {
-    return function() {
-      (async () => {
-        const { value: formValues } = await Swal.fire({
-          title: 'Crea tu servicio',
-          html: 
-          `
-            <input id="swal-input1" placeholder="Inicio" class="swal2-input"> 
-            <input id="swal-input2" placeholder="Destino" class="swal2-input">
-            <input type="date" id="swal-input3" class="swal2-input">
-          `,
-          focusConfirm: false,
-          preConfirm: () => {
-            return [
-              document.getElementById('swal-input1').value,
-              document.getElementById('swal-input2').value,
-              document.getElementById('swal-input3').value,
-            ];
-          },
-        });
-  
-        if (formValues) {
-          const initLoc = formValues[0];
-          const finalLoc = formValues[1];
-          const date = formValues[2];
-          const bikeID = userFront.bikeIDs[0];
-          
-          dispatch(
-            createService(
-              initLoc,
-              finalLoc,
-              date,
-              bikeID,
-              towID,
-          ))
-        }
-      })();
-    }
-  }
-  
-  function Stars({ services }) {
-    let count = '';
-    let rating =
-      services.map((service) => (service.rating));
-      for (let i = 0; i < rating.length; i++) {
-        if( rating[i] ){
-          count = count + rating[i];
-        }
-      }
-    if (!rating) {
-      rating = '0';
-    }
-
-    return (
-      <section>
-        {Array.from({ length: Math.floor(count) }, (e, i) => (
-          <StarSolid key={i}>
-            <FontAwesomeIcon icon={faStar} />
-          </StarSolid>
-        ))}
-        {Array.from({ length: Math.ceil(5 - count) }, (e, i) => (
-          <StarEmpty key={i}>
-            <FontAwesomeIcon icon={emptyStar} />
-          </StarEmpty>
-        ))}
-      </section>
-    );
-  }
 
   let history = useHistory();
 
@@ -125,7 +55,7 @@ function Client({ tows }) {
                   <Photo src={supplierID.photo} alt={supplierID.name}></Photo>
                 </ContainerElement>
                 <ContainerElement>
-                  <Button color="primary" onClick={modalService(_id)}>
+                  <Button color="primary" onClick={ModalService(_id, dispatch, userFront)}>
                     Pedir Grúa
                   </Button>
                 </ContainerElement>
