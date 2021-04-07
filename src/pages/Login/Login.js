@@ -59,17 +59,6 @@ function Login() {
 
     dispatch(loginUser(email, password, history));
 
-/*     if(loading) return <p>Loading...</p>
-    if(errorLogin) {
-      dispatch(deleteError());
-      swal({
-        title: 'Algo salió mal!',
-        text:
-        'Usuario o contraseña inválidos',
-        icon: 'error',
-      });
-      return;
-    }; */
   };
 
   return (
