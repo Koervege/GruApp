@@ -22,7 +22,12 @@ export default function ModalService(towID, dispatch, userFront) {
       });
 
       if (formValues) {
-        console.log(formValues)
+        const initLoc = formValues[0];
+        const finalLoc = formValues[1];
+        const date = formValues[2];
+        const bikeID = userFront.bikeIDs[0];
+
+        dispatch(createService(initLoc, finalLoc, date, bikeID, towID));
       }
     })();
   };
