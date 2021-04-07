@@ -34,3 +34,5 @@ export const ImgUser = styled.img`
     width: 70px;
 		height: 70px;
 `
+
+
