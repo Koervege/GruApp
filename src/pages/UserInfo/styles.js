@@ -32,7 +32,7 @@ export const ImgUser = styled.img`
     border-radius: 50%;
     border: 3px solid #fefefe;
     width: 70px;
-		height: 70px;
+    height: 70px;
 `
 
 
