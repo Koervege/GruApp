@@ -1,53 +1,71 @@
-import React from 'react';
-import swal from '@sweetalert/with-react';
-import { useState } from 'react';
 import Swal from 'sweetalert2';
 import logo from '../../logo.png';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-function confirmEmail(userType, userEmail, token) {
 
-  let emailToken
+function confirmEmail(userType, userEmail, auth) {
+
+  let emailToken = 21;
 
   (async() => {
-    const { data: { backendToken }} = await axios({
+    const response = await axios({
       method: 'PUT',
       baseURL: process.env.REACT_APP_SERVER_URL,
       url: '/users/',
       data: {
         userType,
-        userEmail,
+        email: userEmail,
       },
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${auth}`,
       },
     });
-    emailToken = backendToken;
+    emailToken = response.data.emailToken
   })();
 
+  let confirmationSuccessful = false;
+
   (async () => {
-    const { value: formValues } = await Swal.fire({
+    await Swal.fire({
       title: 'Confirma tu correo',
       iconHtml: `<img src=${logo} style="width:170px;height:150px;radius:100px; alt="GruApp logo">`,
       html:
-        `
-        <p>Te hemos enviado un correo con un PIN de confirmación. ¡Recuerda revisar en tu carpeta de Spam!<p>
-        <input id="Token" placeholder="Tu PIN" class="swal2-input">
-        `,
+            `
+              <p>Te hemos enviado un correo con un PIN de confirmación. ¡Recuerda revisar en tu carpeta de Spam!<p>
+              <input id="Token" placeholder="Tu PIN" class="swal2-input" required="required" >
+            `,
       confirmButtonText: 'Verificar',
       focusConfirm: false,
-      preConfirm: () => {
-        return [
-          document.getElementById('Token').value,
-        ];
-      },
-      allowOutsideClick: false
+      preConfirm: 
+        async () => {
+          const input = document.getElementById('Token').value
+          let response
+          if(input == emailToken) {
+            return (async () => {
+              response = await axios({
+                method: 'PUT',
+                baseURL: process.env.REACT_APP_SERVER_URL,
+                url: '/users/',
+                data: {
+                  userType,
+                  emailToken: input,
+                },
+                headers: {
+                  Authorization: `Bearer ${auth}`,
+                },
+              });
+              if(response.status == 200) {
+                confirmationSuccessful = true;
+                return true;
+              } else return false;
+            })();
+          } else return false;
+        },
     });
 
-    if (formValues) {
-      console.log(formValues.join())
-      Swal.fire(JSON.stringify(formValues));
-    }
+    if(confirmationSuccessful) {
+      await Swal.fire({ icon: 'success', title: '¡Confirmado!'})
+    };
+
   })();
 }
 
