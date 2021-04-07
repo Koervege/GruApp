@@ -95,7 +95,7 @@ function UserInfo() {
           setState(prevState =>({ ...prevState, vehicleType: 'Grúa'}))
         }
       } catch (error) {
-        console.log(error, 'No posee vehiculos registrados');
+        swal("¡Advertencia!", "Aún no posee vehículos registrados. Al ingresar uno podrás disfrutar de todos los beneficios de GruApp.", "info")
       }
     }
   }
@@ -113,17 +113,21 @@ function UserInfo() {
     event.preventDefault();
     const token = localStorage.getItem('token');
 
-    await axios({
-      method: 'DELETE',
-      baseURL:process.env.REACT_APP_SERVER_URL,
-      url: `/${userType}s`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      } 
-    })
-    swal("¡Gracias por visitarnos!", "Usuario eliminado satisfacctoriamente", "info")
-    history.push(`/login/`);
-    localStorage.clear();
+    try {
+      await axios({
+        method: 'DELETE',
+        baseURL:process.env.REACT_APP_SERVER_URL,
+        url: `/${userType}s`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        } 
+      })
+      swal("¡Gracias por visitarnos!", "Usuario eliminado satisfacctoriamente", "info")
+      history.push(`/login/`);
+      localStorage.clear();
+    } catch (error) {
+      swal("¡Lo sentimos!", "No fué posible eliminar el usuario", "erro")
+    }
   }; 
 
   const updateUser = async(event) => {
@@ -132,22 +136,25 @@ function UserInfo() {
     const dataUser = new FormData();
     dataUser.append('name', state.name);
     dataUser.append('phoneNum', state.phoneNum);
-    console.log(state.photo);
     if(state.photo) {
       dataUser.append('photo', state.photo, state.photo.name)
     }
     
-    const { data } = await axios({
-      method: 'PUT',
-      baseURL:process.env.REACT_APP_SERVER_URL,
-      url: `/${userType}s`,
-      data: dataUser,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data',
-      } 
-    })
-    swal("¡Buen trabajo!", "Usuario actualizado satisfacctoriamente", "success")
+    try {
+      await axios({
+        method: 'PUT',
+        baseURL:process.env.REACT_APP_SERVER_URL,
+        url: `/${userType}s`,
+        data: dataUser,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        } 
+      })
+      swal("¡Buen trabajo!", "Usuario actualizado satisfacctoriamente", "success")
+    } catch (error) {
+      swal("¡Opps!", "Algo salió mal. No se pudo actualizar", "error")
+    }
   }; 
 
   const updateVehi = async(event) => {
@@ -165,52 +172,55 @@ function UserInfo() {
     dataTow.append('plateNum', state.plateNum);
     dataTow.append('status', true);
 
-    await axios({
-      method : 'PUT',
-      baseURL:process.env.REACT_APP_SERVER_URL,
-      url: userType === 'client' ? '/motorcycles' : '/tows',
-      data: userType === 'client' ? dataMoto : dataTow,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data',
-      } 
-    })
-    .then(() => {
+    try {
+      await axios({
+        method : 'PUT',
+        baseURL:process.env.REACT_APP_SERVER_URL,
+        url: userType === 'client' ? '/motorcycles' : '/tows',
+        data: userType === 'client' ? dataMoto : dataTow,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        } 
+      })
       swal("¡Buen trabajo!", `${vehicleType} actualizada con éxito`, "success")
-    })
-    .catch(err => {
+    } catch (error) {
       swal("¡No fué posible!", 'Debes tener un vehículo agregado', "error")
-    })
+    }
   };
 
   const createVehi = async(event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
 
-    await axios({
-      method: 'POST',
-      baseURL:process.env.REACT_APP_SERVER_URL,
-      url: userType === 'client' ? '/motorcycles' : '/tows',
-      data: userType === 'client' ? 
-        {
-          brand: state.brand,
-          cc: state.cc,
-          type: state.type,
-          plateNum: state.plateNum,
-          weight: state.weight,
-        }
-        : 
-        {
-          brand: state.brand,
-          capacity: state.capacity,
-          plateNum: state.plateNum,
-          status: true,
-        },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      } 
-    })
-    swal("¡Buen trabajo!", `${vehicleType} creada con éxito`, "success")
+    try {
+      await axios({
+        method: 'POST',
+        baseURL:process.env.REACT_APP_SERVER_URL,
+        url: userType === 'client' ? '/motorcycles' : '/tows',
+        data: userType === 'client' ? 
+          {
+            brand: state.brand,
+            cc: state.cc,
+            type: state.type,
+            plateNum: state.plateNum,
+            weight: state.weight,
+          }
+          : 
+          {
+            brand: state.brand,
+            capacity: state.capacity,
+            plateNum: state.plateNum,
+            status: true,
+          },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        } 
+      })
+      swal("¡Buen trabajo!", `${vehicleType} creada con éxito`, "success");
+    } catch (error) {
+      swal("¡Lo sentimos!", `No se pudo crear la ${vehicleType}`, "error");
+    }
   }; 
   
   const accept = (event) => {
@@ -263,7 +273,7 @@ function UserInfo() {
             id="photo"
             disabled={!editUser}
           />
-          {image && <ImgUser src={image} width="75" height="75" alt="profile preview" />}
+          {image && <ImgUser src={image} alt="profile preview" />}
           <Container>
             <Button type="button" color="danger" onClick={eraseUser}>Borrar Usuario</Button>
             {editUser && <Button type="submit" color="success" onClick={updateUser}>Actualizar Usuario</Button>}
