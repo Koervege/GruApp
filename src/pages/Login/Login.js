@@ -57,8 +57,9 @@ function Login() {
   const searchUser = async (event) => {
     event.preventDefault();
 
-    dispatch(loginUser(email, password));
+    dispatch(loginUser(email, password, history));
 
+/*     if(loading) return <p>Loading...</p>
     if(errorLogin) {
       dispatch(deleteError());
       swal({
@@ -68,14 +69,8 @@ function Login() {
         icon: 'error',
       });
       return;
-    };
-  
-    (userType === 'client')?
-      history.push('/listmotorcycle')
-      :
-      history.push('/listtow'); 
-
-    };
+    }; */
+  };
 
   return (
     <Frame>
