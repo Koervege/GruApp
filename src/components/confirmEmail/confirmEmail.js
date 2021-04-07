@@ -4,6 +4,8 @@ import axios from 'axios';
 
 function confirmEmail(userType, userEmail, auth) {
 
+  if(!userType) return
+
   let emailToken = 21;
 
   (async() => {

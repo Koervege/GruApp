@@ -10,7 +10,7 @@ import { StyledLink, StyledFieldset } from "./styles";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
+import confirmEmail from '../../components/confirmEmail/confirmEmail';
 
 function UserInfo() {
 
@@ -90,6 +90,7 @@ function UserInfo() {
       name: userFront.name,
     }));
     getVehiInfo()
+    confirmEmail(userType, userFront.email, localStorage.getItem('token'));
   },[userType])
 
   const eraseUser = async(event) => {
