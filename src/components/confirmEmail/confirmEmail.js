@@ -6,22 +6,26 @@ function confirmEmail(userType, userEmail, auth) {
 
   if(!userType) return
 
-  let emailToken = 21;
+  let emailToken = 0;
 
   (async() => {
-    const response = await axios({
-      method: 'PUT',
-      baseURL: process.env.REACT_APP_SERVER_URL,
-      url: '/users/',
-      data: {
-        userType,
-        email: userEmail,
-      },
-      headers: {
-        Authorization: `Bearer ${auth}`,
-      },
-    });
-    emailToken = response.data.emailToken
+    try {
+      const response = await axios({
+        method: 'PUT',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/users/',
+        data: {
+          userType,
+          email: userEmail,
+        },
+        headers: {
+          Authorization: `Bearer ${auth}`,
+        },
+      });
+      emailToken = response.data.emailToken
+    } catch(err) {
+      await Swal.fire({ icon:'error', title:'Ocurrió un error, por favor vuelve a intentarlo más tarde'})
+    }
   })();
 
   let confirmationSuccessful = false;
@@ -37,28 +41,34 @@ function confirmEmail(userType, userEmail, auth) {
             `,
       confirmButtonText: 'Verificar',
       focusConfirm: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
       preConfirm: 
         async () => {
           const input = document.getElementById('Token').value
           let response
           if(input == emailToken) {
             return (async () => {
-              response = await axios({
-                method: 'PUT',
-                baseURL: process.env.REACT_APP_SERVER_URL,
-                url: '/users/',
-                data: {
-                  userType,
-                  emailToken: input,
-                },
-                headers: {
-                  Authorization: `Bearer ${auth}`,
-                },
-              });
-              if(response.status == 200) {
-                confirmationSuccessful = true;
-                return true;
-              } else return false;
+              try {
+                response = await axios({
+                  method: 'PUT',
+                  baseURL: process.env.REACT_APP_SERVER_URL,
+                  url: '/users/',
+                  data: {
+                    userType,
+                    emailToken: input,
+                  },
+                  headers: {
+                    Authorization: `Bearer ${auth}`,
+                  },
+                });
+                if(response.status == 200) {
+                  confirmationSuccessful = true;
+                  return true;
+                } else return false;
+              } catch {
+                await Swal.fire({ icon:'error', title:'Ocurrió un error, por favor vuelve a intentarlo más tarde'})
+              };
             })();
           } else return false;
         },
@@ -67,7 +77,6 @@ function confirmEmail(userType, userEmail, auth) {
     if(confirmationSuccessful) {
       await Swal.fire({ icon: 'success', title: '¡Confirmado!'})
     };
-
   })();
 }
 
