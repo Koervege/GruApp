@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-const SERVICES_LOADING = 'SERVICES_LOADING';
-const SERVICES_SUCCESS = 'SERVICES_SUCCESS';
 const SERVICES_ERROR = 'SERVICES_ERROR';
+const SERVICES_LOADING = 'SERVICES_LOADING';
+const SERVICES_CREATED = 'SERVICES_CREATED';
+const SERVICES_SUCCESS = 'SERVICES_SUCCESS';
 const SERVICES_FINISHED = 'SERVICES_FINISHED';
 const SERVICES_DELETE_ERROR = 'SERVICES_DELETE_ERROR';
 
@@ -30,6 +31,37 @@ export function getServices() {
   };
 }
 
+export function createService( initLoc, finalLoc, date, bikeID, towID ) {
+  return async function (dispatch) {
+    dispatch({ type: SERVICES_LOADING });
+    try {
+      const token = localStorage.getItem('token');
+
+      const { data: { service } } = await axios({
+        method: 'POST',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/services',
+        data: {
+          initLoc,
+          finalLoc,
+          date,
+          bikeID,
+          towID,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      dispatch({ type: SERVICES_CREATED, payload: service });
+    } catch (error) {
+      dispatch({ type: SERVICES_ERROR, payload: error });
+    } finally {
+      dispatch({ type: SERVICES_FINISHED});
+    }
+  };
+}
+
 export function deleteError() {
   return {
     type: SERVICES_DELETE_ERROR,
@@ -39,6 +71,7 @@ export function deleteError() {
 const initialState = {
   loading: false,
   services: [],
+  service: [],
   userID: '',
   errorServices: null,
 };
@@ -61,6 +94,11 @@ export function servicesReducer(state = initialState, action) {
         ...state,
         errorServices: action.payload,
       };
+    case SERVICES_CREATED:
+      return {
+        ...state,
+        service: action.payload,
+      }
     case SERVICES_FINISHED:
       return {
         ...state,

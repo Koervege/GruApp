@@ -57,25 +57,9 @@ function Login() {
   const searchUser = async (event) => {
     event.preventDefault();
 
-    dispatch(loginUser(email, password));
+    dispatch(loginUser(email, password, history));
 
-    if(errorLogin) {
-      dispatch(deleteError());
-      swal({
-        title: 'Algo salió mal!',
-        text:
-        'Usuario o contraseña inválidos',
-        icon: 'error',
-      });
-      return;
-    };
-  
-    (userType === 'client')?
-      history.push('/listmotorcycle')
-      :
-      history.push('/listtow'); 
-
-    };
+  };
 
   return (
     <Frame>
