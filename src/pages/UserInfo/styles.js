@@ -28,3 +28,11 @@ export const StyledLink = styled(Link)`
 export const StyledFieldset = styled.fieldset`
   border-radius: 20px;
 `
+export const ImgUser = styled.img`
+    border-radius: 50%;
+    border: 3px solid #fefefe;
+    width: 70px;
+    height: 70px;
+`
+
+
