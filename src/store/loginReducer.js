@@ -5,11 +5,11 @@ const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
 const USER_LOGIN_ERROR = 'USER_LOGIN_ERROR';
 const DELETE_LOGIN_ERRROR = 'DELETE_LOGIN_ERROR'
 
-export function loginUser( email, password) {
+export function loginUser( email, password, history) {
   return async function(dispatch) {
+    dispatch({ type: USER_LOGIN })
     try{
-      dispatch({ type: USER_LOGIN })
-      const { data: { token, userType,userFront } }= await axios({
+      const { data: { token, userType, userFront } }= await axios({
             method: 'POST',
             baseURL: process.env.REACT_APP_SERVER_URL,
             url: '/users/signin',
@@ -20,7 +20,13 @@ export function loginUser( email, password) {
         
       });
       localStorage.setItem('token', token)
-      dispatch({ type: USER_LOGIN, payload: {userFront, userType } })
+      
+      userType === 'client' ? 
+        history.push('/listmotorcycle') 
+        : 
+        history.push('/listtow');
+
+      dispatch({ type: USER_LOGIN_SUCCESS, payload: {userFront, userType } })
     } catch(error) {
       dispatch({ type: USER_LOGIN_ERROR, payload: error })
     }

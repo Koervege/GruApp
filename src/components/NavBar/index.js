@@ -40,7 +40,6 @@ export default function NavBar(userID) {
       icon: 'error',
     });
   }
-
   return (
     <Nav>
       <NavContainer>
