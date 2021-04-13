@@ -1,6 +1,8 @@
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Photo, ContainerList, ContainerElement, SectionList } from './styles';
+import Button from '../../components/Button';
+import Swal from 'sweetalert2';
 
 function Provider({ services }) {
   return (
@@ -21,6 +23,11 @@ function Provider({ services }) {
                   alt={bikeID.clientID.name}
                 ></Photo>
               </ContainerElement>
+              <ContainerElement>
+                  <Button color="primary">
+                    Detalles
+                  </Button>
+                </ContainerElement>
             </ContainerList>
           );
         })}

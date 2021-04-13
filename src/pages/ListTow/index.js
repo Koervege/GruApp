@@ -10,15 +10,17 @@ import NavBar from '../../components/NavBar';
 
 function ListTow() {
   const dispatch = useDispatch();
-  const { loading, services, userID, errorServices } = useSelector(({ servicesReducer }) => ({
+  const { loading, services, userID, errorServices, userFront } = useSelector(
+    ({ servicesReducer, usersReducer }) => ({
     loading: servicesReducer.loading,
     services: servicesReducer.services,
     userID: servicesReducer.userID,
     errorServices: servicesReducer.errorServices,
+    userFront: usersReducer.userFront,
   }));
 
   useEffect(() => {
-    dispatch(getServices());
+    dispatch(getServices(`towID=${userFront.towIDs[0]}`));
   }, []);
 
   let history = useHistory();
