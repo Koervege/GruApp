@@ -41,9 +41,7 @@ function ListTow() {
     <section>
       <NavBar userID={userID}/>
       <BoxSupplier>
-        <Button color="primary">Ha ganado XX.XXX COP</Button>
         <Provider services={services} />
-        <Button color="success">Servicio en proceso</Button>
       </BoxSupplier>
     </section>
   );

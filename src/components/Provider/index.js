@@ -1,7 +1,8 @@
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { Photo, ContainerList, ContainerElement, SectionList } from './styles';
 import { useSelector } from 'react-redux';
+import Button from '../../components/Button';
+import { Photo, ContainerList, ContainerElement, SectionList } from './styles';
 
 
 function Provider({ services }) {
@@ -29,6 +30,13 @@ function Provider({ services }) {
                     src={bikeID.clientID.photo}
                     alt={bikeID.clientID.name}
                   ></Photo>
+                </ContainerElement>
+                <ContainerElement>
+                  <Button
+                    color="success"
+                  >
+                    Estado
+                  </Button>
                 </ContainerElement>
               </ContainerList>
             );
