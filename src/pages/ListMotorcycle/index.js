@@ -40,9 +40,7 @@ function ListMotorcycle () {
     <section>
       <NavBar userID={userID} />
       <BoxSupplier>
-        <Button color="primary">Ha pagado XX.XXX COP</Button>
         <Client tows={tows} />
-        <Button color="success"> Servicio en proceso</Button>
       </BoxSupplier>
     </section>
   );
