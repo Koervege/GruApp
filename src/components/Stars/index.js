@@ -2,7 +2,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTruckPickup } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
-import { StarSolid, StarEmpty } from './styles';
+import { StarSolid, StarEmpty, ContainerFonts } from './styles';
 
 export default function Stars({ services }) {
   let count = '';
@@ -15,10 +15,14 @@ export default function Stars({ services }) {
     }
   }
   if(count === '') {
-    return <FontAwesomeIcon icon={faTruckPickup} />;
+    return (
+      <ContainerFonts>
+        <FontAwesomeIcon icon={faTruckPickup} />
+      </ContainerFonts>
+    )
   } else {
     return (
-      <section>
+      <ContainerFonts>
         {Array.from({ length: Math.floor(count / serviceDone) }, (e, i) => (
           <StarSolid key={i}>
             <FontAwesomeIcon icon={faStar} />
@@ -30,7 +34,7 @@ export default function Stars({ services }) {
             </StarEmpty>
           )
         )}
-      </section>
+      </ContainerFonts>
     );
   };
 };

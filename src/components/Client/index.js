@@ -2,17 +2,12 @@ import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteError } from '../../store/servicesReducer'
-import {
-  Photo,
-  ContainerList,
-  ContainerElement,
-  SectionList,
-} from '../Provider/styles';
+import { SectionList } from '../Provider/styles';
 import Stars from '../Stars'
 import CountServices from '../CountServices';
 import Button from '../../components/Button';
 import ModalService from '../CreateServiceModal';
-import { ContainerStar } from './styles';
+import { Photo, ContainerStar, ContainerList, ContainerElement } from './styles';
 
 function Client({ tows }) {
   const dispatch = useDispatch();
