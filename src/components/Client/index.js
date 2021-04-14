@@ -9,6 +9,7 @@ import {
   SectionList,
 } from '../Provider/styles';
 import Stars from '../Stars'
+import CountServices from '../CountServices';
 import Button from '../../components/Button';
 import ModalService from '../CreateServiceModal';
 import { ContainerStar } from './styles';
@@ -47,9 +48,7 @@ function Client({ tows }) {
                   <Stars services={serviceIDs} />
                 </ContainerStar>
                 <ContainerElement>
-                  {`${serviceIDs.length} servicio${
-                    serviceIDs.length === 1 ? '' : 's'
-                  }`}
+                  <CountServices services={serviceIDs}/>
                 </ContainerElement>
                 <ContainerElement>
                   <Photo src={supplierID.photo} alt={supplierID.name}></Photo>
