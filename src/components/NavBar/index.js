@@ -1,15 +1,19 @@
 import React from "react";
 import swal from 'sweetalert';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getLoggedUser, deleteError } from '../../store/usersReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMotorcycle, faTruckPickup } from '@fortawesome/free-solid-svg-icons'
 import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto } from "./styles";
+import  MenuNavBar from "../MenuNavBar";
+
 
 export default function NavBar(userID) {
   const dispatch = useDispatch();
+
+  const [displayMenu, setDisplayMenu] = useState(false);
 
   const { userFront, userType, loading, errorUsers } = useSelector(
     ({ usersReducer }) => ({
@@ -40,6 +44,7 @@ export default function NavBar(userID) {
       icon: 'error',
     });
   }
+
   return (
     <Nav>
       <NavContainer>
@@ -59,8 +64,9 @@ export default function NavBar(userID) {
       </NavContainer>
       <NavProfiles>
         <NavProfilesSpan>{userFront.name}</NavProfilesSpan>
-        <ATags to="/">
+        <ATags onClick={() => setDisplayMenu(!displayMenu)}>
           <NavUserPhoto src={userFront.photo} alt="profile_photo" />
+          {displayMenu && <MenuNavBar/>}
         </ATags>
       </NavProfiles>
     </Nav>
