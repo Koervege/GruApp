@@ -19,7 +19,7 @@ function ListMotorcycle () {
 
   useEffect(() => {
     dispatch(getTows());
-  }, [tows.serviceIDs.length]);
+  }, []);
   
   console.log(tows)
   let history = useHistory();

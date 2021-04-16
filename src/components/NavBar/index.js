@@ -9,10 +9,6 @@ import { faMotorcycle, faTruckPickup } from '@fortawesome/free-solid-svg-icons'
 import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto, ImgBtn } from "./styles";
 import  MenuNavBar from "../MenuNavBar";
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5bf75d3db71c3d239bf85bc1967a27d5e9831a8e
 export default function NavBar() {
   const dispatch = useDispatch();
 
