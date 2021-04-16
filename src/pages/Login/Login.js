@@ -6,12 +6,12 @@ import Img from '../../components/Img';
 import { StyledInput, Container } from '../../components/StyledInput/index';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {ATags} from '../../components/NavBar/styles'
 import { useForm } from '../../hooks/useForm';
 import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
-import { loginUser, deleteError } from '../../store/loginReducer'
+import { loginUser } from '../../store/usersReducer'
 import { StyledFieldset } from '../Register/styles';
 
 const StyledLink = styled(Link)`
@@ -44,12 +44,6 @@ function Login() {
   });
   
   const dispatch = useDispatch();
-  const { loading, errorLogin, userType } = useSelector(({ loginReducer }) => ({
-    loading: loginReducer.loading,
-    errorLogin: loginReducer.errorLogin,
-    userType: loginReducer.userType,
-  }));  
-
   
   const { email, password } = formValues;
   let history = useHistory();
