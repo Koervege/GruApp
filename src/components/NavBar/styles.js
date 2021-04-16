@@ -9,7 +9,7 @@ export const Nav = styled.nav`
   background-color: rgba(82, 161, 227);
   font-size: 1.5em;
   color: #fefefe;
-  text-transform: uppercase;
+  text-transform: capitalize;
 `;
 
 export const NavContainer = styled.div`
