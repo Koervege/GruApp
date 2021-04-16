@@ -23,7 +23,10 @@ function Provider() {
 
   useEffect(() => {
     if(userFront && userFront.towIDs && userFront.towIDs[0]) {
+<<<<<<< HEAD
       console.log(userFront.towIDs[0]);
+=======
+>>>>>>> 5bf75d3db71c3d239bf85bc1967a27d5e9831a8e
       dispatch(getServices(`towID=${userFront.towIDs[0]._id}`));
     }
   }, [userFront.email]);

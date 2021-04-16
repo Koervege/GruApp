@@ -1,15 +1,22 @@
 import React from "react";
 import swal from 'sweetalert';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getLoggedUser, deleteError } from '../../store/usersReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMotorcycle, faTruckPickup } from '@fortawesome/free-solid-svg-icons'
-import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto } from "./styles";
+import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto, ImgBtn } from "./styles";
+import  MenuNavBar from "../MenuNavBar";
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5bf75d3db71c3d239bf85bc1967a27d5e9831a8e
 export default function NavBar() {
   const dispatch = useDispatch();
+
+  const [displayMenu, setDisplayMenu] = useState(false);
 
   const { userFront, userType, loading, errorUsers } = useSelector(
     ({ usersReducer }) => ({
@@ -40,6 +47,13 @@ export default function NavBar() {
       icon: 'error',
     });
   }
+
+  const hideMenu = (e) => {
+    if (!e.currentTarget.contains(e.relatedTarget)){
+      setDisplayMenu(false);
+    }
+  }
+
   return (
     <Nav>
       <NavContainer>
@@ -59,9 +73,10 @@ export default function NavBar() {
       </NavContainer>
       <NavProfiles>
         <NavProfilesSpan>{userFront.name}</NavProfilesSpan>
-        <ATags to="/">
-          <NavUserPhoto src={userFront.photo} alt="profile_photo" />
-        </ATags>
+        <ImgBtn onClick={() => setDisplayMenu(!displayMenu)} onBlur={hideMenu}>
+          <NavUserPhoto src={userFront.photo} alt="profile_photo"/>
+          {displayMenu && <MenuNavBar/>}
+        </ImgBtn>
       </NavProfiles>
     </Nav>
   );
