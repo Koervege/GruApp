@@ -45,6 +45,12 @@ export default function NavBar(userID) {
     });
   }
 
+  const hideMenu = (e) => {
+    if (!e.currentTarget.contains(e.relatedTarget)){
+      setDisplayMenu(false);
+    }
+  }
+
   return (
     <Nav>
       <NavContainer>
@@ -64,8 +70,8 @@ export default function NavBar(userID) {
       </NavContainer>
       <NavProfiles>
         <NavProfilesSpan>{userFront.name}</NavProfilesSpan>
-        <ATags onClick={() => setDisplayMenu(!displayMenu)}>
-          <NavUserPhoto src={userFront.photo} alt="profile_photo" />
+        <ATags to=" " onClick={() => setDisplayMenu(!displayMenu)} onBlur={hideMenu}>
+          <NavUserPhoto src={userFront.photo} alt="profile_photo"/>
           {displayMenu && <MenuNavBar/>}
         </ATags>
       </NavProfiles>
