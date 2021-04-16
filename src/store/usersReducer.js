@@ -50,6 +50,35 @@ export function getLoggedUser() {
   }
 }
 
+export function loginUser( email, password, history) {
+  return async function(dispatch) {
+    dispatch({ type: USERS_LOADING })
+    try{
+      const { data: { token, userType, userFront } } = await axios({
+            method: 'POST',
+            baseURL: process.env.REACT_APP_SERVER_URL,
+            url: '/users/signin',
+            data: {
+              email,
+              password,
+            }
+        
+      });
+      localStorage.setItem('token', token)
+
+      !userFront.emailIsConfirmed ? history.push('/userInfo') :
+        userType === 'client' ? 
+          history.push('/listmotorcycle') 
+          : 
+          history.push('/listtow');
+
+      dispatch({ type: USERS_SUCCESS, payload: {userFront, userType } })
+    } catch(error) {
+      dispatch({ type: USERS_ERROR, payload: error })
+    }
+  }
+}
+
 export function deleteError(){
   return {
     type: USERS_DELETE_ERROR,
