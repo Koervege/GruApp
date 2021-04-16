@@ -1,11 +1,49 @@
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Photo, ContainerList, ContainerElement, SectionList } from './styles';
+import Button from '../../components/Button';
+import Swal from 'sweetalert2';
+import { getServices, deleteError } from '../../store/servicesReducer';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import swal from 'sweetalert'
+import { useHistory } from "react-router-dom";
 
-function Provider({ services }) {
+function Provider() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const { loading, errorServices, services,  userFront } = useSelector(
+    ({ servicesReducer, usersReducer }) => ({
+    loading: servicesReducer.loading,
+    errorServices: servicesReducer.errorServices,
+    services: servicesReducer.services,
+    userFront: usersReducer.userFront,
+  }));
+
+  useEffect(() => {
+    if(userFront && userFront.towIDs && userFront.towIDs[0]) {
+      dispatch(getServices(`towID=${userFront.towIDs[0]._id}`));
+    }
+  }, [userFront.email]);
+
+  if(loading) return <p>loading...</p>
+  if (errorServices) {
+    localStorage.removeItem('token');
+    history.push('/login');
+    swal({
+      title: 'Algo salió mal!',
+      text:
+        'Por favor, ingresa de nuevo a la aplicación con tu usuario y contraseña.',
+      icon: 'error',
+    });
+
+    dispatch(deleteError());
+  }
+
   return (
     <SectionList>
-      {!!services &&
+      {!!services && !!userFront &&
         services.length > 0 &&
         services.map(({ _id, initLoc, finalLoc, date, bikeID }) => {
           const dateArr = date.split('-');
@@ -21,6 +59,11 @@ function Provider({ services }) {
                   alt={bikeID.clientID.name}
                 ></Photo>
               </ContainerElement>
+              <ContainerElement>
+                  <Button color="primary">
+                    Detalles
+                  </Button>
+                </ContainerElement>
             </ContainerList>
           );
         })}

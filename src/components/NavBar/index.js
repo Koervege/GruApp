@@ -10,7 +10,7 @@ import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavP
 import  MenuNavBar from "../MenuNavBar";
 
 
-export default function NavBar(userID) {
+export default function NavBar() {
   const dispatch = useDispatch();
 
   const [displayMenu, setDisplayMenu] = useState(false);
