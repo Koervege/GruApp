@@ -30,12 +30,11 @@ export function registerUser(firstName, lastName, email, phoneNum, password, use
 
 export function getLoggedUser() {
   return async function(dispatch) {
-
+    dispatch({ type: USERS_LOADING })
     try{
-      dispatch({ type: USERS_LOADING })
       const token = localStorage.getItem('token')
 
-      const { userType, userFront } = await axios({
+      const { data: { userType, userFront } } = await axios({
         method: 'GET',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/users',
@@ -45,6 +44,35 @@ export function getLoggedUser() {
       })
       localStorage.setItem('token', token)
       dispatch({ type: USERS_SUCCESS, payload: {userFront, userType} })
+    } catch(error) {
+      dispatch({ type: USERS_ERROR, payload: error })
+    }
+  }
+}
+
+export function loginUser( email, password, history) {
+  return async function(dispatch) {
+    dispatch({ type: USERS_LOADING })
+    try{
+      const { data: { token, userType, userFront } } = await axios({
+            method: 'POST',
+            baseURL: process.env.REACT_APP_SERVER_URL,
+            url: '/users/signin',
+            data: {
+              email,
+              password,
+            }
+        
+      });
+      localStorage.setItem('token', token)
+
+      !userFront.emailIsConfirmed ? history.push('/userInfo') :
+        userType === 'client' ? 
+          history.push('/listmotorcycle') 
+          : 
+          history.push('/listtow');
+
+      dispatch({ type: USERS_SUCCESS, payload: {userFront, userType } })
     } catch(error) {
       dispatch({ type: USERS_ERROR, payload: error })
     }

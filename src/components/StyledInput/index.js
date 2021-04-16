@@ -14,21 +14,18 @@ function StyledInput({
 }) {
   return (
     <Container>
-      <div>
-        <Label htmlFor={id}>{children}</Label>
-
-        <Input
-          type={type}
-          id={id}
-          onChange={onChange}
-          name={name}
-          placeholder={placeholder}
-          value={value}
-          required={required}
-          disabled = {disabled ? true : false}
-          pattern = {pattern}
-        ></Input>
-      </div>
+      <Label htmlFor={id}>{children}</Label>
+      <Input
+        type={type}
+        id={id}
+        onChange={onChange}
+        name={name}
+        placeholder={placeholder}
+        value={value}
+        required={required}
+        disabled = {disabled ? true : false}
+        pattern = {pattern}
+      ></Input>
     </Container>
   );
 }

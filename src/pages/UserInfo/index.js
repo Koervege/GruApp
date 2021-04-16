@@ -6,10 +6,13 @@ import Img from '../../components/Img';
 import MotoInfo from '../../components/MotoInfo';
 import TowInfo from '../../components/TowInfo';
 import { StyledInput, Container } from '../../components/StyledInput/index';
-import { StyledLink, StyledFieldset } from "./styles";
+import { StyledLink, StyledFieldset,ImgUser } from "./styles";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import confirmEmail from '../../components/confirmEmail/confirmEmail';
+import swal from 'sweetalert';
+
 
 
 function UserInfo() {
@@ -31,18 +34,31 @@ function UserInfo() {
       plateNum:'',
       type:'',
       weight:'',
-      photo: '',
-      vehiPhoto: '',
+      photo: null,
+      vehiPhoto: null,
+      image: null,
       vehicleType:'',
-      edit: false,
-      editVehi: false,
-      hideInfo: true,
+      editUser: false,
+      editVehi: true,
       error: null,
     }
   );
 
+  function readFile(file) {
+    const reader = new FileReader()
+
+    reader.readAsDataURL(file)
+
+    reader.onload = e => setState(prevState =>({ ...prevState, image: e.target.result}))
+    reader.onerror = e => console.log(reader.error)
+  }
+
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    if (name === 'photo' || name === 'vehiPhoto') {
+      value = event.target.files[0]
+      readFile(event.target.files[0])
+    }
     setState(prevState => ({
       ...prevState,
       [name]: value,
@@ -52,8 +68,8 @@ function UserInfo() {
   const handleEdit = (e) => {
     setState(prevState =>({
       ...prevState,
-      edit: e.target.type === 'checkbox' ? e.target.checked : e.target.value,
-      editVehi: !state.editVehi,
+      editUser: e.target.name === 'editUser' ? !editUser : editUser,
+      editVehi: e.target.name === 'editVehi' ? !editVehi : editVehi,
     }));
   }
 
@@ -80,7 +96,7 @@ function UserInfo() {
           setState(prevState =>({ ...prevState, vehicleType: 'Grúa'}))
         }
       } catch (error) {
-        console.log(error, 'No posee vehiculos registrados');
+        swal("¡Advertencia!", "Aún no posee vehículos registrados. Al ingresar uno podrás disfrutar de todos los beneficios de GruApp.", "info")
       }
     }
   }
@@ -91,33 +107,45 @@ function UserInfo() {
       phoneNum: userFront.phoneNum,
       name: userFront.name,
     }));
-    getVehiInfo()
+    getVehiInfo();
+    if(!userFront.emailIsConfirmed) {
+      confirmEmail(userType, userFront.email, localStorage.getItem('token'));
+    };
   },[userType])
 
   const eraseUser = async(event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
 
-    await axios({
-      method: 'DELETE',
-      baseURL:process.env.REACT_APP_SERVER_URL,
-      url: `/${userType}s`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      } 
-    })
-    history.push(`/login/`);
-    localStorage.clear();
+    try {
+      await axios({
+        method: 'DELETE',
+        baseURL:process.env.REACT_APP_SERVER_URL,
+        url: `/${userType}s`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        } 
+      })
+      swal("¡Gracias por visitarnos!", "Usuario eliminado satisfacctoriamente", "info")
+      history.push(`/login/`);
+      localStorage.clear();
+    } catch (error) {
+      swal("¡Lo sentimos!", "No fué posible eliminar el usuario", "erro")
+    }
   }; 
 
-  const sendInfo = async(event) => {
+  const updateUser = async(event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
     const dataUser = new FormData();
     dataUser.append('name', state.name);
     dataUser.append('phoneNum', state.phoneNum);
-    if (state.edit) {
-      const { data } = await axios({
+    if(state.photo) {
+      dataUser.append('photo', state.photo, state.photo.name)
+    }
+    
+    try {
+      await axios({
         method: 'PUT',
         baseURL:process.env.REACT_APP_SERVER_URL,
         url: `/${userType}s`,
@@ -127,18 +155,28 @@ function UserInfo() {
           'Content-Type': 'multipart/form-data',
         } 
       })
-      alert(data.message)
-      const dataMoto = new FormData();
-      dataMoto.append('brand', state.brand);
-      dataMoto.append('cc', state.cc);
-      dataMoto.append('type', state.type);
-      dataMoto.append('plateNum', state.plateNum);
-      dataMoto.append('weight', state.weight);
-      const dataTow = new FormData();
-      dataTow.append('brand', state.brand);
-      dataTow.append('capacity', state.capacity);
-      dataTow.append('plateNum', state.plateNum);
-      dataTow.append('status', true);
+      swal("¡Buen trabajo!", "Usuario actualizado satisfacctoriamente", "success")
+    } catch (error) {
+      swal("¡Opps!", "Algo salió mal. No se pudo actualizar", "error")
+    }
+  }; 
+
+  const updateVehi = async(event) => {
+    event.preventDefault();
+    const token = localStorage.getItem('token');
+    const dataMoto = new FormData();
+    dataMoto.append('brand', state.brand);
+    dataMoto.append('cc', state.cc);
+    dataMoto.append('type', state.type);
+    dataMoto.append('plateNum', state.plateNum);
+    dataMoto.append('weight', state.weight);
+    const dataTow = new FormData();
+    dataTow.append('brand', state.brand);
+    dataTow.append('capacity', state.capacity);
+    dataTow.append('plateNum', state.plateNum);
+    dataTow.append('status', true);
+
+    try {
       await axios({
         method : 'PUT',
         baseURL:process.env.REACT_APP_SERVER_URL,
@@ -149,7 +187,17 @@ function UserInfo() {
           'Content-Type': 'multipart/form-data',
         } 
       })
-    } else {
+      swal("¡Buen trabajo!", `${vehicleType} actualizada con éxito`, "success")
+    } catch (error) {
+      swal("¡No fué posible!", 'Debes tener un vehículo agregado', "error")
+    }
+  };
+
+  const createVehi = async(event) => {
+    event.preventDefault();
+    const token = localStorage.getItem('token');
+
+    try {
       await axios({
         method: 'POST',
         baseURL:process.env.REACT_APP_SERVER_URL,
@@ -173,17 +221,23 @@ function UserInfo() {
           Authorization: `Bearer ${token}`,
         } 
       })
-      alert('vehiculo creador')
-
-      if(userType === 'client') {
-        history.push('/listMotorcycle/')
-      } else {
-        history.push('/listTow/')
-      }
+      swal("¡Buen trabajo!", `${vehicleType} creada con éxito`, "success");
+    } catch (error) {
+      swal("¡Lo sentimos!", `No se pudo crear la ${vehicleType}`, "error");
     }
   }; 
+  
+  const accept = (event) => {
+    event.preventDefault();
 
-    const { name, phoneNum, brand, cc, capacity, plateNum, type, weight, photo, vehiPhoto, vehicleType, edit, editVehi } = state;
+    if(userType === 'client') {
+      history.push('/listMotorcycle/')
+    } else {
+      history.push('/listTow/')
+    }
+  };
+
+    const { name, phoneNum, brand, cc, capacity, plateNum, type, weight, image, vehiPhoto, vehicleType, editUser, editVehi } = state;
 
     return (
       <Frame>
@@ -191,49 +245,51 @@ function UserInfo() {
           <Img src={logo} radius="100" width="100" height="100" alt="logo" />
         </Container>
 
-        <form onSubmit={sendInfo}>
-        <StyledInput
-            name="edit"
-            onChange={handleEdit}
-            children="Editar"
-            type="checkbox"
-            checked={edit}
-          />
+        <form onSubmit={createVehi}> 
         <StyledFieldset>
           <legend>Usuario</legend>
+          <label htmlFor="editUser">
+            <input type="checkbox" defaultChecked="true" id="editUser" name="editUser" onChange={handleEdit} checked={editUser}/>
+            Editar
+          </label>
           <StyledInput
             value={name}
             name="name"
             onChange={handleChange}
             children="Nombre"
             type="text"
-            disabled={!edit}
+            disabled={!editUser}
           />
-          <Button type="button" color="danger" onClick={eraseUser}>Borrar Usuario</Button>
           <StyledInput
             value={phoneNum}
             name="phoneNum"
             onChange={handleChange}
             children="Telefono"
             type="tel"
-            disabled={!edit}
+            disabled={!editUser}
           />
           <StyledInput
-            value={photo}
             name="photo"
             onChange={handleChange}
             children="Foto perfil"
-            type="text"
-            disabled={!edit}
+            type="file"
+            accept="image/*"
+            id="photo"
+            disabled={!editUser}
           />
+          {image && <ImgUser src={image} alt="profile preview" />}
+          <Container>
+            <Button type="button" color="danger" onClick={eraseUser}>Borrar Usuario</Button>
+            {editUser && <Button type="submit" color="success" onClick={updateUser}>Actualizar Usuario</Button>}
+          </Container>
         </StyledFieldset>
-        { !plateNum && 
-        <Button type='button' color='success' onClick={() => setState(prevState =>({...prevState, hideInfo:false, editVehi:true}))}>
-          {vehicleType === 'Moto'? 'Agregar Moto': 'Agregar Grúa'}
-        </Button>
-        }
+      
         {(<StyledFieldset>
-          <legend>{vehicleType}</legend>
+          <legend>{vehicleType}</legend>  
+          <label htmlFor="editVehi">
+            <input type="checkbox" defaultChecked="true" id="editVehi" name="editVehi" onChange={handleEdit} checked={editVehi}/>
+            Editar
+          </label>
           {
             vehicleType === 'Moto'? 
               (
@@ -262,17 +318,20 @@ function UserInfo() {
             value={vehiPhoto}
             name="vehiPhoto"
             onChange={handleChange}
-            children="Foto vehículo "
-            type="text"
+            children="Foto vehículo"
+            type="file"
+            accept="image/*"
             disabled={!editVehi}
-          />  
-        </StyledFieldset>)}
+          />
           <Container>
-            <Button type="submit" color="primary">
-              Aceptar
-            </Button>
-            <StyledLink to="/">Cancelar</StyledLink>
+            <Button type="submit" color="primary" >Agregar {vehicleType}</Button>
+          { editVehi && plateNum && <Button type="submit" color="success" onClick={updateVehi}>Actualizar {vehicleType}</Button>}
           </Container>
+        </StyledFieldset>)}
+        <Container>
+          <Button type="submit" color="primary" onClick={accept} >Aceptar</Button>
+          <StyledLink to="/">Cancelar</StyledLink>
+        </Container>
         </form>
       </Frame>
     );

@@ -43,7 +43,6 @@ function ListMotorcycle () {
         <Button color="primary">Ha pagado XX.XXX COP</Button>
         <Client tows={tows} />
         <Button color="success"> Servicio en proceso</Button>
-        <Button color="primary">Pedir Grúa</Button>
       </BoxSupplier>
     </section>
   );
