@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getLoggedUser, deleteError } from '../../store/usersReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMotorcycle, faTruckPickup } from '@fortawesome/free-solid-svg-icons'
-import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto } from "./styles";
+import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto, ImgBtn } from "./styles";
 import  MenuNavBar from "../MenuNavBar";
 
 
@@ -70,10 +70,10 @@ export default function NavBar(userID) {
       </NavContainer>
       <NavProfiles>
         <NavProfilesSpan>{userFront.name}</NavProfilesSpan>
-        <ATags to=" " onClick={() => setDisplayMenu(!displayMenu)} onBlur={hideMenu}>
+        <ImgBtn onClick={() => setDisplayMenu(!displayMenu)} onBlur={hideMenu}>
           <NavUserPhoto src={userFront.photo} alt="profile_photo"/>
           {displayMenu && <MenuNavBar/>}
-        </ATags>
+        </ImgBtn>
       </NavProfiles>
     </Nav>
   );
