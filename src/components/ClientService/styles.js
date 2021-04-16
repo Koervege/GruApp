@@ -1,19 +1,12 @@
 import styled from 'styled-components';
 
-export const ContainerStar = styled.div`
+export const SectionList = styled.section`
+  padding: 25px 0;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 0 20px;
-
-`;
-
-export const Photo = styled.img`
-  border-radius: 50%;
-  border: solid 5px white;
-  height: 70px;
-  width: 70px;
-  src: ${(props) => props.src};
-
+  justify-content: center;
 `;
 
 export const ContainerList = styled.article`
@@ -42,13 +35,4 @@ export const ContainerList = styled.article`
       border: solid 1px goldenrod;
     }
   }
-`;
-
-export const ContainerElement = styled.div`
-  display: flex;
-  min-width: 10%;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 10px;
 `;
