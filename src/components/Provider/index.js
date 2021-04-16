@@ -22,8 +22,9 @@ function Provider() {
   }));
 
   useEffect(() => {
-    if(userFront.towIDs) {
-      dispatch(getServices(`towID=${userFront.towIDs[0]}`));
+    if(userFront && userFront.towIDs && userFront.towIDs[0]) {
+      console.log(userFront.towIDs[0]);
+      dispatch(getServices(`towID=${userFront.towIDs[0]._id}`));
     }
   }, [userFront.email]);
 
