@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMotorcycle, faTruckPickup } from '@fortawesome/free-solid-svg-icons'
 import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto } from "./styles";
 
-export default function NavBar(userID) {
+export default function NavBar() {
   const dispatch = useDispatch();
 
   const { userFront, userType, loading, errorUsers } = useSelector(
