@@ -53,7 +53,7 @@ function confirmEmail(userType, userEmail, auth) {
                 response = await axios({
                   method: 'PUT',
                   baseURL: process.env.REACT_APP_SERVER_URL,
-                  url: '/users/',
+                  url: '/users/confirm',
                   data: {
                     userType,
                     emailToken: input,
