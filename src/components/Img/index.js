@@ -5,7 +5,7 @@ const Img = styled.img`
     border-radius: ${({radius}) => `${radius}px`};
     width: ${({width}) => `${width}px` };
     height: ${({height}) => `${height}px`};
-    border-color: #e0e0e0;
+    border-color: #2980B9;
     border-style:solid;
     border-width: 3px;`
 

@@ -43,9 +43,20 @@ export const NavProfiles = styled.div`
 export const NavProfilesSpan = styled.span`
   margin-right: 15px;
 `
+
+const tagFontWeight = tagType => {
+  switch (tagType) {
+    case "bold":
+      return "bold";  
+    default:
+      return "normal";
+  }
+};
+
 export const ATags = styled(Link)`
   text-decoration: none;
   color: inherit;
+  font-weight: ${({ tagType }) => tagFontWeight(tagType)};
 `
 
 export const NavUserPhoto = styled.img`

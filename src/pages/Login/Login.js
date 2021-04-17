@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
 import { loginUser } from '../../store/usersReducer'
 import { StyledFieldset } from '../Register/styles';
-import { Background } from '../../components/Background/index'
+import { Background } from '../../components/Background/index';
 
 const StyledLink = styled(Link)`
 	text-decoration: none;
@@ -91,7 +91,7 @@ function Login() {
       </form>
       <Container>
         <small>
-          Aun no estás registrado? <ATags to="/register">Registrarse</ATags>
+          Aun no estás registrado? <ATags tagType="bold" to="/register">Registrarse</ATags>
         </small>
       </Container>
     </Frame>

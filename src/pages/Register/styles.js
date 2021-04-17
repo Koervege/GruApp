@@ -34,6 +34,9 @@ export const StyledFieldset = styled.fieldset`
   align-content: center;
   justify-content: center;
   flex-flow: column wrap;
+  border-color: #2980B9;
+  border-width: 3px;
+  border-style:solid;
 
 `
 
