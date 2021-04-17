@@ -330,7 +330,6 @@ function UserInfo() {
         </StyledFieldset>)}
         <Container>
           <Button type="submit" color="primary" onClick={accept} >Aceptar</Button>
-          <StyledLink to="/">Cancelar</StyledLink>
         </Container>
         </form>
       </Frame>
