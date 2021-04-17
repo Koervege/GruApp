@@ -1,9 +1,5 @@
-import swal from 'sweetalert';
-import React,{ useState,useEffect } from 'react';
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+
 import { BoxSupplier } from '../ListMotorcycle/styles';
-import { getServices, deleteError } from '../../store/servicesReducer';
 import Provider from '../../components/Provider';
 import Button from '../../components/Button';
 import NavBar from '../../components/NavBar';
@@ -73,10 +69,11 @@ function ListTow() {
     dispatch(deleteError());
   }
   
+
   return (
     
     <section>
-      <NavBar userID={userID}/>
+      <NavBar/>
       <BoxSupplier>
         <label htmlFor="towStatus">
           <input 
@@ -90,7 +87,7 @@ function ListTow() {
               }
         </label>
         <Button color="primary">Ha ganado XX.XXX COP</Button>
-        <Provider services={services} />
+        <Provider/>
         <Button color="success">Servicio en proceso</Button>
       </BoxSupplier>
     </section>
