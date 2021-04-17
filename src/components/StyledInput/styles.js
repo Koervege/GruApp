@@ -15,7 +15,6 @@ export const Input = styled.input `
   font-size: 16px;
   color: #444;
   font-weight: 600;
-  font-size: 16px;
   letter-spacing: 0.3px;
     &:valid {
       background-color: #e8f0fe;  
@@ -27,7 +26,7 @@ export const Input = styled.input `
 `
 
 export const Label = styled.label `
-  min-width: 70px;
+  width: 70px;
   padding: 5px 0;
   font-weight: 500;
   font-size: 16px;
@@ -43,5 +42,5 @@ export const Container = styled.div `
   justify-content: center;
   padding: 15px;
   align-items: center;
-    
+  flex: 1 1 auto;  
 `

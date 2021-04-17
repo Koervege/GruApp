@@ -1,23 +1,19 @@
-import { Select, Label, Container } from './styles';
+import { Select, Label } from './styles';
 
 function StyledSelect({
-  labelChildren,
   id,
   name,
   value,
   onChange,
 }) {
   return (
-    <Container>
-
-        <Select
-          id={id}
-          onChange={onChange}
-          name={name}
-          value={value}
-        >
-        </Select>
-    </Container>
+    <Select
+      id={id}
+      onChange={onChange}
+      name={name}
+      value={value}
+    >
+    </Select>
   );
 }
 

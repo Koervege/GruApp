@@ -6,13 +6,14 @@ import Img from '../../components/Img';
 import MotoInfo from '../../components/MotoInfo';
 import TowInfo from '../../components/TowInfo';
 import { StyledInput, Container } from '../../components/StyledInput/index';
-import { StyledLink, StyledFieldset,ImgUser } from "./styles";
+import { ImgUser } from "./styles";
+import { StyledFieldset } from "../Register/styles";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import confirmEmail from '../../components/confirmEmail/confirmEmail';
 import swal from 'sweetalert';
-
+import { Background } from '../../components/Background/index';
 
 
 function UserInfo() {
@@ -240,6 +241,7 @@ function UserInfo() {
     const { name, phoneNum, brand, cc, capacity, plateNum, type, weight, image, vehiPhoto, vehicleType, editUser, editVehi } = state;
 
     return (
+      <Background>
       <Frame>
         <Container>
           <Img src={logo} radius="100" width="100" height="100" alt="logo" />
@@ -277,10 +279,12 @@ function UserInfo() {
             id="photo"
             disabled={!editUser}
           />
-          {image && <ImgUser src={image} alt="profile preview" />}
           <Container>
-            <Button type="button" color="danger" onClick={eraseUser}>Borrar Usuario</Button>
+            {image && <ImgUser src={image} alt="profile preview" />}
+          </Container>
+          <Container>
             {editUser && <Button type="submit" color="success" onClick={updateUser}>Actualizar Usuario</Button>}
+            <Button type="button" color="danger" onClick={eraseUser}>Borrar Usuario</Button>
           </Container>
         </StyledFieldset>
       
@@ -333,6 +337,7 @@ function UserInfo() {
         </Container>
         </form>
       </Frame>
+      </Background>
     );
   
 }
