@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
 import { loginUser } from '../../store/usersReducer'
 import { StyledFieldset } from '../Register/styles';
+import { Background } from '../../components/Background/index'
 
 const StyledLink = styled(Link)`
 	text-decoration: none;
@@ -56,6 +57,7 @@ function Login() {
   };
 
   return (
+    <Background>
     <Frame>
       <Container>
         <Img src={logo} radius="100" width="100" height="100" alt="logo" />
@@ -93,6 +95,7 @@ function Login() {
         </small>
       </Container>
     </Frame>
+    </Background>
     );
 }  
 
