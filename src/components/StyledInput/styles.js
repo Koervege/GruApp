@@ -8,7 +8,7 @@ export const Input = styled.input `
   border: 0;
   box-sizing: border-box;
   padding: 2px 10px;
-  width: 100%;
+  max-width: 233px;
   height: 30px;
   margin: 0 auto;
   outline: none;
@@ -18,7 +18,7 @@ export const Input = styled.input `
   font-size: 16px;
   letter-spacing: 0.3px;
     &:valid {
-      background-color: transparent;  
+      background-color: #e8f0fe;  
     }
     &:focus {
       border: 1px solid #2980B9;  

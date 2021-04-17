@@ -54,9 +54,9 @@ export const RadioFieldset =  styled.fieldset`
 
 export const RadioLabel = styled.label `
 
-  color:darkolivegreen;
-  font-weight: bold;
-  font-size: 15px;
+  color: #2980B9;
+  font-weight: 500;
+  font-size: 16px;
   align-self: center;
   justify-self: center;
 
@@ -67,11 +67,11 @@ export const RadioInput = styled.input `
   border-radius: 50%;
   width: 16px;
   height: 16px;
-  border: 2px solid #999;
+  border: 2px solid #2980B9;
   transition: 0.2s all linear;
   margin-right: 5px;
   top: 4px;
-  color:tomato;
+  outline: none;
 
   &:checked {
     border: 6px solid #1982ea;
