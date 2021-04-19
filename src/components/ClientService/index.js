@@ -1,96 +1,88 @@
-import { useSelector } from 'react-redux';
+import swal from 'sweetalert';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import {buttonValues} from '../../buttonValues'
 import Button from '../../components/Button';
-import { SectionList, ContainerList } from './styles';
+import { getServices, deleteError } from '../../store/servicesReducer';
+import { SectionList, ContainerList, Photo, IntDivider, Information, Meter } from './styles';
 
-function SelectButton({ status }){
-  let color='';
-  let content='';
-  const buttonValues = {
-    Terminado:{
-      color: 'primary',
-      content: 'Calificar servicio',
-      value: '100',
-    },
-    Solicitado:{
-      color: '',
-      content: 'Pendiente servicio',
-      value: '0',
-    },
-    Aceptado:{
-      color:'success',
-      content:'Servicio aceptado',
-      value: '15',
-    }
-  }
-  if(status === 'Terminado'){
-    color='success';
-    content='Pagar';
+function ServiceClient() {
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  }else if(status === 'Solicitado') {
-    content = 'Pendiente servicio';
-
-  }else if(status === 'Aceptado'){
-    color='success';
-    content='Servicio aceptado';
-  }else if(status === 'Pagado'){
-    color='primary';
-    content='Calificar servicio';
-  }
-
-  return (
-    <div>
-      <Button color={color}>{content}</Button>
-      {status !== 'Terminado' ? <Button color="danger">Cancelar</Button> : null}
-      <label htmlFor="progress">Disk usage C:</label>
-      <meter
-        id="progress"
-        min="0"
-        max="100"
-        low="25"
-        high="75"
-        optimum="100"
-        value="15"
-      ></meter>
-    </div>
-  );
-}
-
-function ShowService({ services, supplier }) {
-  const { userFront } = useSelector(({ usersReducer }) => ({
-      userFront: usersReducer.userFront,
+  const { loading, errorServices, services, bikeIDs } = useSelector(
+    ({ servicesReducer, usersReducer }) => ({
+      loading: servicesReducer.loading,
+      services: servicesReducer.services,
+      bikeIDs: usersReducer.userFront.bikeIDs,
+      errorServices: servicesReducer.errorServices,
     })
   );
-  let serviceProcess = []
-  if(userFront){
-    serviceProcess = services.filter((service) => service.bikeID === userFront.bikeIDs[0]._id);
-  }
-  return (
-    <div>        
-      {!!serviceProcess && serviceProcess.length > 0 && 
-        serviceProcess.map(({ _id, initLoc, finalLoc, servStat})=>{
-          return (
-            <ContainerList key={_id}>
-              <p>{initLoc}</p>
-              <p>{finalLoc}</p>
-              <img src={supplier.photo} alt={supplier.name} />
-              <SelectButton status={servStat}/>
-            </ContainerList>
-          );
-      })}
-    </div>
-  )
-}
 
-function ServiceClient({ tows }) {
+  useEffect(() => {
+    bikeIDs && bikeIDs[0] &&
+      dispatch(getServices(`bikeID=${bikeIDs[0]._id}`));
+  }, []);
+
+  if (loading) return <p>loading...</p>;
+
+  if (errorServices) {
+    localStorage.removeItem('token');
+    history.push('/login');
+
+    swal({
+      title: 'Algo salió mal!',
+      text:
+      'Por favor, ingresa de nuevo a la aplicación con tu usuario y contraseña.',
+      icon: 'error',
+    });
+    
+    dispatch(deleteError());
+  }
+  
   return (
     <SectionList>
-      {!!tows &&
-        tows.length > 0 &&
-        tows.map(({ _id, serviceIDs, supplierID }) => {
+      {!!services &&
+        services.length > 0 &&
+        services.map(({ _id, initLoc, finalLoc, towID, servStat }) => {
+
           return (
-            <div key={_id}>
-              <ShowService services={serviceIDs} supplier={supplierID} />
-            </div>
+            towID.supplierID && (
+              <ContainerList key={_id}>
+                <IntDivider>
+                  <Photo src={towID.supplierID.photo} alt={towID.supplierID.name} />
+                  <p>{towID.supplierID.name}</p>
+                </IntDivider>
+                <Information>
+                  <Meter
+                    id="progress"
+                    min="0"
+                    max="100"
+                    low="25"
+                    high="60"
+                    optimum="100"
+                    value={buttonValues[servStat].value}
+                    ></Meter>
+                  <label htmlFor="progress">
+                    {buttonValues[servStat].content}
+                  </label>
+                  <p>{initLoc} - {finalLoc}</p>
+                </Information>
+                <IntDivider>                  
+                  {servStat !== 'Inicio' && 
+                    servStat !== 'Destino' && 
+                    servStat !== 'Solicitado' &&
+                    <Button color={buttonValues[servStat].color}>
+                      {buttonValues[servStat].content}
+                    </Button>
+                  }
+                  {servStat !== 'Terminado' && servStat !== 'Pagado' && 
+                    <Button color="danger">Cancelar</Button>
+                  }
+                </IntDivider>
+              </ContainerList>
+            )
           );
         })}
     </SectionList>

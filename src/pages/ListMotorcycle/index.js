@@ -21,7 +21,6 @@ function ListMotorcycle () {
     dispatch(getTows());
   }, []);
   
-  console.log(tows)
   let history = useHistory();
 
   if (loading) return <p>loading ...</p>;
