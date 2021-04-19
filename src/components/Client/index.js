@@ -2,16 +2,12 @@ import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteError } from '../../store/servicesReducer'
-import {
-  Photo,
-  ContainerList,
-  ContainerElement,
-  SectionList,
-} from '../Provider/styles';
+import { SectionList } from '../Provider/styles';
 import Stars from '../Stars'
+import CountServices from '../CountServices';
 import Button from '../../components/Button';
 import ModalService from '../CreateServiceModal';
-import { ContainerStar } from './styles';
+import { Photo, ContainerStar, ContainerList, ContainerElement } from './styles';
 
 function Client({ tows }) {
   const dispatch = useDispatch();
@@ -20,7 +16,6 @@ function Client({ tows }) {
     loading: servicesReducer.loading,
     errorServices: servicesReducer.errorServices,
   }));
-
   let history = useHistory();
 
   if(loading) return <p>Loading...</p>
@@ -39,29 +34,25 @@ function Client({ tows }) {
       {!!tows &&
         tows.length > 0 &&
         tows.map(({ _id, supplierID, serviceIDs, status }) => {
-          if(status){
-            return (
-              <ContainerList key={_id}>
-                <ContainerElement>{supplierID.name}</ContainerElement>
-                <ContainerStar>
-                  <Stars services={serviceIDs} />
-                </ContainerStar>
-                <ContainerElement>
-                  {`${serviceIDs.length} servicio${
-                    serviceIDs.length === 1 ? '' : 's'
-                  }`}
-                </ContainerElement>
-                <ContainerElement>
-                  <Photo src={supplierID.photo} alt={supplierID.name}></Photo>
-                </ContainerElement>
-                <ContainerElement>
-                  <Button color="primary" onClick={ModalService(_id, dispatch, userFront)}>
-                    Pedir Grúa
-                  </Button>
-                </ContainerElement>
-              </ContainerList>
-            );
-          }
+          return !!status && (
+            <ContainerList key={_id}>
+              <ContainerElement><p>{supplierID.name}</p></ContainerElement>
+              <ContainerStar>
+                <Stars services={serviceIDs} />
+              </ContainerStar>
+              <ContainerElement>
+                <p><CountServices services={serviceIDs}/></p>
+              </ContainerElement>
+              <ContainerElement>
+                <Photo src={supplierID.photo} alt={supplierID.name}></Photo>
+              </ContainerElement>
+              <ContainerElement>
+                <Button color="primary" onClick={ModalService(_id, dispatch, userFront)}>
+                  Pedir Grúa
+                </Button>
+              </ContainerElement>
+            </ContainerList>
+          );
         })}
     </SectionList>
   );

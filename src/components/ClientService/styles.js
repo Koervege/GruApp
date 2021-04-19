@@ -1,29 +1,47 @@
 import styled from 'styled-components';
 
-export const ContainerStar = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-
+export const SectionList = styled.section`
+  padding: 25px 0;
+  width: 100%;
 `;
 
 export const Photo = styled.img`
   border-radius: 50%;
   border: solid 5px white;
-  height: 70px;
-  width: 70px;
+  height: 65px;
+  width: 65px;
   src: ${(props) => props.src};
-
 `;
+
+export const IntDivider = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+export const Information = styled.div`
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Meter = styled.meter`
+  width: 100%;
+  height: 20px;
+  margin: 15px 0;
+`
 
 export const ContainerList = styled.article`
   display: flex;
   padding: 7px 50px;
-  margin: 10px 20px;
+  margin: 15px 20px;
+  align-items: center;
   justify-content: space-between;
   border: solid 1px gray;
   border-radius: 5px;
-  height: 100px;
+  height: 120px;
   transition: padding 1s;
 
   &:hover {
@@ -42,13 +60,4 @@ export const ContainerList = styled.article`
       border: solid 1px goldenrod;
     }
   }
-`;
-
-export const ContainerElement = styled.div`
-  display: flex;
-  min-width: 10%;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 10px;
 `;
