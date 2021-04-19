@@ -12,7 +12,7 @@ import { useForm } from '../../hooks/useForm';
 import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
 import { loginUser } from '../../store/usersReducer'
-import { StyledFieldset } from '../Register/styles';
+import { StyledFieldset, Legend } from '../Register/styles';
 import { Background } from '../../components/Background/index';
 
 const StyledLink = styled(Link)`
@@ -64,7 +64,7 @@ function Login() {
       </Container>
       <form onSubmit={ searchUser }>
         <StyledFieldset>
-          <legend>Indentifícate</legend>
+          <Legend>Identifícate</Legend>
           <StyledInput
             value={ email }
             name="email"

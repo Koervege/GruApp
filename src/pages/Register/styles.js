@@ -77,3 +77,11 @@ export const RadioInput = styled.input `
     border: 6px solid #1982ea;
   }
 `
+
+export const Legend = styled.legend `
+
+  margin: 0 5px;
+  padding: 0 7px;
+
+`
+

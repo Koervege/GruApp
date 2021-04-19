@@ -5,7 +5,7 @@ import Button from '../../components/Button';
 import Img from '../../components/Img';
 import swal from 'sweetalert';
 import { StyledInput, Container } from '../../components/StyledInput/index';
-import { StyledLink, StyledFieldset, RadioInput, RadioLabel} from "./styles";
+import { StyledLink, StyledFieldset, RadioInput, RadioLabel, Legend} from "./styles";
 import { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
@@ -69,7 +69,7 @@ function Register() {
 
       <form onSubmit={handleSubmit}>
         <StyledFieldset>
-          <legend>Regístrate</legend>
+          <Legend>Regístrate</Legend>
           <StyledInput
             value={firstName}
             name="firstName"

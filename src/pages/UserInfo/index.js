@@ -7,7 +7,7 @@ import MotoInfo from '../../components/MotoInfo';
 import TowInfo from '../../components/TowInfo';
 import { StyledInput, Container } from '../../components/StyledInput/index';
 import { ImgUser } from "./styles";
-import { StyledFieldset } from "../Register/styles";
+import { StyledFieldset, Legend } from "../Register/styles";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -249,7 +249,7 @@ function UserInfo() {
 
         <form onSubmit={createVehi}> 
         <StyledFieldset>
-          <legend>Usuario</legend>
+          <Legend>Usuario</Legend>
           <label htmlFor="editUser">
             <input type="checkbox" defaultChecked="true" id="editUser" name="editUser" onChange={handleEdit} checked={editUser}/>
             Editar
@@ -289,7 +289,7 @@ function UserInfo() {
         </StyledFieldset>
       
         {(<StyledFieldset>
-          <legend>{vehicleType}</legend>  
+          <Legend>{vehicleType}</Legend>  
           <label htmlFor="editVehi">
             <input type="checkbox" defaultChecked="true" id="editVehi" name="editVehi" onChange={handleEdit} checked={editVehi}/>
             Editar
