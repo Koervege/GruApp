@@ -71,7 +71,6 @@ export function deleteError() {
 const initialState = {
   loading: false,
   services: [],
-  service: [],
   userID: '',
   errorServices: null,
 };
@@ -97,7 +96,7 @@ export function servicesReducer(state = initialState, action) {
     case SERVICES_CREATED:
       return {
         ...state,
-        service: action.payload,
+        services: [...state.services, action.payload],
       }
     case SERVICES_FINISHED:
       return {
