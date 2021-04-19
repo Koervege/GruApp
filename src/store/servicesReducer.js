@@ -67,7 +67,6 @@ export function updateService ( id, dataUpdate) {
   return async function (dispatch) {
     dispatch({ type: SERVICES_LOADING });
     try {
-      console.log(dataUpdate)
       const token = localStorage.getItem('token');
       
       const { data: { service } } = await axios({
@@ -79,7 +78,6 @@ export function updateService ( id, dataUpdate) {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(service)
       dispatch({ type: SERVICES_UPDATED, payload: service });
     } catch (error) {
       dispatch({ type: SERVICES_ERROR, payload: error });
