@@ -2,10 +2,10 @@ import swal from 'sweetalert';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { BoxSupplier } from './styles';
+import { BoxSupplier, LineDivider } from './styles';
 import Client from '../../components/Client';
-import Button from '../../components/Button';
 import NavBar from '../../components/NavBar';
+import ClientService from '../../components/ClientService'
 import { getTows, deleteErrorTows } from '../../store/towsReducer';
 
 function ListMotorcycle () {
@@ -20,7 +20,7 @@ function ListMotorcycle () {
   useEffect(() => {
     dispatch(getTows());
   }, []);
-
+  
   let history = useHistory();
 
   if (loading) return <p>loading ...</p>;
@@ -40,7 +40,13 @@ function ListMotorcycle () {
     <section>
       <NavBar userID={userID} />
       <BoxSupplier>
+        <h3>Grúas disponibles</h3>
         <Client tows={tows} />
+      </BoxSupplier>
+      <BoxSupplier>
+        <LineDivider />
+        <h3>Servicios en proceso</h3>
+        <ClientService tows={tows} />
       </BoxSupplier>
     </section>
   );

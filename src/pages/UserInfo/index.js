@@ -107,8 +107,10 @@ function UserInfo() {
       phoneNum: userFront.phoneNum,
       name: userFront.name,
     }));
-    getVehiInfo()
-    confirmEmail(userType, userFront.email, localStorage.getItem('token'));
+    getVehiInfo();
+    if(!userFront.emailIsConfirmed) {
+      confirmEmail(userType, userFront.email, localStorage.getItem('token'));
+    };
   },[userType])
 
   const eraseUser = async(event) => {

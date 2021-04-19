@@ -7,7 +7,7 @@ const SERVICES_SUCCESS = 'SERVICES_SUCCESS';
 const SERVICES_FINISHED = 'SERVICES_FINISHED';
 const SERVICES_DELETE_ERROR = 'SERVICES_DELETE_ERROR';
 
-export function getServices() {
+export function getServices(query='') {
   return async function (dispatch) {
     dispatch({ type: SERVICES_LOADING });
     try {
@@ -16,7 +16,7 @@ export function getServices() {
       const { data: { services, userID } } = await axios({
         method: 'GET',
         baseURL: process.env.REACT_APP_SERVER_URL,
-        url: '/services',
+        url: `/services?${query}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -71,7 +71,6 @@ export function deleteError() {
 const initialState = {
   loading: false,
   services: [],
-  service: [],
   userID: '',
   errorServices: null,
 };
@@ -97,7 +96,7 @@ export function servicesReducer(state = initialState, action) {
     case SERVICES_CREATED:
       return {
         ...state,
-        service: action.payload,
+        services: [...state.services, action.payload],
       }
     case SERVICES_FINISHED:
       return {
