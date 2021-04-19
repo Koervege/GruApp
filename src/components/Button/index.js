@@ -3,11 +3,11 @@ import styled from 'styled-components';
 const handleColorType = color => {
     switch (color) {
       case "primary":
-        return "#0069d9";
+        return "#2980B9";
       case "danger":
-        return "#ff0000";
+        return "#BA3D3C";
       case "success":
-        return "#218838";  
+        return "#6E6D13";  
       default:
         return "#5a6268";
     }
@@ -22,7 +22,7 @@ const Button = styled.button`
     margin: 10px;
     outline: none;
     font-size: 16px;
-    height: 36px;
+    height: 40px;
     min-width: 90px;
     max-width: 120px;
     color: #fefefe;
@@ -33,11 +33,13 @@ const Button = styled.button`
     -moz-osx-font-smoothing: grayscale;
     font-weight: 500;
     border: none;
-    background: ${({ color }) => handleColorType(color)}; 
+    background: ${({ color }) => handleColorType(color)};
+    opacity: 0.8;
+    transition: all 0.4s;
     &:hover {
       cursor: pointer;
-      background-color: #F8CE0B;
-      color: black;
+      opacity: 1;
+      color: #111;
     }
 `
 export default Button

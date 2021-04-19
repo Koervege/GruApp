@@ -4,16 +4,23 @@ import styled from 'styled-components';
 export const StyledLink = styled(Link)`
 
   text-decoration: none;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+  border-radius: 11px;
   margin: 10px;
   outline: none;
-  font-size: 20px;
-  height: 41.5px;
-  min-width: 100px;
-  max-width: auto;
+  color: #fefefe;
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  font-weight: 500;
+  height: 40px;
+  min-width: 90px;
+  max-width: 120px;
   color: white;
   border-style: none;
   background: red;
