@@ -6,7 +6,7 @@ export const LandNavbar = styled.nav`
   flex-direction: row;
   justify-content: space-between;
   padding: 15px 50px;
-  background-color: rgba(82, 161, 227);
+  background: linear-gradient(120deg, #2980B9 5%, #0D476E 55%, #52BAFF 100%);
   font-size: 1.5em;
   color: #fefefe;
   text-transform: uppercase;
