@@ -2,7 +2,8 @@ import swal from 'sweetalert';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import {buttonValues} from '../../buttonValues'
+import { buttonValues } from '../../buttonValues';
+import { setEpaycoData, handler } from '../../setEpaycoData';
 import Button from '../../components/Button';
 import { getServices, deleteError } from '../../store/servicesReducer';
 import { SectionList, ContainerList, Photo, IntDivider, Information, Meter } from './styles';
@@ -11,12 +12,13 @@ function ServiceClient() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { loading, errorServices, services, bikeIDs } = useSelector(
+  const { loading, errorServices, services, bikeIDs, name } = useSelector(
     ({ servicesReducer, usersReducer }) => ({
       loading: servicesReducer.loading,
       services: servicesReducer.services,
       bikeIDs: usersReducer.userFront.bikeIDs,
       errorServices: servicesReducer.errorServices,
+      name:usersReducer.userFront.name,
     })
   );
 
@@ -40,12 +42,20 @@ function ServiceClient() {
     
     dispatch(deleteError());
   }
+
+  const handleClick = (servStat, cost, initLoc, finalLoc) => {
+    if( servStat === 'Terminado'){
+      const data = setEpaycoData(cost, initLoc, finalLoc, name);
+      handler.open(data);
+    }
+
+  }
   
   return (
     <SectionList>
       {!!services &&
         services.length > 0 &&
-        services.map(({ _id, initLoc, finalLoc, towID, servStat }) => {
+        services.map(({ _id, initLoc, finalLoc, towID, servStat, cost }) => {
 
           return (
             towID.supplierID && (
@@ -73,7 +83,9 @@ function ServiceClient() {
                   {servStat !== 'Inicio' && 
                     servStat !== 'Destino' && 
                     servStat !== 'Solicitado' &&
-                    <Button color={buttonValues[servStat].color}>
+                    <Button 
+                      color={buttonValues[servStat].color}
+                      onClick={ () => handleClick(servStat, cost, initLoc, finalLoc) }>
                       {buttonValues[servStat].content}
                     </Button>
                   }
