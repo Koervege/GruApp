@@ -14,7 +14,7 @@ export function setEpaycoData (cost, initLoc, finalLoc, name){
     country: 'CO',
     lang: 'en',
   
-    invoice: '12345698',
+    invoice: '12345698900',
     extra1: 'extra1',
     extra2: 'extra2',
     extra3: 'extra3',
