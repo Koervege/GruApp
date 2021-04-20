@@ -51,15 +51,15 @@ function ServiceClient() {
 
   }
   
-  function CancelService( _id ){
+  function CancelService( _id, index ){
     const dataUpdate = { servStat : 'Cancelado'}
-    dispatch(updateService( _id, dataUpdate ));
+    dispatch(updateService( _id, dataUpdate, index ));
   }
   return (
     <SectionList>
       {!!services &&
         services.length > 0 &&
-        services.map(({ _id, initLoc, finalLoc, towID, servStat, cost }) => {
+        services.map(({ _id, initLoc, finalLoc, towID, servStat, cost }, index) => {
 
           return (
             towID.supplierID &&
@@ -114,7 +114,7 @@ function ServiceClient() {
                   {servStat !== 'Terminado' && servStat !== 'Pagado' && (
                     <Button
                       color="danger"
-                      onClick={() => CancelService(_id)}
+                      onClick={() => CancelService(_id, index)}
                     >
                       Cancelar
                     </Button>
