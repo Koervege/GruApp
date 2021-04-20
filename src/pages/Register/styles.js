@@ -23,13 +23,15 @@ export const StyledLink = styled(Link)`
   max-width: 120px;
   color: white;
   border-style: none;
-  background: red;
+  background: #BA3D3C;
+  opacity: 0.8;
+  transition: all 0.4s;
 
   &:hover {
 
     cursor: pointer;
-    background-color: #f8ce0b;
-    color: black;
+    opacity: 1;
+    color: #111;
 
   }
 

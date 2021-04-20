@@ -30,6 +30,10 @@ export const Label = styled.label`
   font-size: 16px;
   margin-right: 18px;
   color: #2980b9;
+  @media (max-width: 768px) {
+      width: 100%;
+      align-self: flex-start;
+    } 
 `;
 
 

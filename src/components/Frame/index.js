@@ -5,7 +5,6 @@ const Frame = styled.div `
 
   padding: 5px;
   border-radius: 10px;
-  margin: 0px auto;
   max-width: 500px;
   background-color: transparent;
   color: #2980b9; 

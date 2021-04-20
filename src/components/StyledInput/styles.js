@@ -22,7 +22,6 @@ export const Input = styled.input `
     &:focus {
       border: 1px solid #2980B9;  
     }
-    
 `
 
 export const Label = styled.label `
@@ -35,12 +34,21 @@ export const Label = styled.label `
     &:focus {
       background-color: white;
     }
+    @media (max-width: 768px) {
+      width: 100%;
+      align-self: flex-start;
+      margin-right: 0;
+    } 
 `
 export const Container = styled.div `
 
   display: flex;
   justify-content: center;
-  padding: 15px;
+  padding: 12px 15px;
   align-items: center;
-  flex: 1 1 auto;  
+  flex: 1 1 auto;
+    @media (max-width: 768px) {
+      flex-direction: column;
+      padding: 5px 10px;
+    }  
 `
