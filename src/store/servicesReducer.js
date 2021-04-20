@@ -63,24 +63,22 @@ export function createService( initLoc, finalLoc, date, bikeID, towID ) {
   };
 }
 
-export function updateService ( id, dataUpdate) {
+export function updateService ( serviceID, dataUpdate, updatedServiceIndex ) {
   return async function (dispatch) {
     dispatch({ type: SERVICES_LOADING });
     try {
-      console.log(dataUpdate)
       const token = localStorage.getItem('token');
       
       const { data: { service } } = await axios({
         method: 'PUT',
         baseURL: process.env.REACT_APP_SERVER_URL,
-        url: `/services/${id}`,
+        url: `/services/${serviceID}`,
         data: dataUpdate,
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(service)
-      dispatch({ type: SERVICES_UPDATED, payload: service });
+      dispatch({ type: SERVICES_UPDATED, payload: service, updatedServiceIndex });
     } catch (error) {
       dispatch({ type: SERVICES_ERROR, payload: error });
     } finally {
@@ -128,7 +126,13 @@ export function servicesReducer(state = initialState, action) {
     case SERVICES_UPDATED:
       return {
         ...state,
-        services: [...state.services, action.payload],
+        services: state.services.map((service, index) => {
+            return (
+            index === action.updatedServiceIndex ? 
+            action.payload :
+            service
+            )
+          }),
       }
     case SERVICES_FINISHED:
       return {

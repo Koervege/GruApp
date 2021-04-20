@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 import logo from '../../logo.png';
 import axios from 'axios';
 
-function confirmEmail(userType, userEmail, auth) {
+function confirmEmail(userType, userEmail, auth, history) {
 
   if(!userType) return
 
@@ -39,10 +39,16 @@ function confirmEmail(userType, userEmail, auth) {
               <p>Te hemos enviado un correo con un PIN de confirmación. ¡Recuerda revisar en tu carpeta de Spam!<p>
               <input id="Token" placeholder="Tu PIN" class="swal2-input" required="required" >
             `,
+      showDenyButton: true,
+      denyButtonText: 'Volver al inicio',
       confirmButtonText: 'Verificar',
       focusConfirm: false,
       allowOutsideClick: false,
       allowEscapeKey: false,
+      preDeny: () => {
+        localStorage.removeItem('token');
+        history.push('/');
+      },
       preConfirm: 
         async () => {
           const input = document.getElementById('Token').value

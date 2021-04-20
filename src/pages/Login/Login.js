@@ -4,38 +4,16 @@ import Frame from '../../components/Frame';
 import Button from '../../components/Button';
 import Img from '../../components/Img';
 import { StyledInput, Container } from '../../components/StyledInput/index';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import {ATags} from '../../components/NavBar/styles'
 import { useForm } from '../../hooks/useForm';
 import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
 import { loginUser } from '../../store/usersReducer'
-import { StyledFieldset } from '../Register/styles';
+import { StyledFieldset, Legend, StyledLink } from '../Register/styles';
+import { Background } from '../../components/Background/index';
 
-const StyledLink = styled(Link)`
-	text-decoration: none;
-	display:flex;
-	justify-content: center;
-	align-items: center;
-  border-radius: 5px;
-  margin: 10px;
-  outline: none;
-  font-size: 20px;
-  height: 40px;
-  min-width: 100px;
-  max-width: auto;
-  color: white;
-  border-style: none;
-  background: red;
 
-  &:hover {
-    cursor: pointer;
-    background-color: #f8ce0b;
-    color: black;
-  }
-`
 function Login() {
 
   const [formValues, handleInputChange] = useForm({
@@ -56,13 +34,14 @@ function Login() {
   };
 
   return (
+    <Background>
     <Frame>
       <Container>
         <Img src={logo} radius="100" width="100" height="100" alt="logo" />
       </Container>
       <form onSubmit={ searchUser }>
         <StyledFieldset>
-          <legend>Indentifícate</legend>
+          <Legend>Identifícate</Legend>
           <StyledInput
             value={ email }
             name="email"
@@ -89,10 +68,11 @@ function Login() {
       </form>
       <Container>
         <small>
-          Aun no estás registrado? <ATags to="/register">Registrarse</ATags>
+          Aun no estás registrado? <ATags tagType="bold" to="/register">Registrarse</ATags>
         </small>
       </Container>
     </Frame>
+    </Background>
     );
 }  
 

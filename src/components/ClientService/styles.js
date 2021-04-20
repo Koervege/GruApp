@@ -39,14 +39,15 @@ export const ContainerList = styled.article`
   margin: 15px 20px;
   align-items: center;
   justify-content: space-between;
-  border: solid 1px gray;
-  border-radius: 5px;
+  border: solid 2px #2980B9;
+  border-radius: 11px;
   height: 120px;
   transition: padding 1s;
+  background-color: rgba(249, 249, 249, 0.5);
 
   &:hover {
     padding: 15px 50px;
-    border: solid 1px goldenrod;
+    border: solid 2px #BAB916;
   }
 
   @media (max-width: 768px) {
@@ -57,7 +58,7 @@ export const ContainerList = styled.article`
     align-items: center;
     &:hover {
       padding: 30px 50px;
-      border: solid 1px goldenrod;
+      border: solid 2px #BAB916;
     }
   }
 `;

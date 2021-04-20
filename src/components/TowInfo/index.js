@@ -10,42 +10,38 @@ export default function TowInfo(props) {
   return (
     <React.Fragment>
       <Container>
-        <div>
-          <Label htmlFor="brand">Marca</Label>
-          <Select
-            value={props.brand}
-            id="brand"
-            name="brand"
-            onChange={props.onChange}
-            type="text"
-            required
-            disabled={props.edit}
-          >
-          <option value="">-- Seleccione la Marca --</option> 
-          {
-            brands.map((brand) => <option key={brand} value={brand}>{brand}</option>)
-          }
-          </Select>
-        </div>
+        <Label htmlFor="brand">Marca</Label>
+        <Select
+          value={props.brand}
+          id="brand"
+          name="brand"
+          onChange={props.onChange}
+          type="text"
+          required
+          disabled={props.edit}
+        >
+        <option value="">-- Seleccione la Marca --</option> 
+        {
+          brands.map((brand) => <option key={brand} value={brand}>{brand}</option>)
+        }
+        </Select>
       </Container>
       <Container>
-        <div>
-          <Label htmlFor="capacity">Capacidad Grúa</Label>
-          <Select
-            value={props.capacity}
-            id="capacity"
-            name="capacity"
-            onChange={props.onChange}
-            type="text"
-            required
-            disabled={props.edit}
-          >
-          <option value="">-- Seleccione capacidad Máxima --</option> 
-          {
-            capacity.map((kg) => <option key={kg} value={kg}>{kg}</option>)
-          } 
-          </Select>
-        </div>
+        <Label htmlFor="capacity">Capacidad Grúa</Label>
+        <Select
+          value={props.capacity}
+          id="capacity"
+          name="capacity"
+          onChange={props.onChange}
+          type="text"
+          required
+          disabled={props.edit}
+        >
+        <option value="">-- Seleccione capacidad Máxima --</option> 
+        {
+          capacity.map((kg) => <option key={kg} value={kg}>{kg}</option>)
+        } 
+        </Select>
       </Container>
       <StyledInput
         value={props.plateNum}
