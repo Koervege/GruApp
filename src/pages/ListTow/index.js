@@ -92,9 +92,8 @@ function ListTow() {
           {isTowActive ? 'Activo' : 'Inactivo'}
         </label>
       
-        <Button color="primary">Ha ganado XX.XXX COP</Button>
+        <h3>Servicios en proceso</h3>
         <Provider />
-        <Button color="success">Servicio en proceso</Button>
       </BoxSupplier>
     </section>
   );

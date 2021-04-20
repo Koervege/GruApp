@@ -91,8 +91,8 @@ function ServiceClient() {
                   </p>
                 </Information>
 
-                <IntDivider>                  
-                  {servStat !== 'Inicio' && 
+                <IntDivider>
+                {servStat !== 'Inicio' && 
                     servStat !== 'Destino' && 
                     servStat !== 'Solicitado' &&
                     <Button 
@@ -101,16 +101,6 @@ function ServiceClient() {
                       {buttonValues[servStat].content}
                     </Button>
                   }
-                </IntDivider>
-
-                <IntDivider>
-                  {servStat !== 'Inicio' &&
-                    servStat !== 'Destino' &&
-                    servStat !== 'Solicitado' && (
-                      <Button color={buttonValues[servStat].color}>
-                        {buttonValues[servStat].content}
-                      </Button>
-                    )}
                   {servStat !== 'Terminado' && servStat !== 'Pagado' && (
                     <Button
                       color="danger"
