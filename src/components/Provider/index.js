@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import swal from 'sweetalert'
 import { useHistory } from "react-router-dom";
+import towViewService from '../TowViewServiceModal/index'
 
 function Provider() {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ function Provider() {
     <SectionList>
       {!!services && !!userFront &&
         services.length > 0 &&
-        services.map(({ _id, initLoc, finalLoc, date, bikeID }) => {
+        services.map(({ _id, initLoc, finalLoc, date, bikeID, servStat }, index) => {
           const dateArr = date.split('-');
           const newDate = new Date(dateArr[0], dateArr[1], dateArr[2]);
           const dateFormat = format(newDate, 'PPPP', { locale: es });
@@ -60,7 +61,7 @@ function Provider() {
                 ></Photo>
               </ContainerElement>
               <ContainerElement>
-                  <Button color="primary">
+                  <Button color="primary" onClick={() => towViewService(_id, servStat, bikeID.clientID.name, dispatch, index)}>
                     Detalles
                   </Button>
                 </ContainerElement>

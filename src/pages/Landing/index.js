@@ -11,6 +11,7 @@ import {
 } from './styles';
 
 class Landing extends React.Component {
+
   render() {
     return (
       <section className="landingContainer">
