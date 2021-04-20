@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { buttonValues } from '../../buttonValues';
 import { setEpaycoData, handler } from '../../setEpaycoData';
 import Button from '../../components/Button';
-import { getServices, deleteError } from '../../store/servicesReducer';
+import { getServices, updateService ,deleteError } from '../../store/servicesReducer';
 import { SectionList, ContainerList, Photo, IntDivider, Information, Meter } from './styles';
 
 function ServiceClient() {
@@ -51,6 +51,10 @@ function ServiceClient() {
 
   }
   
+  function CancelService( _id ){
+    const dataUpdate = { servStat : 'Cancelado'}
+    dispatch(updateService( _id, dataUpdate ));
+  }
   return (
     <SectionList>
       {!!services &&
@@ -58,10 +62,15 @@ function ServiceClient() {
         services.map(({ _id, initLoc, finalLoc, towID, servStat, cost }) => {
 
           return (
-            towID.supplierID && (
+            towID.supplierID &&
+              servStat !== 'Cancelado' &&
+              servStat !== 'Calificado' && (
               <ContainerList key={_id}>
                 <IntDivider>
-                  <Photo src={towID.supplierID.photo} alt={towID.supplierID.name} />
+                  <Photo
+                    src={towID.supplierID.photo}
+                    alt={towID.supplierID.name}
+                  />
                   <p>{towID.supplierID.name}</p>
                 </IntDivider>
                 <Information>
@@ -73,12 +82,15 @@ function ServiceClient() {
                     high="60"
                     optimum="100"
                     value={buttonValues[servStat].value}
-                    ></Meter>
+                  ></Meter>
                   <label htmlFor="progress">
                     {buttonValues[servStat].content}
                   </label>
-                  <p>{initLoc} - {finalLoc}</p>
+                  <p>
+                    {initLoc} - {finalLoc}
+                  </p>
                 </Information>
+
                 <IntDivider>                  
                   {servStat !== 'Inicio' && 
                     servStat !== 'Destino' && 
@@ -87,11 +99,23 @@ function ServiceClient() {
                       color={buttonValues[servStat].color}
                       onClick={ () => handleClick(servStat, cost, initLoc, finalLoc) }>
                       {buttonValues[servStat].content}
+
+                <IntDivider>
+                  {servStat !== 'Inicio' &&
+                    servStat !== 'Destino' &&
+                    servStat !== 'Solicitado' && (
+                      <Button color={buttonValues[servStat].color}>
+                        {buttonValues[servStat].content}
+                      </Button>
+                    )}
+                  {servStat !== 'Terminado' && servStat !== 'Pagado' && (
+                    <Button
+                      color="danger"
+                      onClick={() => CancelService(_id)}
+                    >
+                      Cancelar
                     </Button>
-                  }
-                  {servStat !== 'Terminado' && servStat !== 'Pagado' && 
-                    <Button color="danger">Cancelar</Button>
-                  }
+                  )}
                 </IntDivider>
               </ContainerList>
             )
