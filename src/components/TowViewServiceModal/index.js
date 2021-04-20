@@ -58,7 +58,6 @@ function towViewService(servID, serviceStatus = 'Aceptado', clientName = 'client
           `,
         confirmButtonText: 'Enviar',
         preConfirm: () => {
-          console.log(document.getElementById('time'), typeof(document.getElementById('time')))
           dispatch(updateService(servID, {
           hour: document.getElementById('time').value,
           cost: document.getElementById('cost').value,
