@@ -7,6 +7,7 @@ export const BoxSupplier = styled.div`
   padding: 15px 0;
   background: linear-gradient(150deg, #c9f1ff 0%, #fefefe 100%);
   min-height: 100vh;
+  color: #2980B9;
 `;
 
 export const LineDivider = styled.div`

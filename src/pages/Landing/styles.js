@@ -13,20 +13,25 @@ export const LandingMap = styled.iframe`
 
     width:50%;
     height:500px;
-    border: 4px solid rgba(82, 161, 227);
+    border: 4px solid #2980B9;
+    border-radius: 11px;
 `
 
 export const LandingImg = styled.img`
 
-    width: 350px;
-    height: 320px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: solid 4px #2980B9;
 `
 
 export const LandingH1 = styled.h1`
     
     font-size: 2em;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: rgba(82, 161, 227);
+    color: #2980B9;
 `
 
 export const LandingP = styled.p`
@@ -34,5 +39,5 @@ export const LandingP = styled.p`
     width:50%;
     font-size: 1.3em;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: rgba(82, 161, 227);
+    color: #2980B9;
 `
