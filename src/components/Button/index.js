@@ -3,33 +3,43 @@ import styled from 'styled-components';
 const handleColorType = color => {
     switch (color) {
       case "primary":
-        return "#0069d9";
+        return "#2980B9";
       case "danger":
-        return "#ff0000";
+        return "#BA3D3C";
       case "success":
-        return "#218838";  
+        return "#6E6D13";  
       default:
         return "#5a6268";
     }
   };
 
 const Button = styled.button`
-      
-    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing:border-box;
+    border-radius: 11px;
     margin: 10px;
     outline: none;
-    font-size: 20px;
+    font-size: 16px;
     height: 40px;
-    min-width: 100px;
-    max-width: auto;
-    color: white;
-    border-style: none;
-    background: ${({ color }) => handleColorType(color)}; 
-
+    min-width: 90px;
+    max-width: 120px;
+    color: #fefefe;
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 500;
+    border: none;
+    background: ${({ color }) => handleColorType(color)};
+    opacity: 0.8;
+    transition: all 0.4s;
     &:hover {
       cursor: pointer;
-      background-color: #F8CE0B;
-      color: black;
+      opacity: 1;
+      color: #111;
     }
 `
 export default Button

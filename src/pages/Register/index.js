@@ -5,11 +5,13 @@ import Button from '../../components/Button';
 import Img from '../../components/Img';
 import swal from 'sweetalert';
 import { StyledInput, Container } from '../../components/StyledInput/index';
-import { StyledLink, StyledFieldset, RadioInput, RadioLabel} from "./styles";
+import { StyledLink, StyledFieldset, RadioInput, RadioLabel, Legend} from "./styles";
 import { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { registerUser, deleteError } from '../../store/usersReducer'
+import { registerUser, deleteError } from '../../store/usersReducer';
+import { Background } from '../../components/Background/index';
+
 
 function Register() {
 
@@ -59,6 +61,7 @@ function Register() {
 
   if(loading) return <p>Un momento por favor...</p>
   return (
+    <Background>
     <Frame>
       <Container>
       <Img src={logo} radius="150" width="150" height="150" alt="logo" />
@@ -66,7 +69,7 @@ function Register() {
 
       <form onSubmit={handleSubmit}>
         <StyledFieldset>
-          <legend>Regístrate</legend>
+          <Legend>Regístrate</Legend>
           <StyledInput
             value={firstName}
             name="firstName"
@@ -90,7 +93,7 @@ function Register() {
             name="email"
             id="email"
             onChange={e => setEmail(e.target.value)}
-            children="E - mail"
+            children="E-mail"
             type="email"
             required="required"
           />
@@ -158,6 +161,7 @@ function Register() {
         </Container>
       </form>
     </Frame>
+    </Background>
   )
 
 }

@@ -42,8 +42,6 @@ function ListMotorcycle () {
       <BoxSupplier>
         <h3>Grúas disponibles</h3>
         <Client tows={tows} />
-      </BoxSupplier>
-      <BoxSupplier>
         <LineDivider />
         <h3>Servicios en proceso</h3>
         <ClientService tows={tows} />

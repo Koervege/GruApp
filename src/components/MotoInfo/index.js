@@ -11,7 +11,6 @@ export default function MotoInfo(props) {
   return (
     <React.Fragment>
       <Container>
-        <div>
           <Label htmlFor="brand">Marca</Label>
           <Select
             value={props.brand}
@@ -27,10 +26,8 @@ export default function MotoInfo(props) {
             brands.map((brand) => <option key={brand} value={brand}>{brand}</option>)
           }
           </Select>
-        </div>
       </Container>
       <Container>
-        <div>
           <Label htmlFor="cc">Cilindraje</Label>
           <Select
             value={props.cc}
@@ -46,10 +43,8 @@ export default function MotoInfo(props) {
             ccs.map((cc) => <option key={cc} value={cc}>{cc}</option>)
           } 
           </Select>
-        </div>
       </Container>
       <Container>
-        <div>
           <Label htmlFor="type">Tipo</Label>
           <Select
             value={props.type}
@@ -65,7 +60,6 @@ export default function MotoInfo(props) {
             motoTypes.map((motoType) => <option key={motoType} value={motoType}>{motoType}</option>)
           } 
           </Select>
-        </div>
       </Container>
       <StyledInput
         value={props.plateNum}
