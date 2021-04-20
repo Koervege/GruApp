@@ -99,6 +99,9 @@ function ServiceClient() {
                       color={buttonValues[servStat].color}
                       onClick={ () => handleClick(servStat, cost, initLoc, finalLoc) }>
                       {buttonValues[servStat].content}
+                    </Button>
+                  }
+                </IntDivider>
 
                 <IntDivider>
                   {servStat !== 'Inicio' &&
