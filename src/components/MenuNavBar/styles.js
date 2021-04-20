@@ -24,11 +24,17 @@ export const MenuItem = styled(Link)`
   transition: background-color 0.4s;
   padding: 0.4rem 1rem;
   text-decoration: none;
-  color: rgba(82, 161, 227);
-  border-bottom: 1px solid rgba(82, 161, 227);
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2980B9;
+  font-weight: 500;
+  border-bottom: 2px solid #2980B9;
     &:hover {
       cursor: pointer;
-      background-color: rgba(82, 161, 227);
+      background-color: #2980B9;
       color: #fefefe;
     }
     &:last-child {

@@ -6,12 +6,15 @@ export const LandNavbar = styled.nav`
   flex-direction: row;
   justify-content: space-between;
   padding: 15px 50px;
-  background-color: rgba(82, 161, 227);
+  background: linear-gradient(120deg, #2980B9 5%, #0D476E 55%, #52BAFF 100%);
   font-size: 1.5em;
   color: #fefefe;
   text-transform: uppercase;
   position: fixed;
   width: 95%;
+    @media (max-width: 768px) {
+      padding: 12px 20px;
+    }
 `;
 
 export const LandNavContainer = styled.div`
@@ -24,6 +27,9 @@ export const LandNavContainer = styled.div`
 export const LandNavIcons = styled.div`
   font-size: 70px;
   color: #fefefe;
+    @media (max-width: 768px) {
+      font-size: 50px;
+    } 
 `;
 
 export const LandNavLoginCont = styled.div`
@@ -41,5 +47,6 @@ export const LandNavLogin = styled(Link)`
   border: 3px solid #fefefe;
   width: 100px;
   height: auto;
+  margin-right: 15px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 `;

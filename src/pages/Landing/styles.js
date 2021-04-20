@@ -7,32 +7,49 @@ export const LandingMain = styled.main`
     flex-flow: column nowrap;
     align-items: center;
     justify-content: center;
+    @media (max-width: 768px) {
+      padding-top: 60px;
+    }
 `
 
 export const LandingMap = styled.iframe`
 
-    width:50%;
+    width:70%;
     height:500px;
-    border: 4px solid rgba(82, 161, 227);
+    border: 4px solid #2980B9;
+    border-radius: 11px;
+    @media (max-width: 768px) {
+      width: 100%;
+      border: none;
+      border-radius: 0;
+    }
 `
 
 export const LandingImg = styled.img`
 
-    width: 350px;
-    height: 320px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: solid 4px #2980B9;
+    @media (max-width: 768px) {
+      width: 120px;
+      height: 120px;
+    }
 `
 
 export const LandingH1 = styled.h1`
     
     font-size: 2em;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: rgba(82, 161, 227);
+    color: #2980B9;
 `
 
 export const LandingP = styled.p`
 
-    width:50%;
+    width:70%;
     font-size: 1.3em;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: rgba(82, 161, 227);
+    color: #2980B9;
 `
