@@ -8,14 +8,8 @@ import {
   LandingP,
   LandingImg,
 } from './styles';
-import viewService from '../../components/ViewServiceModal/index'
 
 class Landing extends React.Component {
-
-  componentDidMount() {
-
-    viewService()
-  }
 
   render() {
     return (
