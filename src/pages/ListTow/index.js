@@ -8,6 +8,11 @@ import Provider from '../../components/Provider';
 import Button from '../../components/Button';
 import NavBar from '../../components/NavBar';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import swal from 'sweetalert';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { getServices, deleteError } from '../../store/servicesReducer';
 
 function ListTow() {
   const dispatch = useDispatch();
@@ -91,6 +96,7 @@ function ListTow() {
           />
           {isTowActive ? 'Activo' : 'Inactivo'}
         </label>
+      
         <Button color="primary">Ha ganado XX.XXX COP</Button>
         <Provider />
         <Button color="success">Servicio en proceso</Button>
