@@ -127,12 +127,12 @@ export function servicesReducer(state = initialState, action) {
       return {
         ...state,
         services: state.services.map((service, index) => {
-            return (
+          return (
             index === action.updatedServiceIndex ? 
             action.payload :
             service
-            )
-          }),
+          )
+        }), 
       }
     case SERVICES_FINISHED:
       return {

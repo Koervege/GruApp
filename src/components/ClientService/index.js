@@ -25,7 +25,7 @@ function ServiceClient() {
   useEffect(() => {
     bikeIDs && bikeIDs[0] &&
       dispatch(getServices(`bikeID=${bikeIDs[0]._id}`));
-  }, []);
+  }, [services.length]);
 
   if (loading) return <p>loading...</p>;
 
@@ -51,15 +51,15 @@ function ServiceClient() {
 
   }
   
-  function CancelService( _id ){
+  function CancelService( _id, index ){
     const dataUpdate = { servStat : 'Cancelado'}
-    dispatch(updateService( _id, dataUpdate ));
+    dispatch(updateService( _id, dataUpdate, index ));
   }
   return (
     <SectionList>
       {!!services &&
         services.length > 0 &&
-        services.map(({ _id, initLoc, finalLoc, towID, servStat, cost }) => {
+        services.map(({ _id, initLoc, finalLoc, towID, servStat, cost }, index) => {
 
           return (
             towID.supplierID &&
@@ -91,8 +91,8 @@ function ServiceClient() {
                   </p>
                 </Information>
 
-                <IntDivider>                  
-                  {servStat !== 'Inicio' && 
+                <IntDivider>
+                {servStat !== 'Inicio' && 
                     servStat !== 'Destino' && 
                     servStat !== 'Solicitado' &&
                     <Button 
@@ -101,19 +101,10 @@ function ServiceClient() {
                       {buttonValues[servStat].content}
                     </Button>
                   }
-                </IntDivider>
-                <IntDivider>
-                  {servStat !== 'Inicio' &&
-                    servStat !== 'Destino' &&
-                    servStat !== 'Solicitado' && (
-                      <Button color={buttonValues[servStat].color}>
-                        {buttonValues[servStat].content}
-                      </Button>
-                    )}
                   {servStat !== 'Terminado' && servStat !== 'Pagado' && (
                     <Button
                       color="danger"
-                      onClick={() => CancelService(_id)}
+                      onClick={() => CancelService(_id, index)}
                     >
                       Cancelar
                     </Button>

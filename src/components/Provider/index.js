@@ -50,7 +50,7 @@ function Provider() {
           const dateArr = date.split('-');
           const newDate = new Date(dateArr[0], dateArr[1], dateArr[2]);
           const dateFormat = format(newDate, 'PPPP', { locale: es });
-          return (
+          return servStat !== 'Cancelado' && servStat !== 'Pagado' && (
             <ContainerList key={_id}>
               <ContainerElement>{bikeID.clientID.name}</ContainerElement>
               <ContainerElement>{`${initLoc} / ${finalLoc} / ${dateFormat} / ${bikeID.type} / ${bikeID.cc} cc`}</ContainerElement>
