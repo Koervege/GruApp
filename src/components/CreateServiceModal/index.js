@@ -37,7 +37,7 @@ export default function ModalService(towID, dispatch, userFront, name) {
 
         Swal.fire({
           icon: 'success',
-          title: 'Solicitud',
+          title: 'Solicitud enviada exitosamente',
           text: `${name} te indicará la hora de recogida y el costo del servicio`,
           confirmButtonText: 'Entendido!',
         });
