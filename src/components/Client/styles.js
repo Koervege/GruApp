@@ -29,7 +29,7 @@ export const ContainerList = styled.article`
 
   &:hover {
     padding: 15px 50px;
-    border: solid 2px #BAB916;
+    border: solid 2px whitesmoke;
   }
 
   @media (max-width: 768px) {

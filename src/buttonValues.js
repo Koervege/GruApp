@@ -1,7 +1,7 @@
 export const buttonValues = {
   Solicitado: {
     color: '',
-    content: 'Pendiente servicio',
+    content: 'Pendiente confirmación del conductor',
     value: '0',
   },
   Aceptado: {
