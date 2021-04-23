@@ -63,9 +63,6 @@ export default function AddInformation(_id, tow, index, dispatch) {
     if (formValues) {
       const rating = formValues[0];
       const comments = formValues[1];
-      console.log(rating);
-      console.log(comments);
-
       const dataUpdate = { servStat: 'Calificado', rating, comments };
       dispatch(updateService(_id, dataUpdate, index));
 
