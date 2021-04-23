@@ -1,12 +1,15 @@
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+import { format } from 'date-fns';
 import { useEffect } from 'react';
+import { es } from 'date-fns/locale';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { buttonValues } from '../../buttonValues';
 import { setEpaycoData, handler } from '../../setEpaycoData';
 import Button from '../../components/Button';
-import { getServices, updateService ,deleteError } from '../../store/servicesReducer';
-import { SectionList, ContainerList, Photo, IntDivider, Information, Meter } from './styles';
+import { CancelService, AceptService, AddInformation } from '../ClientModals';
+import { getServices ,deleteError } from '../../store/servicesReducer';
+import { SectionList, ContainerList, Photo, IntDivider, Information, Meter, Paragraph } from './styles';
 
 function ServiceClient() {
   const dispatch = useDispatch();
@@ -32,39 +35,47 @@ function ServiceClient() {
   if (errorServices) {
     localStorage.removeItem('token');
     history.push('/login');
-
-    swal({
-      title: 'Algo salió mal!',
-      text:
-      'Por favor, ingresa de nuevo a la aplicación con tu usuario y contraseña.',
-      icon: 'error',
-    });
-    
+    Swal.fire(
+      'Algo salió mal!', 
+      'Por favor, ingresa de nuevo a la aplicación con tu usuario y contraseña',
+      'error'
+    );
     dispatch(deleteError());
   }
 
-  const handleClick = (servStat, cost, initLoc, finalLoc) => {
-    if( servStat === 'Terminado'){
+  const handleClick = (
+    _id,
+    servStat,
+    cost,
+    initLoc,
+    finalLoc,
+    hour,
+    date,
+    tow,
+    index,
+  ) => {
+    if (servStat === 'Terminado') {
       const data = setEpaycoData(cost, initLoc, finalLoc, name);
       handler.open(data);
+    } else if (servStat === 'Aceptado') {
+      AceptService( _id, tow, date, hour, cost, index, dispatch );
+    } else if (servStat === 'Pagado') {
+      AddInformation(_id, tow, index, dispatch);
     }
-
-  }
+  };
   
-  function CancelService( _id, index ){
-    const dataUpdate = { servStat : 'Cancelado'}
-    dispatch(updateService( _id, dataUpdate, index ));
-  }
   return (
     <SectionList>
       {!!services &&
         services.length > 0 &&
-        services.map(({ _id, initLoc, finalLoc, towID, servStat, cost }, index) => {
-
+        services.map(({ _id, initLoc, finalLoc, towID, servStat, cost, hour, date }, index) => {
+          const dateArr = date.split('-');
+          const newDate = new Date(dateArr[0], dateArr[1], dateArr[2]);
+          const dateFormat = format(newDate, 'PPPP', { locale: es });
           return (
             towID.supplierID &&
-              servStat !== 'Cancelado' &&
-              servStat !== 'Calificado' && (
+            servStat !== 'Cancelado' &&
+            servStat !== 'Calificado' && (
               <ContainerList key={_id}>
                 <IntDivider>
                   <Photo
@@ -84,27 +95,65 @@ function ServiceClient() {
                     value={buttonValues[servStat].value}
                   ></Meter>
                   <label htmlFor="progress">
-                    {buttonValues[servStat].content}
+                    {servStat === 'Inicio' && (
+                      <strong>
+                        {buttonValues[servStat].content} {initLoc}
+                      </strong>
+                    )}
+                    {servStat === 'Destino' && (
+                      <strong>
+                        {buttonValues[servStat].content} {finalLoc}
+                      </strong>
+                    )}
+                    {servStat !== 'Inicio' && servStat !== 'Destino' && (
+                      <strong>{buttonValues[servStat].content}</strong>
+                    )}
                   </label>
-                  <p>
+                  {hour && servStat !== 'Aceptado' && (
+                    <Paragraph>
+                      El {dateFormat} a las {hour}
+                    </Paragraph>
+                  )}
+                  <Paragraph>
                     {initLoc} - {finalLoc}
-                  </p>
+                  </Paragraph>
                 </Information>
 
                 <IntDivider>
-                {servStat !== 'Inicio' && 
-                    servStat !== 'Destino' && 
-                    servStat !== 'Solicitado' &&
-                    <Button 
-                      color={buttonValues[servStat].color}
-                      onClick={ () => handleClick(servStat, cost, initLoc, finalLoc) }>
-                      {buttonValues[servStat].content}
-                    </Button>
-                  }
+                  {servStat !== 'Solicitado' &&
+                    servStat !== 'Confirmado' &&
+                    servStat !== 'Inicio' && 
+                    servStat !== 'Destino' && (
+                      <Button
+                        color={buttonValues[servStat].color}
+                        onClick={() =>
+                          handleClick(
+                            _id,
+                            servStat,
+                            cost,
+                            initLoc,
+                            finalLoc,
+                            hour,
+                            date,
+                            towID,
+                            index
+                          )
+                        }
+                      >
+                        {buttonValues[servStat].content}
+                      </Button>
+                    )}
                   {servStat !== 'Terminado' && servStat !== 'Pagado' && (
                     <Button
                       color="danger"
-                      onClick={() => CancelService(_id, index)}
+                      onClick={() =>
+                        CancelService(
+                          _id,
+                          index,
+                          towID.supplierID.name,
+                          dispatch
+                        )
+                      }
                     >
                       Cancelar
                     </Button>

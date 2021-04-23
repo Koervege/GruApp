@@ -7,20 +7,27 @@ export const SectionList = styled.section`
 
 export const Photo = styled.img`
   border-radius: 50%;
-  border: solid 5px white;
-  height: 65px;
-  width: 65px;
+  border: solid 1px white;
+  height: 75px;
+  width: 75px;
   src: ${(props) => props.src};
 `;
 
+export const Paragraph = styled.p`
+  display: flex;
+  margin: 10px 0 0 0;
+`
+
 export const IntDivider = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `
 export const Information = styled.div`
   display: flex;
+  flex: 4;
   width: 300px;
   flex-direction: column;
   align-items: center;
@@ -41,7 +48,7 @@ export const ContainerList = styled.article`
   justify-content: space-between;
   border: solid 2px #2980B9;
   border-radius: 11px;
-  height: 120px;
+  height: 150px;
   transition: padding 1s;
   background-color: rgba(249, 249, 249, 0.5);
 

@@ -5,7 +5,7 @@ import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
 import { StarSolid, StarEmpty, ContainerFonts } from './styles';
 
 export default function Stars({ services }) {
-  let count = '';
+  let count = 0;
   let serviceDone = '';
   let rating = services.map((service) => service.rating);
   for (let i = 0; i < rating.length; i++) {
@@ -14,6 +14,7 @@ export default function Stars({ services }) {
       serviceDone++;
     }
   }
+  console.log(count, serviceDone)
   if(count === '') {
     return (
       <ContainerFonts>

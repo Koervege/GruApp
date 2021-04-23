@@ -15,11 +15,11 @@ export const buttonValues = {
     value: '40',
   },
   Inicio: {
-    content: 'Conductor se dirige a recoger motocicleta',
+    content: 'Conductor se dirige a ',
     value: '60',
   },
   Destino: {
-    content: 'Conductor se dirige a destino final',
+    content: 'Conductor se dirige a ',
     value: '80',
   },
   Terminado: {
@@ -29,7 +29,7 @@ export const buttonValues = {
   },
   Pagado: {
     color: 'primary',
-    content: 'Calificar servicio',
+    content: 'Calificar',
     value: '100',
   },
 };

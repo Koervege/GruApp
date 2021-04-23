@@ -7,7 +7,7 @@ export default function ModalService(towID, dispatch, userFront, name) {
     (async () => {
       const { value: formValues } = await Swal.fire({
         iconHtml: `<img src=${logo} 
-          style="width:150px; height:150px; border-radius:50%; 
+          style="width:150px; height:150px; border-radius:50%;" 
           alt="GruApp logo">`,
         confirmButtonText: 'Solicitar',
         title: 'Crea tu servicio',
