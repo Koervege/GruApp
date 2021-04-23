@@ -7,9 +7,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { buttonValues } from '../../buttonValues';
 import { setEpaycoData, handler } from '../../setEpaycoData';
 import Button from '../../components/Button';
-import { CancelService, AceptService, AddInformation } from '../ClientModals';
+import CancelService from '../CancelServiceModal';
+import AceptService from '../AceptServiceModal'
+import AddInformation from '../AddInformationModal';
 import { getServices ,deleteError } from '../../store/servicesReducer';
-import { SectionList, ContainerList, Photo, IntDivider, Information, Meter, Paragraph } from './styles';
+import { SectionList, ContainerList, Photo, IntDivider } from './styles';
+import ContainerInformationService from '../ContainerInformationService';
 
 function ServiceClient() {
   const dispatch = useDispatch();
@@ -84,41 +87,15 @@ function ServiceClient() {
                   />
                   <p>{towID.supplierID.name}</p>
                 </IntDivider>
-                <Information>
-                  <Meter
-                    id="progress"
-                    min="0"
-                    max="100"
-                    low="25"
-                    high="60"
-                    optimum="100"
-                    value={buttonValues[servStat].value}
-                  ></Meter>
-                  <label htmlFor="progress">
-                    {servStat === 'Inicio' && (
-                      <strong>
-                        {buttonValues[servStat].content} {initLoc}
-                      </strong>
-                    )}
-                    {servStat === 'Destino' && (
-                      <strong>
-                        {buttonValues[servStat].content} {finalLoc}
-                      </strong>
-                    )}
-                    {servStat !== 'Inicio' && servStat !== 'Destino' && (
-                      <strong>{buttonValues[servStat].content}</strong>
-                    )}
-                  </label>
-                  {hour && servStat !== 'Aceptado' && (
-                    <Paragraph>
-                      El {dateFormat} a las {hour}
-                    </Paragraph>
-                  )}
-                  <Paragraph>
-                    {initLoc} - {finalLoc}
-                  </Paragraph>
-                </Information>
-
+                
+                <ContainerInformationService 
+                  servStat={servStat} 
+                  initLoc={initLoc}
+                  finalLoc={finalLoc}
+                  hour={hour} 
+                  date={dateFormat}
+                />
+                
                 <IntDivider>
                   {servStat !== 'Solicitado' &&
                     servStat !== 'Confirmado' &&
@@ -147,13 +124,7 @@ function ServiceClient() {
                     <Button
                       color="danger"
                       onClick={() =>
-                        CancelService(
-                          _id,
-                          index,
-                          towID.supplierID.name,
-                          dispatch
-                        )
-                      }
+                        CancelService( _id, index, towID.supplierID.name, dispatch )}
                     >
                       Cancelar
                     </Button>

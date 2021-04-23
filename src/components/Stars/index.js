@@ -14,7 +14,6 @@ export default function Stars({ services }) {
       serviceDone++;
     }
   }
-  console.log(count, serviceDone)
   if(count === '') {
     return (
       <ContainerFonts>
