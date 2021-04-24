@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../../logo.png';
-import LandingNavbar from '../../components/LandingNavbar/LandingNavbar';
+import NavBar from '../../components/NavBar';
 import { Background } from '../../components/Background'
 import {
   LandingMain,
@@ -15,7 +15,7 @@ class Landing extends React.Component {
   render() {
     return (
       <section className="landingContainer">
-        <LandingNavbar></LandingNavbar>
+        <NavBar />
         <Background>
         <LandingMain>
           <LandingImg src={logo} alt="GruApp logo"></LandingImg>

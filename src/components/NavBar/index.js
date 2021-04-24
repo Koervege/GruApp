@@ -1,17 +1,17 @@
 import React from "react";
-import swal from 'sweetalert';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getLoggedUser, deleteError } from '../../store/usersReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMotorcycle, faTruckPickup } from '@fortawesome/free-solid-svg-icons'
-import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto, ImgBtn } from "./styles";
+import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto, ImgBtn, Image, LandNavLoginCont, LandNavLogin } from "./styles";
 import  MenuNavBar from "../MenuNavBar";
+import logo from '../../logo.png';
 
 export default function NavBar() {
   const dispatch = useDispatch();
-
+  const token = localStorage.getItem('token');
   const [displayMenu, setDisplayMenu] = useState(false);
 
   const { userFront, userType, loading, errorUsers } = useSelector(
@@ -23,7 +23,7 @@ export default function NavBar() {
     })
   );
 
-  let history = useHistory();
+  let location = useLocation();
 
   useEffect(() => {
     dispatch(getLoggedUser());
@@ -34,14 +34,7 @@ export default function NavBar() {
   if (loading) return <p>Loading...</p>;
   if (errorUsers) {
     localStorage.removeItem('token');
-    history.push('/login');
     dispatch(deleteError());
-    swal({
-      title: 'Algo salió mal!',
-      text:
-        'Por favor, ingresa de nuevo a la aplicación con tu usuario y contraseña.',
-      icon: 'error',
-    });
   }
 
   const hideMenu = (e) => {
@@ -51,30 +44,62 @@ export default function NavBar() {
   }
 
   return (
-    <Nav>
-      <NavContainer>
-        <NavIcon>
-          <ATags to="/">
-            <FontAwesomeIcon icon={iconNav} />
-          </ATags>
-        </NavIcon>
-        <NavList>
-          <NavItems>
-            <ATags to="/">Historial</ATags>
-          </NavItems>
-          <NavItems>
-            <ATags to="/">Notificaciones</ATags>
-          </NavItems>
-        </NavList>
-      </NavContainer>
-      <NavProfiles>
-        <NavProfilesSpan>{userFront.name}</NavProfilesSpan>
-        <ImgBtn onClick={() => setDisplayMenu(!displayMenu)} onBlur={hideMenu}>
-          <NavUserPhoto src={userFront.photo} alt="profile_photo"/>
-          {displayMenu && <MenuNavBar/>}
-        </ImgBtn>
-      </NavProfiles>
-    </Nav>
+    <>
+      {token ? (
+        <Nav>
+          {location.pathname !== '/' ?
+            <NavContainer>
+              <NavIcon>
+                <ATags to="/">
+                  <FontAwesomeIcon icon={iconNav} />
+                </ATags>
+              </NavIcon>
+              <NavList>
+                <NavItems>
+                  <ATags to="/">Historial</ATags>
+                </NavItems>
+                <NavItems>
+                  <ATags to="/">Notificaciones</ATags>
+                </NavItems>
+              </NavList>
+            </NavContainer>
+          :
+            <NavContainer>
+              <NavIcon>
+                <ATags to="/">
+                  <Image src={logo} alt="GruApp logo"></Image>
+                </ATags>
+              </NavIcon>
+            </NavContainer>
+          }
+
+          <NavProfiles>
+            <NavProfilesSpan>{userFront.name}</NavProfilesSpan>
+            <ImgBtn
+              onClick={() => setDisplayMenu(!displayMenu)}
+              onBlur={hideMenu}
+            >
+              <NavUserPhoto src={userFront.photo} alt="profile_photo" />
+              {displayMenu && <MenuNavBar />}
+            </ImgBtn>
+          </NavProfiles>
+        </Nav>
+      ) : (
+        <Nav>
+          <NavContainer>
+            <NavIcon>
+              <ATags to="/">
+                <Image src={logo} alt="GruApp logo"></Image>
+              </ATags>
+            </NavIcon>
+          </NavContainer>
+          <LandNavLoginCont>
+            <LandNavLogin to="/register">Registrate</LandNavLogin>
+            <LandNavLogin to="/login">Ingresa</LandNavLogin>
+          </LandNavLoginCont>
+        </Nav>
+      )}
+    </>
   );
 
 }

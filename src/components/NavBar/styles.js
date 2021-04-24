@@ -88,4 +88,27 @@ export const ImgBtn = styled.button`
   }
 `
 
+export const Image = styled.img`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+`;
 
+export const LandNavLoginCont = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const LandNavLogin = styled(Link)`
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  width: 150px;
+  height: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+`;
