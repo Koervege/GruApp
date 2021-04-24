@@ -4,12 +4,12 @@ import Frame from '../../components/Frame';
 import Button from '../../components/Button';
 import Img from '../../components/Img';
 import { StyledInput, Container } from '../../components/StyledInput/index';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {ATags} from '../../components/NavBar/styles'
 import { useForm } from '../../hooks/useForm';
 import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
-import { loginUser } from '../../store/usersReducer'
+import { loginUser, deleteError } from '../../store/usersReducer'
 import { StyledFieldset, Legend, StyledLink } from '../Register/styles';
 import { Background } from '../../components/Background/index';
 
@@ -22,7 +22,11 @@ function Login() {
   });
   
   const dispatch = useDispatch();
-  
+  const { loading, errorUsers } = useSelector(({ usersReducer }) => ({
+    loading: usersReducer.loading,
+    errorUsers: usersReducer.errorUsers,
+  }));
+
   const { email, password } = formValues;
   let history = useHistory();
 
@@ -31,6 +35,16 @@ function Login() {
 
     dispatch(loginUser(email, password, history));
 
+    if(errorUsers) {
+      dispatch(deleteError());
+      swal({
+        title: 'Lo sentimos!',
+        text:
+        'Email o contraseña inválida',
+        icon: 'error',
+      });
+      return;
+    };
   };
 
   return (
