@@ -1,5 +1,5 @@
 import swal from 'sweetalert';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { buttonValues } from '../../buttonValues';
@@ -11,6 +11,7 @@ import { SectionList, ContainerList, Photo, IntDivider, Information, Meter } fro
 function ServiceClient() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [disablePayButton, setDisablePayButton] = useState(false);
 
   const { loading, errorServices, services, bikeIDs, name } = useSelector(
     ({ servicesReducer, usersReducer }) => ({
@@ -43,9 +44,11 @@ function ServiceClient() {
     dispatch(deleteError());
   }
 
-  const handleClick = (servStat, cost, initLoc, finalLoc) => {
+  const handleClick = (_id, servStat, cost, initLoc, finalLoc )  => {
+    
     if( servStat === 'Terminado'){
-      const data = setEpaycoData(cost, initLoc, finalLoc, name);
+      const data = setEpaycoData(_id, cost, initLoc, finalLoc, name );
+      setDisablePayButton(true);
       handler.open(data);
     }
 
@@ -97,17 +100,13 @@ function ServiceClient() {
                     servStat !== 'Solicitado' &&
                     <Button 
                       color={buttonValues[servStat].color}
-                      onClick={ () => handleClick(servStat, cost, initLoc, finalLoc) }>
+                      disabled = { disablePayButton }
+                      onClick={ () => handleClick(_id, servStat, cost, initLoc, finalLoc ) }>
                       {buttonValues[servStat].content}
-
+                    </Button>
+                  }
+                </IntDivider>    
                 <IntDivider>
-                  {servStat !== 'Inicio' &&
-                    servStat !== 'Destino' &&
-                    servStat !== 'Solicitado' && (
-                      <Button color={buttonValues[servStat].color}>
-                        {buttonValues[servStat].content}
-                      </Button>
-                    )}
                   {servStat !== 'Terminado' && servStat !== 'Pagado' && (
                     <Button
                       color="danger"
