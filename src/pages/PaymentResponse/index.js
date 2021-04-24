@@ -29,7 +29,6 @@ function PaymentResponse() {
       url:`/validation/v1/reference/${ref_payco}`, 
     })
       .then(({ data }) => {
-        console.log(data.data);
         setData(data.data);
       })
       .catch( error => {
@@ -53,7 +52,7 @@ function PaymentResponse() {
     x_cod_respuesta,
     x_id_factura,
     x_quotas,
-  } = data;
+    } = data;
 
   const handleClick = async() => {
     if( x_cod_respuesta === 1  ) {
