@@ -108,7 +108,7 @@ export const LandNavLogin = styled(Link)`
   color: white;
   text-align: center;
   text-decoration: none;
-  width: 150px;
+  width: 200px;
   height: auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 `;

@@ -45,7 +45,7 @@ export default function NavBar() {
 
   return (
     <>
-      {token ? (
+      {token ?
         <Nav>
           {location.pathname !== '/' ?
             <NavContainer>
@@ -72,19 +72,37 @@ export default function NavBar() {
               </NavIcon>
             </NavContainer>
           }
-
-          <NavProfiles>
-            <NavProfilesSpan>{userFront.name}</NavProfilesSpan>
-            <ImgBtn
-              onClick={() => setDisplayMenu(!displayMenu)}
-              onBlur={hideMenu}
-            >
-              <NavUserPhoto src={userFront.photo} alt="profile_photo" />
-              {displayMenu && <MenuNavBar />}
-            </ImgBtn>
-          </NavProfiles>
+          {location.pathname !== '/' ?
+            <NavProfiles>
+              <NavProfilesSpan>{userFront.name}</NavProfilesSpan>
+              <ImgBtn
+                onClick={() => setDisplayMenu(!displayMenu)}
+                onBlur={hideMenu}
+              >
+                <NavUserPhoto src={userFront.photo} alt="profile_photo" />
+                {displayMenu && <MenuNavBar />}
+              </ImgBtn>
+            </NavProfiles>
+          :
+            <NavProfiles>
+              {userType && userType === 'client' ?
+                <LandNavLogin to="/listmotorcycle">
+                  Solicitar servicio
+                </LandNavLogin>
+              :
+                <LandNavLogin to="/listtow">Ver servicios</LandNavLogin>
+              }
+              <ImgBtn
+                onClick={() => setDisplayMenu(!displayMenu)}
+                onBlur={hideMenu}
+              >
+                <NavUserPhoto src={userFront.photo} alt="profile_photo" />
+                {displayMenu && <MenuNavBar />}
+              </ImgBtn>
+            </NavProfiles>
+          }
         </Nav>
-      ) : (
+      :
         <Nav>
           <NavContainer>
             <NavIcon>
@@ -98,8 +116,7 @@ export default function NavBar() {
             <LandNavLogin to="/login">Ingresa</LandNavLogin>
           </LandNavLoginCont>
         </Nav>
-      )}
+      }
     </>
   );
-
 }
