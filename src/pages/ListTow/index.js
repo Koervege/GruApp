@@ -20,15 +20,14 @@ function ListTow() {
     })
   );
 
+  const [isTowActive, setIsTowActive] = useState(false);
+
   useEffect(() => {
     dispatch(getServices());
-  }, []);
-
-  const [isTowActive, setIsTowActive] = useState(
-    userFront && userFront.towIDs && userFront.towIDs[0]
-      ? userFront.towIDs[0].status
-      : true
-  );
+      if(userFront && userFront.towIDs && userFront.towIDs[0]) {
+        setIsTowActive(userFront.towIDs[0].status);
+      }
+  }, [userFront.towIDs]);
 
   const handleActive = async (e) => {
     const { plateNum } = userFront.towIDs[0];

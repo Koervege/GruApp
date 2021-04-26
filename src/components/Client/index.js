@@ -47,7 +47,7 @@ function Client({ tows }) {
                 <Photo src={supplierID.photo} alt={supplierID.name}></Photo>
               </ContainerElement>
               <ContainerElement>
-                <Button color="primary" onClick={ModalService(_id, dispatch, userFront)}>
+                <Button color="primary" onClick={ModalService(_id, dispatch, userFront, supplierID.name)}>
                   Pedir Grúa
                 </Button>
               </ContainerElement>

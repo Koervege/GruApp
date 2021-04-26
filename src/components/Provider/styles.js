@@ -21,7 +21,7 @@ export const ContainerList = styled.article`
 
   &:hover {
     height: 125px;
-    border: solid 2px #BAB916;
+    border: solid 2px whitesmoke;
   }
 `;
 

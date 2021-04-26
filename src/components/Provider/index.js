@@ -6,7 +6,6 @@ import Swal from 'sweetalert2';
 import { getServices, deleteError } from '../../store/servicesReducer';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import swal from 'sweetalert'
 import { useHistory } from "react-router-dom";
 import towViewService from '../TowViewServiceModal/index'
 
@@ -29,18 +28,16 @@ function Provider() {
   }, [userFront.email]);
 
   if(loading) return <p>loading...</p>
-  if (errorServices) {
-    localStorage.removeItem('token');
-    history.push('/login');
-    swal({
-      title: 'Algo salió mal!',
-      text:
-        'Por favor, ingresa de nuevo a la aplicación con tu usuario y contraseña.',
-      icon: 'error',
-    });
-
-    dispatch(deleteError());
-  }
+    if (errorServices) {
+      localStorage.removeItem('token');
+      history.push('/login');
+      Swal.fire(
+        'Algo salió mal!',
+        'Por favor, ingresa de nuevo a la aplicación con tu usuario y contraseña',
+        'error'
+      );
+      dispatch(deleteError());
+    }
 
   return (
     <SectionList>
@@ -50,7 +47,7 @@ function Provider() {
           const dateArr = date.split('-');
           const newDate = new Date(dateArr[0], dateArr[1], dateArr[2]);
           const dateFormat = format(newDate, 'PPPP', { locale: es });
-          return servStat !== 'Cancelado' && servStat !== 'Pagado' && (
+          return servStat !== 'Cancelado' && servStat !== 'Pagado' && servStat !== 'Calificado' && (
             <ContainerList key={_id}>
               <ContainerElement>{bikeID.clientID.name}</ContainerElement>
               <ContainerElement>{`${initLoc} / ${finalLoc} / ${dateFormat} / ${bikeID.type} / ${bikeID.cc} cc`}</ContainerElement>
