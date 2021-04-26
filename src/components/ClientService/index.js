@@ -1,6 +1,6 @@
+import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { format } from 'date-fns';
-import { useEffect } from 'react';
 import { es } from 'date-fns/locale';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,6 +17,7 @@ import ContainerInformationService from '../ContainerInformationService';
 function ServiceClient() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [disablePayButton, setDisablePayButton] = useState(false);
 
   const { loading, errorServices, services, bikeIDs, name } = useSelector(
     ({ servicesReducer, usersReducer }) => ({
@@ -58,7 +59,8 @@ function ServiceClient() {
     index,
   ) => {
     if (servStat === 'Terminado') {
-      const data = setEpaycoData(cost, initLoc, finalLoc, name);
+      const data = setEpaycoData(_id, cost, initLoc, finalLoc, name );
+      setDisablePayButton(true);
       handler.open(data);
     } else if (servStat === 'Aceptado') {
       AceptService( _id, tow, date, hour, cost, index, dispatch );
@@ -116,6 +118,7 @@ function ServiceClient() {
                             index
                           )
                         }
+                        disabled={ disablePayButton }
                       >
                         {buttonValues[servStat].content}
                       </Button>
