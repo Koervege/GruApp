@@ -3,7 +3,8 @@ import axios from 'axios'
 const USERS_LOADING = 'USERS_LOADING';
 const USERS_SUCCESS = 'USERS_SUCCESS';
 const USERS_ERROR = 'USERS_ERROR';
-const USERS_DELETE_ERROR = 'USERS_DELETE_ERROR'
+const USERS_DELETE_ERROR = 'USERS_DELETE_ERROR';
+const USERS_LOG_OUT = 'USERS_LOG_OUT';
 
 export function registerUser(firstName, lastName, email, phoneNum, password, userTypeForm) {
   return async function(dispatch) {
@@ -24,9 +25,9 @@ export function registerUser(firstName, lastName, email, phoneNum, password, use
       dispatch({ type: USERS_SUCCESS, payload: {userFront, userType: userTypeForm} })
     } catch(error) {
       dispatch({ type: USERS_ERROR, payload: error })
-    }
-  }
-}
+    };
+  };
+};
 
 export function getLoggedUser() {
   return async function(dispatch) {
@@ -46,9 +47,9 @@ export function getLoggedUser() {
       dispatch({ type: USERS_SUCCESS, payload: {userFront, userType} })
     } catch(error) {
       dispatch({ type: USERS_ERROR, payload: error })
-    }
-  }
-}
+    };
+  };
+};
 
 export function loginUser( email, password, history) {
   return async function(dispatch) {
@@ -75,15 +76,21 @@ export function loginUser( email, password, history) {
       dispatch({ type: USERS_SUCCESS, payload: {userFront, userType } })
     } catch(error) {
       dispatch({ type: USERS_ERROR, payload: error })
-    }
-  }
-}
+    };
+  };
+};
+
+export function logUserOut(){
+  return {
+    type: USERS_LOG_OUT,
+  };
+};
 
 export function deleteError(){
   return {
     type: USERS_DELETE_ERROR,
-  }
-}
+  };
+};
 
 const initialState = {
   userFront: {},
@@ -110,14 +117,21 @@ export function usersReducer(state = initialState, action) {
         ...state,
         loading: false,
         errorUsers: action.payload,
-      }
+      };
     case USERS_DELETE_ERROR:
       return {
         ...state,
         loading: false,
         errorUsers: null,
-      }
+      };
+    case USERS_LOG_OUT:
+      return {
+        userFront: {},
+        userType: '',
+        loading: false,
+        errorUsers: null,
+      };
     default:
       return state;  
-  }
-}
+  };
+};
