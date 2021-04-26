@@ -8,11 +8,6 @@ import Provider from '../../components/Provider';
 import Button from '../../components/Button';
 import NavBar from '../../components/NavBar';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import swal from 'sweetalert';
-import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { getServices, deleteError } from '../../store/servicesReducer';
 
 function ListTow() {
   const dispatch = useDispatch();
@@ -25,15 +20,14 @@ function ListTow() {
     })
   );
 
+  const [isTowActive, setIsTowActive] = useState(false);
+
   useEffect(() => {
     dispatch(getServices());
-  }, []);
-
-  const [isTowActive, setIsTowActive] = useState(
-    userFront && userFront.towIDs && userFront.towIDs[0]
-      ? userFront.towIDs[0].status
-      : true
-  );
+      if(userFront && userFront.towIDs && userFront.towIDs[0]) {
+        setIsTowActive(userFront.towIDs[0].status);
+      }
+  }, [userFront.towIDs]);
 
   const handleActive = async (e) => {
     const { plateNum } = userFront.towIDs[0];
@@ -97,9 +91,8 @@ function ListTow() {
           {isTowActive ? 'Activo' : 'Inactivo'}
         </label>
       
-        <Button color="primary">Ha ganado XX.XXX COP</Button>
+        <h3>Servicios en proceso</h3>
         <Provider />
-        <Button color="success">Servicio en proceso</Button>
       </BoxSupplier>
     </section>
   );
