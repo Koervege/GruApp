@@ -1,4 +1,4 @@
-export function setEpaycoData (cost, initLoc, finalLoc, name){
+export function setEpaycoData (id, cost, initLoc, finalLoc, name){
     
   return {
     external: 'false',
@@ -8,18 +8,18 @@ export function setEpaycoData (cost, initLoc, finalLoc, name){
     tax_base: '0',
     amount: `${cost}`,
     name: 'Servicio Gruapp',
-    description: `Servicio de grua de ${initLoc} hasta ${finalLoc}`,
+    description: `${initLoc} hasta ${finalLoc}`,
     currency: 'cop',
   
     country: 'CO',
     lang: 'en',
   
-    invoice: '12345698',
+    invoice: `${id}`,
     extra1: 'extra1',
     extra2: 'extra2',
     extra3: 'extra3',
   
-    response: '',
+    response: `${process.env.REACT_APP_BASE_URL}/response`,
   
     name_billing: `${name}`,
     address_billing: 'Calle 54 # 189 - 12',
