@@ -96,6 +96,7 @@ export function deleteError() {
 const initialState = {
   loading: false,
   services: [],
+  servicesHistory: [],
   userID: '',
   errorServices: null,
 };
@@ -108,9 +109,16 @@ export function servicesReducer(state = initialState, action) {
         loading: true,
       };
     case SERVICES_SUCCESS:
+      let uncompletedServices = [];
+      let completedServices = [];
+      action.payload[0].forEach((element) => {
+        if(element.servStat === Terminado || element.servStat === Pagado) completedServices.push(element);
+        else uncompletedServices.push(element);
+      })
       return {
         ...state,
-        services: action.payload[0],
+        services: uncompletedServices,
+        servicesHistory: completedServices,
         userID: action.payload[1],
       };
     case SERVICES_ERROR:

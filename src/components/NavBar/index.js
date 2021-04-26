@@ -6,13 +6,27 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getLoggedUser, deleteError } from '../../store/usersReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMotorcycle, faTruckPickup } from '@fortawesome/free-solid-svg-icons'
-import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto, ImgBtn } from "./styles";
+import { 
+  Nav, 
+  NavContainer, 
+  NavIcon, 
+  NavList, 
+  NavItems, 
+  ATags, 
+  NavProfiles, 
+  NavProfilesSpan, 
+  NavUserPhoto, 
+  ImgBtn, 
+  HistoryButton, 
+} from "./styles";
 import  MenuNavBar from "../MenuNavBar";
+import ServiceHistoryMenu from '../ServiceHistoryMenu';
 
 export default function NavBar() {
   const dispatch = useDispatch();
 
   const [displayMenu, setDisplayMenu] = useState(false);
+  const [displayHistory, setDisplayHistory] = useState(false);
 
   const { userFront, userType, loading, errorUsers } = useSelector(
     ({ usersReducer }) => ({
@@ -50,6 +64,12 @@ export default function NavBar() {
     }
   }
 
+  const hideHistory = (e) => {
+    if (!e.currentTarget.contains(e.relatedTarget)){
+      setDisplayHistory(false);
+    }
+  }
+
   return (
     <Nav>
       <NavContainer>
@@ -60,10 +80,11 @@ export default function NavBar() {
         </NavIcon>
         <NavList>
           <NavItems>
-            <ATags to="/">Historial</ATags>
-          </NavItems>
-          <NavItems>
-            <ATags to="/">Notificaciones</ATags>
+            <HistoryButton 
+              onClick={() => setDisplayHistory(!displayHistory)} 
+              onBlur={hideHistory}>
+                {'Historial'} {displayHistory && <ServiceHistoryMenu/>}
+            </HistoryButton>
           </NavItems>
         </NavList>
       </NavContainer>
