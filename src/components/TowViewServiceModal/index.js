@@ -10,21 +10,21 @@ function towViewService(servID, serviceStatus = 'Aceptado', clientName = 'client
   let buttonText = '';
 
   switch(currentStatusIndex) {
-  case 0:
-    doSomething = true;
-    buttonText = 'Introducir costo y hora del servicio';
-    break;
-  case 1:
-    doSomething = false;
-    buttonText = 'Ya aceptaste este servicio, espera a que el cliente confirme';
-    break;
-  case 5:
-    doSomething = false;
-    buttonText = 'Ya terminaste este servicio, espera a que el cliente pague';
-    break;
-  default:
-    doSomething = true;
-    buttonText = `Cambiar estado de servicio a: ${possibleServiceStatus[currentStatusIndex + 1]}`
+    case 0:
+      doSomething = true;
+      buttonText = 'Introducir costo y hora del servicio';
+      break;
+    case 1:
+      doSomething = false;
+      buttonText = 'Ya aceptaste este servicio, espera a que el cliente confirme';
+      break;
+    case 5:
+      doSomething = false;
+      buttonText = 'Ya terminaste este servicio, espera a que el cliente pague';
+      break;
+    default:
+      doSomething = true;
+      buttonText = `Cambiar estado de servicio a: ${possibleServiceStatus[currentStatusIndex + 1]}`
   }
 
   (async () => {
@@ -47,13 +47,13 @@ function towViewService(servID, serviceStatus = 'Aceptado', clientName = 'client
         iconHtml: `<img src=${logo} style="width:170px;height:150px;radius:100px; alt="GruApp logo">`,
         html: 
           `
-            <div>
+            <div style="display: flex; flex-direction: column">
               <label for="time">Hora del servicio</label>
-              <input type="time" id="time" name="time" required></input>
+              <input type="time" id="time" name="time" class="swal2-input" required style="width:200px"></input>
             </div>
-            <div>
+            <div style="display: flex; flex-direction: column">
               <label for="cost">Costo del servicio</label>
-              <input type="number" id="cost" name="cost" small="¿Cuánto quieres cobrar?"required></input>
+              <input type="number" id="cost" name="cost" class="swal2-input" style="width:220px" required></input>
             </div>
           `,
         confirmButtonText: 'Enviar',

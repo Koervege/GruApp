@@ -9,11 +9,10 @@ export const ContainerStar = styled.div`
 
 export const Photo = styled.img`
   border-radius: 50%;
-  border: solid 5px white;
+  border: solid 2px white;
   height: 70px;
   width: 70px;
   src: ${(props) => props.src};
-
 `;
 
 export const ContainerList = styled.article`
@@ -29,7 +28,7 @@ export const ContainerList = styled.article`
 
   &:hover {
     padding: 15px 50px;
-    border: solid 2px #BAB916;
+    border: solid 2px whitesmoke;
   }
 
   @media (max-width: 768px) {
