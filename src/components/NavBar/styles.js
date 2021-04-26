@@ -72,6 +72,18 @@ export const ATags = styled(Link)`
   font-weight: ${({ tagType }) => tagFontWeight(tagType)};
 `
 
+export const HistoryButton = styled.button`
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.1em;
+  background: inherit;
+  border: none;
+  outline: none;
+  &:hover {
+    cursor: pointer;
+  }
+`
+
 export const NavUserPhoto = styled.img`
   border-radius: 50%;
   border: 3px solid #fefefe;
