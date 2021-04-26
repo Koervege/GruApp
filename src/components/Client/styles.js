@@ -9,11 +9,10 @@ export const ContainerStar = styled.div`
 
 export const Photo = styled.img`
   border-radius: 50%;
-  border: solid 5px white;
+  border: solid 2px white;
   height: 70px;
   width: 70px;
   src: ${(props) => props.src};
-
 `;
 
 export const ContainerList = styled.article`
