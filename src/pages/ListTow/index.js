@@ -11,10 +11,9 @@ import axios from 'axios';
 
 function ListTow() {
   const dispatch = useDispatch();
-  const { loading, services, userID, errorServices, userFront } = useSelector(
+  const { loading, errorServices, userFront, userType } = useSelector(
     ({ servicesReducer, usersReducer }) => ({
-      services: servicesReducer.services,
-      userID: servicesReducer.userID,
+      userType: usersReducer.userType,
       errorServices: servicesReducer.errorServices,
       userFront: usersReducer.userFront,
     })
@@ -75,6 +74,8 @@ function ListTow() {
 
     dispatch(deleteError());
   }
+
+  if(userType === 'client') history.push('/listmotorcycle');
 
   return (
     <section>
