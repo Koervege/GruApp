@@ -74,7 +74,7 @@ export default function NavBar() {
     <Nav>
       <NavContainer>
         <NavIcon>
-          <ATags to="/">
+          <ATags>
             <FontAwesomeIcon icon={iconNav} />
           </ATags>
         </NavIcon>

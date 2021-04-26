@@ -111,10 +111,12 @@ export function servicesReducer(state = initialState, action) {
     case SERVICES_SUCCESS:
       let uncompletedServices = [];
       let completedServices = [];
-      action.payload[0].forEach((element) => {
-        if(element.servStat === Terminado || element.servStat === Pagado) completedServices.push(element);
-        else uncompletedServices.push(element);
-      })
+      action.payload[0].forEach((service) => {
+        service.servStat === 'Calificado' ? 
+          completedServices.push(service)
+          :
+          uncompletedServices.push(service);
+      });
       return {
         ...state,
         services: uncompletedServices,
@@ -132,8 +134,14 @@ export function servicesReducer(state = initialState, action) {
         services: [...state.services, action.payload],
       };
     case SERVICES_UPDATED:
+      let wasServiceRated = action.payload.servStat === 'Calificado';
+
       return {
         ...state,
+        servicesHistory: wasServiceRated ? 
+          [ ...state.servicesHistory, action.payload ] 
+          : 
+          [ ...state.servicesHistory ],
         services: state.services.map((service, index) => {
           return (
             index === action.updatedServiceIndex ? 
@@ -141,7 +149,7 @@ export function servicesReducer(state = initialState, action) {
             service
           )
         }), 
-      }
+      };
     case SERVICES_FINISHED:
       return {
         ...state,
