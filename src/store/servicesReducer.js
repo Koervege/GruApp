@@ -7,6 +7,7 @@ const SERVICES_SUCCESS = 'SERVICES_SUCCESS';
 const SERVICES_UPDATED = 'SERVICES_UPDATED';
 const SERVICES_FINISHED = 'SERVICES_FINISHED';
 const SERVICES_DELETE_ERROR = 'SERVICES_DELETE_ERROR';
+const SERVICES_CLEAR = 'SERVICES_CLEAR';
 
 export function getServices(query='') {
   return async function (dispatch) {
@@ -28,9 +29,9 @@ export function getServices(query='') {
       dispatch({ type: SERVICES_ERROR, payload: error });
     } finally {
       dispatch({ type: SERVICES_FINISHED});
-    }
+    };
   };
-}
+};
 
 export function createService( initLoc, finalLoc, date, bikeID, towID ) {
   return async function (dispatch) {
@@ -59,9 +60,9 @@ export function createService( initLoc, finalLoc, date, bikeID, towID ) {
       dispatch({ type: SERVICES_ERROR, payload: error });
     } finally {
       dispatch({ type: SERVICES_FINISHED});
-    }
+    };
   };
-}
+};
 
 export function updateService ( serviceID, dataUpdate, updatedServiceIndex ) {
   return async function (dispatch) {
@@ -83,19 +84,26 @@ export function updateService ( serviceID, dataUpdate, updatedServiceIndex ) {
       dispatch({ type: SERVICES_ERROR, payload: error });
     } finally {
       dispatch({ type: SERVICES_FINISHED });
-    }
+    };
   };
-}
+};
 
 export function deleteError() {
   return {
     type: SERVICES_DELETE_ERROR,
-  }
-}
+  };
+};
+
+export function clearServices() {
+  return {
+    type: SERVICES_CLEAR,
+  };
+};
 
 const initialState = {
   loading: false,
   services: [],
+  servicesHistory: [],
   userID: '',
   errorServices: null,
 };
@@ -108,9 +116,18 @@ export function servicesReducer(state = initialState, action) {
         loading: true,
       };
     case SERVICES_SUCCESS:
+      let uncompletedServices = [];
+      let completedServices = [];
+      action.payload[0].forEach((service) => {
+        service.servStat === 'Calificado' ? 
+          completedServices.push(service)
+          :
+          uncompletedServices.push(service);
+      });
       return {
         ...state,
-        services: action.payload[0],
+        services: uncompletedServices,
+        servicesHistory: completedServices,
         userID: action.payload[1],
       };
     case SERVICES_ERROR:
@@ -124,8 +141,14 @@ export function servicesReducer(state = initialState, action) {
         services: [...state.services, action.payload],
       };
     case SERVICES_UPDATED:
+      let wasServiceRated = action.payload.servStat === 'Calificado';
+
       return {
         ...state,
+        servicesHistory: wasServiceRated ? 
+          [ ...state.servicesHistory, action.payload ] 
+          : 
+          [ ...state.servicesHistory ],
         services: state.services.map((service, index) => {
           return (
             index === action.updatedServiceIndex ? 
@@ -133,7 +156,7 @@ export function servicesReducer(state = initialState, action) {
             service
           )
         }), 
-      }
+      };
     case SERVICES_FINISHED:
       return {
         ...state,
@@ -143,8 +166,15 @@ export function servicesReducer(state = initialState, action) {
       return {
         ...state,
         errorServices: null,
-      }
+      };
+    case SERVICES_CLEAR:
+      return {
+        loading: false,
+        services: [],
+        userID: '',
+        errorServices: null,
+      };
     default:
       return state;
-  }
-}
+  };
+};

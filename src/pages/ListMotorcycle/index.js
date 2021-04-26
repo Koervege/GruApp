@@ -10,18 +10,19 @@ import { getTows, deleteErrorTows } from '../../store/towsReducer';
 
 function ListMotorcycle () {
   const dispatch = useDispatch();
-  const { loading, tows, userID, errorTows } = useSelector(({ towsReducer }) => ({
+  const { loading, tows, userID, errorTows, userType } = useSelector(({ towsReducer, usersReducer }) => ({
     loading: towsReducer.loading,
     tows: towsReducer.tows,
     userID: towsReducer.userID,
+    userType: usersReducer.userType,
     errorTows: towsReducer.errorTows,
   }));
+
+  let history = useHistory();
 
   useEffect(() => {
     dispatch(getTows());
   }, []);
-  
-  let history = useHistory();
 
   if (loading) return <p>loading ...</p>;
 
@@ -36,6 +37,9 @@ function ListMotorcycle () {
     });
     dispatch(deleteErrorTows());
   }
+
+  if(userType === 'supplier') history.push('/listtow');
+
   return (
     <section>
       <NavBar userID={userID} />

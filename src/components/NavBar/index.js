@@ -2,17 +2,34 @@ import React from "react";
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getLoggedUser, deleteError } from '../../store/usersReducer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMotorcycle, faTruckPickup } from '@fortawesome/free-solid-svg-icons'
-import { Nav, NavContainer, NavIcon, NavList, NavItems, ATags, NavProfiles, NavProfilesSpan, NavUserPhoto, ImgBtn, Image, LandNavLoginCont, LandNavLogin } from "./styles";
-import  MenuNavBar from "../MenuNavBar";
 import logo from '../../logo.png';
+import  MenuNavBar from "../MenuNavBar";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getLoggedUser, deleteError } from '../../store/usersReducer';
+import { faMotorcycle, faTruckPickup } from '@fortawesome/free-solid-svg-icons'
+import { 
+  Nav, 
+  ATags, 
+  Image,
+  ImgBtn, 
+  NavIcon, 
+  NavList, 
+  NavItems, 
+  NavProfiles, 
+  NavUserPhoto, 
+  NavContainer, 
+  LandNavLogin,
+  HistoryButton, 
+  NavProfilesSpan, 
+  LandNavLoginCont, 
+} from "./styles";
+import ServiceHistoryMenu from '../ServiceHistoryMenu';
 
 export default function NavBar() {
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
   const [displayMenu, setDisplayMenu] = useState(false);
+  const [displayHistory, setDisplayHistory] = useState(false);
 
   const { userFront, userType, loading, errorUsers } = useSelector(
     ({ usersReducer }) => ({
@@ -43,11 +60,17 @@ export default function NavBar() {
     }
   }
 
+  const hideHistory = (e) => {
+    if (!e.currentTarget.contains(e.relatedTarget)){
+      setDisplayHistory(false);
+    }
+  }
+
   return (
     <>
-      {token ?
+      {token ? (
         <Nav>
-          {location.pathname !== '/' ?
+          {location.pathname !== '/' ? (
             <NavContainer>
               <NavIcon>
                 <ATags to="/">
@@ -56,14 +79,16 @@ export default function NavBar() {
               </NavIcon>
               <NavList>
                 <NavItems>
-                  <ATags to="/">Historial</ATags>
-                </NavItems>
-                <NavItems>
-                  <ATags to="/">Notificaciones</ATags>
+                  <HistoryButton
+                    onClick={() => setDisplayHistory(!displayHistory)}
+                    onBlur={hideHistory}
+                  >
+                    {'Historial'} {displayHistory && <ServiceHistoryMenu />}
+                  </HistoryButton>
                 </NavItems>
               </NavList>
             </NavContainer>
-          :
+          ) : (
             <NavContainer>
               <NavIcon>
                 <ATags to="/">
@@ -71,8 +96,8 @@ export default function NavBar() {
                 </ATags>
               </NavIcon>
             </NavContainer>
-          }
-          {location.pathname !== '/' ?
+          )}
+          {location.pathname !== '/' ? (
             <NavProfiles>
               <NavProfilesSpan>{userFront.name}</NavProfilesSpan>
               <ImgBtn
@@ -83,15 +108,15 @@ export default function NavBar() {
                 {displayMenu && <MenuNavBar />}
               </ImgBtn>
             </NavProfiles>
-          :
+          ) : (
             <NavProfiles>
-              {userType && userType === 'client' ?
+              {userType && userType === 'client' ? (
                 <LandNavLogin to="/listmotorcycle">
                   Solicitar servicio
                 </LandNavLogin>
-              :
+              ) : (
                 <LandNavLogin to="/listtow">Ver servicios</LandNavLogin>
-              }
+              )}
               <ImgBtn
                 onClick={() => setDisplayMenu(!displayMenu)}
                 onBlur={hideMenu}
@@ -100,9 +125,9 @@ export default function NavBar() {
                 {displayMenu && <MenuNavBar />}
               </ImgBtn>
             </NavProfiles>
-          }
+          )}
         </Nav>
-      :
+      ) : (
         <Nav>
           <NavContainer>
             <NavIcon>
@@ -116,7 +141,7 @@ export default function NavBar() {
             <LandNavLogin to="/login">Ingresa</LandNavLogin>
           </LandNavLoginCont>
         </Nav>
-      }
+      )}
     </>
   );
 }
