@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 import logo from '../../logo.png';
 import { updateService } from '../../store/servicesReducer'
 
-function towViewService(servID, serviceStatus = 'Aceptado', clientName = 'clientillo', dispatch, serviceIndex) {
+function towViewService(servID, serviceStatus, clientName, dispatch, serviceIndex) {
 
   const possibleServiceStatus = ['Solicitado', 'Aceptado', 'Confirmado', 'Inicio', 'Destino', 'Terminado', 'Pagado'];
   let currentStatusIndex = possibleServiceStatus.indexOf(serviceStatus);
