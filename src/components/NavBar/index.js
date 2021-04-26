@@ -26,7 +26,7 @@ export default function NavBar() {
   let location = useLocation();
 
   useEffect(() => {
-    dispatch(getLoggedUser());
+    token && dispatch(getLoggedUser());
   }, []);
 
   let iconNav = '';

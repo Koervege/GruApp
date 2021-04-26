@@ -53,3 +53,9 @@ export const LandingP = styled.p`
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: #2980B9;
 `
+export const LineDivider = styled.div`
+  width: 90%;
+  border-top: 3px solid;
+  margin: 0 auto;
+  margin: 15px 0;
+`;
