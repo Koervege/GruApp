@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+
 
 export const LandingMain = styled.main`
 
@@ -9,19 +11,6 @@ export const LandingMain = styled.main`
     justify-content: center;
     @media (max-width: 768px) {
       padding-top: 60px;
-    }
-`
-
-export const LandingMap = styled.iframe`
-
-    width:70%;
-    height:500px;
-    border: 4px solid #2980B9;
-    border-radius: 11px;
-    @media (max-width: 768px) {
-      width: 100%;
-      border: none;
-      border-radius: 0;
     }
 `
 
