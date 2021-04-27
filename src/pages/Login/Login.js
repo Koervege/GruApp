@@ -9,7 +9,7 @@ import {ATags} from '../../components/NavBar/styles'
 import { useForm } from '../../hooks/useForm';
 import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
-import { loginUser, deleteError } from '../../store/usersReducer'
+import { loginUser } from '../../store/usersReducer'
 import { StyledFieldset, Legend, StyledLink } from '../Register/styles';
 import { Background } from '../../components/Background/index';
 
@@ -22,9 +22,8 @@ function Login() {
   });
   
   const dispatch = useDispatch();
-  const { loading, errorUsers } = useSelector(({ usersReducer }) => ({
+  const { loading } = useSelector(({ usersReducer }) => ({
     loading: usersReducer.loading,
-    errorUsers: usersReducer.errorUsers,
   }));
 
   const { email, password } = formValues;
@@ -33,20 +32,10 @@ function Login() {
   const searchUser = async (event) => {
     event.preventDefault();
 
-    dispatch(loginUser(email, password, history));
-
-    if(errorUsers) {
-      dispatch(deleteError());
-      swal({
-        title: 'Lo sentimos!',
-        text:
-        'Email o contraseña inválida',
-        icon: 'error',
-      });
-      return;
-    };
+    dispatch(loginUser(email, password, history, swal));
   };
 
+  if(loading) return <p>Cargando...</p>
   return (
     <Background>
     <Frame>
