@@ -51,7 +51,7 @@ export function getLoggedUser() {
   };
 };
 
-export function loginUser( email, password, history) {
+export function loginUser( email, password, history, swal) {
   return async function(dispatch) {
     dispatch({ type: USERS_LOADING })
     try{
@@ -76,6 +76,13 @@ export function loginUser( email, password, history) {
       dispatch({ type: USERS_SUCCESS, payload: {userFront, userType } })
     } catch(error) {
       dispatch({ type: USERS_ERROR, payload: error })
+      swal({
+        title: 'Lo sentimos!',
+        text:
+        'Email o contraseña inválida',
+        icon: 'error',
+      });
+      dispatch({ type: USERS_DELETE_ERROR });
     };
   };
 };
