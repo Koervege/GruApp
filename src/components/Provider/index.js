@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { Photo, ContainerList, ContainerElement, SectionList } from './styles';
+import { Photo, ContainerList, ContainerElement, SectionList, ContainerOthers } from './styles';
 import Button from '../../components/Button';
 import Swal from 'sweetalert2';
 import { getServices, deleteError } from '../../store/servicesReducer';
@@ -49,19 +49,19 @@ function Provider() {
           const dateFormat = format(newDate, 'PPPP', { locale: es });
           return servStat !== 'Cancelado' && servStat !== 'Calificado' && (
             <ContainerList key={_id}>
-              <ContainerElement>{bikeID.clientID.name}</ContainerElement>
-              <ContainerElement>{`${initLoc} / ${finalLoc} / ${dateFormat} / ${bikeID.type} / ${bikeID.cc} cc`}</ContainerElement>
-              <ContainerElement>
+              <ContainerOthers>{bikeID.clientID.name}</ContainerOthers>
+              <ContainerElement>{`${initLoc} / ${finalLoc} / ${dateFormat} / ${bikeID.type} / ${bikeID.cc}`}</ContainerElement>
+              <ContainerOthers>
                 <Photo
                   src={bikeID.clientID.photo}
                   alt={bikeID.clientID.name}
                 ></Photo>
-              </ContainerElement>
-              <ContainerElement>
+              </ContainerOthers>
+              <ContainerOthers>
                   <Button color="primary" onClick={() => towViewService(_id, servStat, bikeID.clientID.name, dispatch, index)}>
                     Detalles
                   </Button>
-                </ContainerElement>
+                </ContainerOthers>
             </ContainerList>
           );
         })}

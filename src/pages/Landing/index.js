@@ -32,9 +32,9 @@ class Landing extends React.Component {
                 <FontAwesomeIcon icon={faMotorcycle} />
               </IconContentContainer>
               <LandingP>
-                Tienes una motocicleta y requieres llevarla de un punto a otro?
+                ¿Tienes una motocicleta y requieres llevarla de un punto a otro?
                 Somos aquella plataforma mediante la cual puedes contratar grúas
-                para estos casos, has parte de nuestros usuarios y disfruta el
+                para estos casos, haz parte de nuestros usuarios y disfruta el
                 acceso a conductores disponibles a brindarte el mejor servicio.
               </LandingP>
             </ContentContainer>
@@ -43,7 +43,7 @@ class Landing extends React.Component {
                 <FontAwesomeIcon icon={faTruckPickup} />
               </IconContentContainer>
               <LandingP>
-                Tienes una grúa y quieres prestar un excelente servicio? Haz parte
+                ¿Tienes una grúa y quieres prestar un excelente servicio? Haz parte
                 de nuestra red de conductores que llevan las motocicletas de nuestros
                 usuarios.
               </LandingP>

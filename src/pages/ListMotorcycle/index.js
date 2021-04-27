@@ -10,20 +10,19 @@ import { getTows, deleteErrorTows } from '../../store/towsReducer';
 
 function ListMotorcycle () {
   const dispatch = useDispatch();
-  const { loading, tows, userID, errorTows, userType, servicesHistory } = useSelector(({ towsReducer, usersReducer, servicesReducer }) => ({
+  const { loading, tows, userID, errorTows, userType } = useSelector(({ towsReducer, usersReducer }) => ({
     loading: towsReducer.loading,
     tows: towsReducer.tows,
     userID: towsReducer.userID,
     userType: usersReducer.userType,
     errorTows: towsReducer.errorTows,
-    servicesHistory: servicesReducer.servicesHistory,
   }));
 
   let history = useHistory();
 
   useEffect(() => {
     dispatch(getTows());
-  }, [servicesHistory.length]);
+  }, []);
 
   if (loading) return <p>Cargando...</p>;
 

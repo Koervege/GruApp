@@ -2,15 +2,15 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 
 export const LandingMain = styled.main`
-    display: flex;
-    width: 90%;
-    padding-top: 100px;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: center;
-    @media (max-width: 768px) {
-      padding-top: 60px;
-    }
+  display: flex;
+  width: 90%;
+  padding-top: 100px;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 768px) {
+    padding-top: 60px;
+  }
 `
 
 export const LandingMap = styled.iframe`
@@ -33,7 +33,7 @@ export const ContentSection = styled.div`
   margin: 50px;
   justify-content: space-between;
   align-items: center;
-  @media (max-width: 768px) {
+  @media (max-width: 576px) {
     flex-direction: column;
   }
 `;
@@ -45,12 +45,31 @@ export const ContentContainer = styled.div`
   text-align: center;
   padding-top: 100px;
   flex: 1;
-  margin: 100px;
+  margin: 50px;
   width: 600px;
   height: 600px;
   font-size: 20px;
   border-radius: 15px;
   border: 5px solid white;
+
+  @media (max-width: 576px) {
+    font-size: 10px;
+    width: 250px;
+    height: 250px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 2px solid white;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 10px;
+    margin: 50px;
+    width: 250px;
+    height: 250px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 2px solid white;
+  }
 `;
 
 export const IconContentContainer = styled.div`
@@ -67,6 +86,13 @@ export const IconContentContainer = styled.div`
   width: 200px;
   margin: 15px;
   margin-bottom: 50px;
+  @media (max-width: 768px) {
+    font-size: 25px;
+    font-weight: bold;
+    height: 50px;
+    width: 50px;
+    margin-bottom: 10px;
+  }
 `;
 
 export const LandingP = styled.p`
@@ -90,6 +116,10 @@ export const FooterContainer = styled.section`
   padding: 20px;
   justify-content: space-between;
   width: 300px;
+  @media (max-width: 576px) {
+    padding: 10px;
+    width: 200px;
+  }
 `;
 
 export const IconFooterContainer = styled(Link)`
@@ -99,7 +129,7 @@ export const IconFooterContainer = styled(Link)`
   align-items: center;
   background-color: white;
   border-radius: 50%;
-  color: #c9f1ff;
+  color: #2980b9;
   font-size: 24px;
   font-weight: bold;
   height: 50px;
@@ -108,7 +138,13 @@ export const IconFooterContainer = styled(Link)`
   margin-bottom: 50px;
   transition: all 0.9s;
   &:hover {
-    background-color: #c9f1ff;
+    background-color: #2980b9;
     color: white;
+  }
+  @media (max-width: 576px) {
+    font-size: 10px;
+    font-weight: bold;
+    height: 25px;
+    width: 25px;
   }
 `;
