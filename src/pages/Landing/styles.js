@@ -11,8 +11,9 @@ export const LandingMain = styled.main`
   justify-content: center;
   @media (max-width: 768px) {
     padding-top: 60px;
+    padding-bottom: 30px;
   }
-`
+`;
 
 export const LandingMap = styled.iframe`
   margin: 0 auto;
