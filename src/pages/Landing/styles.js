@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 export const LandingMain = styled.main`
   display: flex;
-  width: 90%;
-  padding-top: 100px;
+  width: 70%;
+  padding-top: 150px;
+  padding-bottom: 100px;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
@@ -104,8 +105,8 @@ export const LandingP = styled.p`
 `
 export const LineDivider = styled.div`
   width: 90%;
-  border: 1px solid #1092e3;
-  background-color: #1092e3;
+  border: 1px solid #2980b9;
+  background-color: #2980b9;
   margin: 0 auto;
   margin: 15px 0;
 `;
