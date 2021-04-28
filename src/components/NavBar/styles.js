@@ -60,8 +60,8 @@ export const NavProfilesSpan = styled.span`
     }
 `
 
-const tagFontWeight = tagType => {
-  switch (tagType) {
+const tagFontWeight = tagtype => {
+  switch (tagtype) {
     case "bold":
       return "bold";  
     default:
@@ -72,7 +72,7 @@ const tagFontWeight = tagType => {
 export const ATags = styled(Link)`
   text-decoration: none;
   color: inherit;
-  font-weight: ${({ tagType }) => tagFontWeight(tagType)};
+  font-weight: ${({ tagtype }) => tagFontWeight(tagtype)};
 `;
 
 export const HistoryButton = styled.button`

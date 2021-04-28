@@ -71,7 +71,7 @@ function Login() {
       </form>
       <Container>
         <small>
-          Aun no estás registrado? <ATags tagType="bold" to="/register">Registrarse</ATags>
+          Aun no estás registrado? <ATags tagtype="bold" to="/register">Registrarse</ATags>
         </small>
       </Container>
     </Frame>

@@ -24,7 +24,7 @@ function ListTow() {
     dispatch(getServices());
       if(userFront && userFront.towIDs && userFront.towIDs[0]) {
         setIsTowActive(userFront.towIDs[0].status);
-      }
+      } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userFront.towIDs]);
 
   const handleActive = async (e) => {

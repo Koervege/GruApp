@@ -22,7 +22,7 @@ function ListMotorcycle () {
 
   useEffect(() => {
     dispatch(getTows());
-  }, []);
+  }, [dispatch]);
 
   if (loading) return <p>Cargando...</p>;
 

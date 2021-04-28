@@ -44,7 +44,7 @@ export default function NavBar() {
 
   useEffect(() => {
     token && dispatch(getLoggedUser());
-  }, []);
+  }, [dispatch, token]);
 
   let iconNav = '';
   userType === 'client' ? (iconNav = faMotorcycle) : (iconNav = faTruckPickup);
