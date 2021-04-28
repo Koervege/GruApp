@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import './index.css'
+import { MapContainer, Sidebar, StyledP } from './styles.js'
 
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp';
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -42,14 +42,16 @@ function Map() {
     return () => map.remove();
     }, []);
   
-
   return (
     <>
-      <div className="sidebar">
-        lng: {lng} | lat: {lat} | Zoom: {zoom}
-      </div>
-      <div className="map-container" ref={mapContainer}>
-      </div>
+      <MapContainer ref={mapContainer}>
+      </MapContainer>
+      <Sidebar>
+        <StyledP>Tu ubicación actual es:</StyledP>
+        <span> lng: {lng} | lat: {lat}</span>
+        <br/>
+        <StyledP>Desliza hacia abajo para descubrir los diferentes servicios que tienes usando nuestra aplicación.</StyledP>
+      </Sidebar>
     </>
   )
 }
