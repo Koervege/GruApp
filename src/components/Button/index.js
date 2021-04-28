@@ -7,11 +7,18 @@ const handleColorType = color => {
       case "danger":
         return "#BA3D3C";
       case "success":
-        return "#6E6D13";  
+        return "#6E6D13";
+      case "disabled":
+        return "#5a6268";   
       default:
-        return "#5a6268";
+        return "#5a3466";
     }
   };
+
+  const handleCursorType = isWaiting => {
+    return isWaiting ? 'wait' : 'pointer';
+  };
+
 
 const Button = styled.button`
     display: flex;
@@ -37,7 +44,7 @@ const Button = styled.button`
     opacity: 0.8;
     transition: all 0.4s;
     &:hover {
-      cursor: pointer;
+      cursor:  ${({ isWaiting }) =>  handleCursorType(isWaiting) };;
       opacity: 1;
       color: #111;
     }
