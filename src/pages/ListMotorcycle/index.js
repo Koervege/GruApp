@@ -24,7 +24,7 @@ function ListMotorcycle () {
     dispatch(getTows());
   }, []);
 
-  if (loading) return <p>loading ...</p>;
+  if (loading) return <p>Cargando...</p>;
 
   if (errorTows) {
     localStorage.removeItem('token');
