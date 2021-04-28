@@ -12,6 +12,7 @@ export const Nav = styled.nav`
   text-transform: capitalize;
     @media (max-width: 768px) {
       padding: 12px 20px;
+      justify-content: center;
     } 
 `;
 
@@ -25,7 +26,8 @@ export const NavIcon = styled.div`
   font-size: 70px;
   color: #fefefe;
     @media (max-width: 768px) {
-      font-size: 50px;
+      font-size: 40px;
+      padding-right: 25px;
     } 
 `
 export const NavList = styled.ul`
@@ -47,13 +49,14 @@ export const NavProfiles = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
+`;
 
 export const NavProfilesSpan = styled.span`
   margin-right: 15px;
     @media (max-width: 768px) {
       margin-right: 2px;
-      text-align: right;
+      width: 150px;
+      text-align: center;
     }
 `
 
@@ -70,7 +73,7 @@ export const ATags = styled(Link)`
   text-decoration: none;
   color: inherit;
   font-weight: ${({ tagType }) => tagFontWeight(tagType)};
-`
+`;
 
 export const HistoryButton = styled.button`
   text-decoration: none;
@@ -88,8 +91,13 @@ export const NavUserPhoto = styled.img`
   border-radius: 50%;
   border: 3px solid #fefefe;
   width: 70px;
-	height: 70px;
-`
+  height: 70px;
+  @media (max-width: 768px) {
+    border: 1px solid #fefefe;
+    width: 50px;
+    height: 50px;
+  }
+`;
 
 export const ImgBtn = styled.button`
   border: none;
@@ -98,6 +106,41 @@ export const ImgBtn = styled.button`
   &:hover {
     cursor: pointer;
   }
-`
+  @media (max-width: 768px) {
+    padding-left: 30px;
+  }
+`;
 
+export const Image = styled.img`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+  @media (max-width: 576px) {
+    height: 50px;
+    width: 50px;
+  }
+`;
 
+export const LandNavLoginCont = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+`;
+
+export const LandNavLogin = styled(Link)`
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  width: 200px;
+  height: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  @media (max-width: 576px) {
+    font-size: 18px;
+    width: 130px;
+  }
+`;

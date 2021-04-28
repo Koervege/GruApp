@@ -95,15 +95,15 @@ function PaymentResponse() {
           <Img src={logo} radius="100" width="100" height="100" alt="logo" />
         </Container>
         <StyledFieldset>
-        <Legend>Resumen Pago Electronico</Legend>
-          <p><b>Resultado transaccion: </b>{ x_response }</p>
+        <Legend>Resumen Pago Electrónico</Legend>
+          <p><b>Resultado transacción: </b>{ x_response }</p>
           <p><b>Factura No: </b>{ x_id_factura }</p>
           <p><b>Ref. Epayco: </b>{ x_ref_payco }</p>
           <p><b>Fecha de pago: </b>{ x_fecha_transaccion }</p>
-          <p><b>Servicio de grua: </b>{ x_description }</p>
-          <p><b>Valor: </b>{ x_amount } { x_currency_code }</p>
+          <p><b>Servicio de grúa: </b>{ x_description }</p>
+          <p><b>Valor: </b>{ x_amount/1000 }.000 { x_currency_code }</p>
           <p><b>Nro. Cuotas: </b>{ x_quotas }</p>
-          <p><b>Tarjeta Nro: </b>{ x_cardnumber }</p>
+          <p><b>Nro. Tarjeta : </b>{ x_cardnumber }</p>
         </StyledFieldset>
         <Button onClick={ handleClick } color="primary">Aceptar</Button>
       </Frame>

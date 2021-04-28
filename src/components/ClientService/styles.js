@@ -46,7 +46,7 @@ export const ContainerList = styled.article`
     align-items: center;
     &:hover {
       padding: 30px 50px;
-      border: solid 2px #BAB916;
+      border: solid 2px whitesmoke;
     }
   }
 `;
