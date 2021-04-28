@@ -48,7 +48,7 @@ export const ContentContainer = styled.div`
   padding-top: 100px;
   flex: 1;
   margin: 50px;
-  width: 600px;
+  max-width: 600px;
   height: 600px;
   font-size: 20px;
   border-radius: 15px;
