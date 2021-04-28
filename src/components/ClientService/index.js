@@ -62,6 +62,10 @@ function ServiceClient() {
       const data = setEpaycoData(_id, cost, initLoc, finalLoc, name );
       setDisablePayButton(true);
       handler.open(data);
+      setTimeout(() => {
+        setDisablePayButton(false);
+      }, 4000);
+            
     } else if (servStat === 'Aceptado') {
       AceptService( _id, tow, date, hour, cost, index, dispatch );
     } else if (servStat === 'Pagado') {
@@ -104,7 +108,8 @@ function ServiceClient() {
                     servStat !== 'Inicio' && 
                     servStat !== 'Destino' && (
                       <Button
-                        color={buttonValues[servStat].color}
+                        color={ buttonValues[servStat].color }
+                        isWaiting={ disablePayButton && servStat === 'Terminado' }
                         onClick={() =>
                           handleClick(
                             _id,
