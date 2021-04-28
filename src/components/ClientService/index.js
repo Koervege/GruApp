@@ -32,7 +32,7 @@ function ServiceClient() {
   useEffect(() => {
     bikeIDs && bikeIDs[0] &&
       dispatch(getServices(`bikeID=${bikeIDs[0]._id}`));
-  }, [services.length]);
+  }, [services.length, dispatch, bikeIDs]);
 
   if (loading) return <p>loading...</p>;
 

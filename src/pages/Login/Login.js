@@ -47,6 +47,7 @@ function Login() {
     };
   };
 
+  if(loading)
   return (
     <Background>
     <Frame>

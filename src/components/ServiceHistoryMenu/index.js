@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Menu, MenuItem, ContainerList } from "./styles";
 import { useSelector } from 'react-redux';
 import { format } from 'date-fns';
