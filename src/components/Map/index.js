@@ -92,7 +92,7 @@ function Map() {
         <StyledSpan>para conocer ubicación actual</StyledSpan>
       </ClickCont>
       {address.city && <StyledSpan>{`Tu ubicación actual es ${address.city}, ${address.state}, ${address.country}` }</StyledSpan>}
-      {address.location && <StyledSpan>{`Barrio ${address.location}`}</StyledSpan>}
+      {address.location && <StyledSpan>{`Sector ${address.location}`}</StyledSpan>}
     </>
   )
 }
