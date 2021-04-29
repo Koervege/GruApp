@@ -141,6 +141,6 @@ export const LandNavLogin = styled(Link)`
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   @media (max-width: 576px) {
     font-size: 18px;
-    width: 130px;
+    width: 120px;
   }
 `;

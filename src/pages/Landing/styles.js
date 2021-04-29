@@ -65,7 +65,7 @@ export const ContentContainer = styled.div`
 
   @media (max-width: 768px) {
     font-size: 10px;
-    margin: 50px;
+    margin: 50px 30px;
     width: 250px;
     height: 250px;
     padding-top: 10px;
@@ -150,3 +150,9 @@ export const IconFooterContainer = styled(Link)`
     width: 25px;
   }
 `;
+
+export const StyledH2 = styled.h2`
+  margin-top: 30px;
+  color: #2980b9;
+  text-align: center;
+`

@@ -5,7 +5,7 @@ import { faFacebookF, faTwitter, faInstagram } from '@fortawesome/free-brands-sv
 import NavBar from '../../components/NavBar';
 import { Background } from '../../components/Background'
 import {
-  LandingMain,
+  StyledH2,
   LandingMap,
   LandingP,
   LineDivider,
@@ -25,6 +25,7 @@ class Landing extends React.Component {
         <NavBar />
         <Background>
           <Map/>
+          <StyledH2>Conoce más de los servicios que tenemos para ofrecerte</StyledH2>
           <ContentSection>
             <ContentContainer>
               <IconContentContainer>

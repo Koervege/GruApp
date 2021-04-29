@@ -3,19 +3,23 @@ import styled from 'styled-components'
 export const MapContainer = styled.div` 
   width: 70vw;
   height: 60vh;
-  margin-top:30px;
+  margin-top:70px;
   border-radius: 11px;
   @media (max-width: 576px) {
     width: 100vw;
+    border-radius: none;
   }
 `
 export const Sidebar = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   background-color: #2980B9;
   opacity: 0.8;
   color: #fefefe;
   padding: 6px 12px;
   font: 16px/24px monospace;
-  z-index: 1;
+  z-index: 2;
   margin: 10px 12px;
   border-radius: 4px;
   display: flex;
@@ -27,13 +31,15 @@ export const Sidebar = styled.div`
     font-size: 13px;
   }
 `
-export const StyledP = styled.p`
+export const StyledSpan = styled.span`
+  margin-top: 5px;
+  color: #2980b9;
   text-align: center;
-  margin: 0 auto;
   font-weight: bold;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+`
+
+export const ClickCont = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
