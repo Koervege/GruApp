@@ -3,13 +3,16 @@ import styled from 'styled-components';
 
 const Frame = styled.div `
 
-    padding: 5px;
-    border-radius: 10px;
-    margin: 0px auto;
-    margin-top: 6%;
-    width: 30%;
-    background-color: rgba( 181, 230, 242, 0.5 );
-    border:2px solid #e0e0e0;
+  padding: 5px;
+  border-radius: 10px;
+  max-width: 500px;
+  background-color: transparent;
+  color: #2980b9; 
+  font-weight: 500;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 
 export default Frame;

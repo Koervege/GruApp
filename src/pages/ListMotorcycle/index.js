@@ -1,30 +1,58 @@
-import React from 'react';
-import { suppliers, services, tows } from '../../data';
-import { BoxSupplier } from './styles';
+import swal from 'sweetalert';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { BoxSupplier, LineDivider } from './styles';
 import Client from '../../components/Client';
-import Button from '../../components/Button';
 import NavBar from '../../components/NavBar';
-class ListMotorcycle extends React.Component {
-  state = {
-    suppliers,
-    tows,
-    services,
-  };
+import ClientService from '../../components/ClientService'
+import { getTows, deleteErrorTows } from '../../store/towsReducer';
 
-  render() {
-    const { suppliers, tows, services } = this.state;
-    return (
-      <section>
-        <NavBar userId={this.props.match.params.id} />
-        <BoxSupplier>
-          <Button color="primary">Ha pagado XX.XXX COP</Button>
-          <Client suppliers={suppliers} tows={tows} services={services} />
-          <Button color="success"> Servicio en proceso</Button>
-          <Button color="primary">Pedir Grúa</Button>
-        </BoxSupplier>
-      </section>
-    );
+function ListMotorcycle () {
+  const dispatch = useDispatch();
+  const { loading, tows, userID, errorTows, userType } = useSelector(({ towsReducer, usersReducer }) => ({
+    loading: towsReducer.loading,
+    tows: towsReducer.tows,
+    userID: towsReducer.userID,
+    userType: usersReducer.userType,
+    errorTows: towsReducer.errorTows,
+  }));
+
+  let history = useHistory();
+
+  useEffect(() => {
+    dispatch(getTows());
+  }, [dispatch]);
+
+  if (loading) return <p>Cargando...</p>;
+
+  if (errorTows) {
+    localStorage.removeItem('token');
+    history.push('/login');
+    swal({
+      title: 'Algo salió mal!',
+      text:
+        'Por favor, ingresa de nuevo a la aplicación con tu usuario y contraseña.',
+      icon: 'error',
+    });
+    dispatch(deleteErrorTows());
   }
+
+  if(userType === 'supplier') history.push('/listtow');
+
+  return (
+    <section>
+      <NavBar userID={userID} />
+      <BoxSupplier>
+        <h3>Grúas disponibles</h3>
+        <Client tows={tows} />
+        <LineDivider />
+        <h3>Servicios en proceso</h3>
+        <ClientService tows={tows} />
+      </BoxSupplier>
+    </section>
+  );
 }
+
 
 export default ListMotorcycle;

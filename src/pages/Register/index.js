@@ -1,143 +1,169 @@
 import React from 'react';
-import './styles.css';
-import Frame from '../../components/Frame/index';
-import Button from '../../components/Button/index';
-import { StyledInput } from '../../components/StyledInput/index';
-import logo from '../../logo.png';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import logo from '../../images/logo.png';
+import Frame from '../../components/Frame';
+import Button from '../../components/Button';
+import Img from '../../components/Img';
+import swal from 'sweetalert';
+import { StyledInput, Container } from '../../components/StyledInput/index';
+import { StyledLink, StyledFieldset, RadioInput, RadioLabel, Legend} from "./styles";
+import { useState } from 'react';
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { registerUser, deleteError } from '../../store/usersReducer';
+import { Background } from '../../components/Background/index';
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  border-radius: 5px;
-  margin: 10px;
-  outline: none;
-  font-size: 20px;
-  height: 40px;
-  min-width: 100px;
-  max-width: auto;
-  color: white;
-  border-style: none;
-  background: red;
-	padding: 10px;
 
-  &:hover {
-    cursor: pointer;
-    background-color: #f8ce0b;
-    color: black;
-  }
-`
-class Form extends React.Component {
-  state = {
-    email: '',
-    password: '',
-    passwordConfirm: '',
-  };
+function Register() {
 
-  handleChange = (e) => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNum, setPhoneNum] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [userTypeForm, setUserTypeForm] = useState('');
 
-  handleSubmit = (e) => {
+  const dispatch = useDispatch();
+  const { loading, errorUsers } = useSelector(({ usersReducer }) => ({
+    loading: usersReducer.loading,
+    errorUsers: usersReducer.errorUsers,
+  }));
+
+  let history = useHistory();
+
+  function handleSubmit(e) {
     e.preventDefault();
+    
+    if(password !== passwordConfirm) {
+      swal({
+        title: 'Las contraseñas no son las mismas',
+        text:
+        'Por favor revisa las contraseñas e intenta enviar nuevamente.',
+        icon: 'error',
+      });
+      return;
+    };
+
+    dispatch(registerUser(firstName, lastName, email, phoneNum, password, userTypeForm));
+
+    if(errorUsers) {
+      dispatch(deleteError());
+      swal({
+        title: 'Algo salió mal!',
+        text:
+        'Ocurrió un error al enviar tu información. Inténtalo de nuevo más tarde.',
+        icon: 'error',
+      });
+      return;
+    };
+    history.push(`/userinfo/`);
   };
 
-  render() {
-    const { email, password, passwordConfirm } = this.state;
+  if(loading) return <p>Un momento por favor...</p>
+  return (
+    <Background>
+    <Frame>
+      <Container>
+      <Img src={logo} radius="150" width="150" height="150" alt="logo" />
+      </Container>
 
-    return (
-      <form onSubmit={this.handleSubmit} className="regForm">
-        <div className="logoContainer">
-          <img src={logo} className="regLogo" alt="logoGruApp"></img>
-        </div>
+      <form onSubmit={handleSubmit}>
+        <StyledFieldset>
+          <Legend>Regístrate</Legend>
+          <StyledInput
+            value={firstName}
+            name="firstName"
+            id="firstName"
+            onChange={e => setFirstName(e.target.value)}
+            children="Nombre"
+            type="text"
+            required="required"
+          />
+          <StyledInput
+            value={lastName}
+            name="lastName"
+            id="lastName"
+            onChange={e => setLastName(e.target.value)}
+            children="Apellido"
+            type="text"
+            required="required"
+          />
+          <StyledInput
+            value={email}
+            name="email"
+            id="email"
+            onChange={e => setEmail(e.target.value)}
+            children="E-mail"
+            type="email"
+            required="required"
+          />
+          <StyledInput
+            value={phoneNum}
+            name="phoneNum"
+            id="phoneNum"
+            onChange={e => setPhoneNum(e.target.value)}
+            children="Tel. Móvil"
+            type="tel"
+            pattern='[0-9]{10}'
+            required="required"
+          />
+          <StyledInput
+            value={password}
+            name="password"
+            id="password"
+            onChange={e => setPassword(e.target.value)}
+            children="Contraseña"
+            type="password"
+            required="required"
+          />
+          <StyledInput
+            value={passwordConfirm}
+            name="passwordConfirm"
+            id="passwordConfirm"
+            onChange={e => setPasswordConfirm(e.target.value)}
+            children="Confírmala"
+            type="password"
+            required="required"
+          /> 
 
-        <Frame className="regFrame">
-          <fieldset className="registerText">
-            <div className="aligner">
-              <StyledInput
-                className="styledInput"
-                type="text"
-                name="email"
-                id="email"
-                onChange={this.handleChange}
-                placeholder="email@gruapp.com"
-                value={email}
-              >
-                Correo electrónico
-              </StyledInput>
-            </div>
-          </fieldset>
-          <fieldset className="registerText">
-            <div className="aligner">
-              <StyledInput
-                className="styledInput"
-                htmlFor="password"
-                type="password"
-                name="password"
-                id="password"
-                onChange={this.handleChange}
-                placeholder="Contraseña"
-                value={password}
-              >
-                {' '}
-                Contraseña
-              </StyledInput>
-            </div>
-          </fieldset>
-          <fieldset className="registerText">
-            <div className="aligner">
-              <StyledInput
-                className="styledInput"
-                htmlFor="passwordConfirm"
-                type="password"
-                name="passwordConfirm"
-                id="passwordConfirm"
-                onChange={this.handleChange}
-                placeholder="Contraseña"
-                value={passwordConfirm}
-              >
-                Confirma tu contraseña
-              </StyledInput>
-            </div>
-          </fieldset>
-
-          <fieldset className="registerCheck">
-            <label htmlFor="isBike" className="radioLabel">
+          <Container>
+            <RadioLabel htmlFor="isBike" className="radioLabel">
               Moto
-            </label>
-            <input
+            </RadioLabel>
+            <RadioInput
               type="radio"
-              name="isBike"
+              name="userTypeForm"
               id="isBike"
-              value="isBike"
-              onChange={this.handleChange}
+              value="client"
+              onChange={e => setUserTypeForm(e.target.value)}
+              required="required"
             />
 
-            <label htmlFor="isTow" className="radioLabel">
-              Grua
-            </label>
-            <input
+            <RadioLabel htmlFor="isTow" className="radioLabel">
+              Grúa
+            </RadioLabel>
+            <RadioInput
               type="radio"
-              name="isBike"
+              name="userTypeForm"
               id="isTow"
-              value="isTow"
-              onChange={this.handleChange}
+              value="supplier"
+              onChange={e => setUserTypeForm(e.target.value)}
+              required="required"
             />
-          </fieldset>
-        </Frame>
+          </Container>
+        </StyledFieldset>
 
-        <div className="buttonAlign">
-          <div className="regButtons">
-            <Button color="primary" type="submit" id="acceptButton">
-              Registrarse
-            </Button>
-            <StyledLink to="/">Cancelar</StyledLink>
-          </div>
-        </div>
+        <Container>
+          <Button type="submit" color="primary">
+            Enviar
+          </Button>
+          <StyledLink to="/">Cancelar</StyledLink>
+        </Container>
       </form>
-    );
-  }
+    </Frame>
+    </Background>
+  )
+
 }
 
-export default Form;
+export default Register

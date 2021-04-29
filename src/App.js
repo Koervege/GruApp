@@ -10,6 +10,8 @@ import ListMotorcycle from './pages/ListMotorcycle';
 import ListTow from './pages/ListTow';
 import Login from './pages/Login/Login';
 import Register from './pages/Register';
+import UserInfo from './pages/UserInfo';
+import PaymentResponse from './pages/PaymentResponse';
 
 function App() {
   return (
@@ -18,8 +20,10 @@ function App() {
         <Route exact path="/" component={Landing} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/listtow/:id" component={ListTow} />
-        <Route exact path="/listmotorcycle/:id" component={ListMotorcycle} />
+        <Route exact path="/listtow" component={ListTow} />
+        <Route exact path="/listmotorcycle" component={ListMotorcycle} />
+        <Route exact path="/userinfo" component={UserInfo} />
+        <Route exact path="/response" component={PaymentResponse} />
         <Redirect from="*" to="/" />
       </Switch>
     </Router>

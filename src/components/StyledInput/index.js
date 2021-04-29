@@ -8,21 +8,24 @@ function StyledInput({
   placeholder,
   value,
   onChange,
+  required,
+  disabled,
+  pattern,
 }) {
   return (
     <Container>
-      <div>
-        <Label htmlFor={id}>{children}</Label>
-
-        <Input
-          type={type}
-          id={id}
-          onChange={onChange}
-          name={name}
-          placeholder={placeholder}
-          value={value}
-        ></Input>
-      </div>
+      <Label htmlFor={id}>{children}</Label>
+      <Input
+        type={type}
+        id={id}
+        onChange={onChange}
+        name={name}
+        placeholder={placeholder}
+        value={value}
+        required={required}
+        disabled = {disabled ? true : false}
+        pattern = {pattern}
+      ></Input>
     </Container>
   );
 }
