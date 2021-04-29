@@ -55,10 +55,17 @@ function Map() {
       zoom: zoom
     });
   
+    const marker = new mapboxgl.Marker({
+      draggable: false
+      })
+      .setLngLat(map.getCenter())
+      .addTo(map);
+
     map.on('move', () => {
       setLng(map.getCenter().lng.toFixed(4));
       setLat(map.getCenter().lat.toFixed(4));
       setZoom(map.getZoom().toFixed(2));
+      marker.setLngLat(map.getCenter());
     });
     
     map.addControl(
