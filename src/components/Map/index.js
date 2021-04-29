@@ -8,7 +8,7 @@ import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp';
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 
 mapboxgl.workerClass = MapboxWorker;
-mapboxgl.accessToken = 'pk.eyJ1IjoicGlwZXNvdG8xMyIsImEiOiJja2V3YmN6MjMxdzRtMnlvbWVzcjk4M3ltIn0.2_KKrhFgzx5ljS7shXG28A';
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 const btn = document.getElementsByClassName('mapboxgl-ctrl-geolocate')
 
 function Map() {
@@ -26,7 +26,7 @@ function Map() {
 
 
   const printAddress = async() => {
-    const tokenHERE = 'yBy9UGwkkEL8SW6-MgAJ9nHvaDrCn8uBeZXT5JlkHko';
+    const tokenHERE = process.env.REACT_APP_HERE_API_KEY;
 
     try {
       const { data } = await axios({
