@@ -7,7 +7,7 @@ export const MapContainer = styled.div`
   border-radius: 11px;
   @media (max-width: 576px) {
     width: 100vw;
-    border-radius: none;
+    border-radius: 0;
   }
 `
 export const Sidebar = styled.div`

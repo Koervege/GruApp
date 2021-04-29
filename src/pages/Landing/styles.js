@@ -152,7 +152,11 @@ export const IconFooterContainer = styled(Link)`
 `;
 
 export const StyledH2 = styled.h2`
-  margin-top: 30px;
+  font-size: 30px;
+  margin-top: 40px;
   color: #2980b9;
   text-align: center;
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 `
