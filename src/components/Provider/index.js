@@ -24,7 +24,7 @@ function Provider() {
   useEffect(() => {
     if(userFront && userFront.towIDs && userFront.towIDs[0]) {
       dispatch(getServices(`towID=${userFront.towIDs[0]._id}`));
-    }
+    }// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userFront.email]);
 
   if(loading) return <p>loading...</p>

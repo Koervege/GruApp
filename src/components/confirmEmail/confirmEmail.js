@@ -51,9 +51,9 @@ function confirmEmail(userType, userEmail, auth, history) {
       },
       preConfirm: 
         async () => {
-          const input = document.getElementById('Token').value
+          const input = parseInt(document.getElementById('Token').value);
           let response
-          if(input == emailToken) {
+          if(input === emailToken) {
             return (async () => {
               try {
                 response = await axios({
@@ -68,7 +68,7 @@ function confirmEmail(userType, userEmail, auth, history) {
                     Authorization: `Bearer ${auth}`,
                   },
                 });
-                if(response.status == 200) {
+                if(+response.status === 200) {
                   confirmationSuccessful = true;
                   return true;
                 } else return false;

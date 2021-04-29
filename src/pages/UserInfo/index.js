@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import confirmEmail from '../../components/confirmEmail/confirmEmail';
 import swal from 'sweetalert';
 import { Background } from '../../components/Background/index';
+import { getLoggedUser } from '../../store/usersReducer';
 
 
 function UserInfo() {
@@ -103,6 +104,9 @@ function UserInfo() {
   }
 
   useEffect(() => {
+    if(!userFront.name) {
+      dispatch(getLoggedUser());
+    };
     setState(prevState =>({
       ...prevState,
       phoneNum: userFront.phoneNum,
@@ -112,7 +116,8 @@ function UserInfo() {
     if(!userFront.emailIsConfirmed) {
       confirmEmail(userType, userFront.email, localStorage.getItem('token'));
     };
-  },[userType])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[userType, userFront.name])
 
   const eraseUser = async(event) => {
     event.preventDefault();
@@ -251,11 +256,11 @@ function UserInfo() {
         <StyledFieldset>
           <Legend>Usuario</Legend>
           <label htmlFor="editUser">
-            <input type="checkbox" defaultChecked="true" id="editUser" name="editUser" onChange={handleEdit} checked={editUser}/>
+            <input type="checkbox" id="editUser" name="editUser" onChange={handleEdit} checked={editUser}/>
             Editar
           </label>
           <StyledInput
-            value={name}
+            value={name ? name : ''}
             name="name"
             onChange={handleChange}
             children="Nombre"
@@ -263,7 +268,7 @@ function UserInfo() {
             disabled={!editUser}
           />
           <StyledInput
-            value={phoneNum}
+            value={phoneNum ? phoneNum : ''}
             name="phoneNum"
             onChange={handleChange}
             children="Telefono"
@@ -291,7 +296,7 @@ function UserInfo() {
         {(<StyledFieldset>
           <Legend>{vehicleType}</Legend>  
           <label htmlFor="editVehi">
-            <input type="checkbox" defaultChecked="true" id="editVehi" name="editVehi" onChange={handleEdit} checked={editVehi}/>
+            <input type="checkbox" id="editVehi" name="editVehi" onChange={handleEdit} checked={editVehi}/>
             Editar
           </label>
           {
@@ -319,7 +324,7 @@ function UserInfo() {
               )
           }
           <StyledInput
-            value={vehiPhoto}
+            value={vehiPhoto ? vehiPhoto : ''}
             name="vehiPhoto"
             onChange={handleChange}
             children="Foto vehículo"
