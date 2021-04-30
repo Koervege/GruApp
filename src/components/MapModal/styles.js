@@ -33,7 +33,7 @@ export const Sidebar = styled.div`
 `
 export const StyledSpan = styled.span`
   margin-top: 5px;
-  color: #2980b9;
+  color: ${props => props.origin ? "#ff0000" : "#2980b9"};
   text-align: center;
   font-weight: bold;
 `
