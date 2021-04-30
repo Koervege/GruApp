@@ -45,6 +45,7 @@ export default function NavBar() {
 
   useEffect(() => {
     token && dispatch(getLoggedUser(history));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, token]);
 
   let iconNav = '';
