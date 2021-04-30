@@ -53,7 +53,7 @@ function Map(props) {
           ognLocation: data.items[0].address.district,
           ognCity: data.items[0].address.city,
           ognState: data.items[0].address.county,
-          ognCountry: data.items[0].address.countryCode,
+          ognStreet: data.items[0].address.street,
         })
       }
     } catch (error) {
@@ -66,11 +66,12 @@ function Map(props) {
         url: `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${destLat}%2C${destLng}&lang=en-US&apikey=${tokenHERE}`, 
       })
       if (data) {
+        console.log(data.items[0].address)
         setDestAddress({
           destLocation: data.items[0].address.district,
           destCity: data.items[0].address.city,
           destState: data.items[0].address.county,
-          destCountry: data.items[0].address.countryCode,
+          destStreet: data.items[0].address.street,
         })
       }
     } catch (error) {
@@ -83,14 +84,14 @@ function Map(props) {
       [`
           ${ognAddress.ognCity}, 
           ${ognAddress.ognState}, 
-          ${ognAddress.ognCountry}, 
-          ${ognAddress.ognLocation ? 'sector ' + ognAddress.ognLocation : ''}
+          ${ognAddress.ognLocation ? 'sector ' + ognAddress.ognLocation : ''},
+          ${ognAddress.ognStreet ? ognAddress.ognStreet : ''}
         `,
         `
           ${destAddress.destCity}, 
           ${destAddress.destState}, 
-          ${destAddress.destCountry}, 
-          ${destAddress.destLocation ? 'sector ' + destAddress.destLocation : ''}
+          ${destAddress.destLocation ? 'sector ' + destAddress.destLocation : ''},
+          ${destAddress.destStreet ? destAddress.destStreet : ''}
       `]
     )
   }
