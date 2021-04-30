@@ -104,7 +104,7 @@ function UserInfo() {
 
   useEffect(() => {
     if(!userFront.name) {
-      dispatch(getLoggedUser());
+      dispatch(getLoggedUser(history));
     };
     setState(prevState =>({
       ...prevState,

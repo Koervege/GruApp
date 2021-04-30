@@ -29,26 +29,29 @@ export function registerUser(firstName, lastName, email, phoneNum, password, use
   };
 };
 
-export function getLoggedUser() {
+export function getLoggedUser(history) {
   return async function(dispatch) {
-    dispatch({ type: USERS_LOADING })
-    try{
-      const token = localStorage.getItem('token')
-
-      const { data: { userType, userFront } } = await axios({
-        method: 'GET',
-        baseURL: process.env.REACT_APP_SERVER_URL,
-        url: '/users',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      })
-      localStorage.setItem('token', token)
-      dispatch({ type: USERS_SUCCESS, payload: {userFront, userType} })
-    } catch(error) {
-      dispatch({ type: USERS_ERROR, payload: error })
-    };
-  };
+    const token = localStorage.getItem('token')
+    if (token) {
+      dispatch({ type: USERS_LOADING })
+      try{
+  
+        const { data: { userType, userFront } } = await axios({
+          method: 'GET',
+          baseURL: process.env.REACT_APP_SERVER_URL,
+          url: '/users',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        })
+        localStorage.setItem('token', token)
+        dispatch({ type: USERS_SUCCESS, payload: {userFront, userType} })
+      } catch(error) {
+        localStorage.removeItem('token');
+        history.push('/login')
+      };
+    };    
+  }
 };
 
 export function loginUser( email, password, history, swal) {

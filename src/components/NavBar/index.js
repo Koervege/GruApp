@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import logo from '../../logo.png';
 import  MenuNavBar from "../MenuNavBar";
@@ -41,9 +41,10 @@ export default function NavBar() {
   );
 
   let location = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
-    token && dispatch(getLoggedUser());
+    token && dispatch(getLoggedUser(history));
   }, [dispatch, token]);
 
   let iconNav = '';
