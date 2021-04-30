@@ -48,7 +48,7 @@ export const ContentContainer = styled.div`
   padding-top: 100px;
   flex: 1;
   margin: 50px;
-  width: 600px;
+  max-width: 600px;
   height: 600px;
   font-size: 20px;
   border-radius: 15px;
@@ -65,7 +65,7 @@ export const ContentContainer = styled.div`
 
   @media (max-width: 768px) {
     font-size: 10px;
-    margin: 50px;
+    margin: 50px 30px;
     width: 250px;
     height: 250px;
     padding-top: 10px;
@@ -150,3 +150,13 @@ export const IconFooterContainer = styled(Link)`
     width: 25px;
   }
 `;
+
+export const StyledH2 = styled.h2`
+  font-size: 30px;
+  margin-top: 40px;
+  color: #2980b9;
+  text-align: center;
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+`
