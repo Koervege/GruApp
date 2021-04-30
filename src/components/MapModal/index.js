@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import { MapContainer, Sidebar, StyledSpan,ClickCont } from './styles.js'
 import Button from '../Button'
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { createService } from '../../store/servicesReducer'
 
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp';
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -10,7 +12,12 @@ import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 mapboxgl.workerClass = MapboxWorker;
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
-function Map() {
+function Map(props) {
+
+  const dispatch = useDispatch();
+  const { infoForMap } = useSelector(({servicesReducer}) => ({
+    infoForMap: servicesReducer.infoForMap,
+  }));
 
   const mapContainer = useRef();
   const [lat, setLat] = useState(4.36);
@@ -71,6 +78,33 @@ function Map() {
     }
   }; 
 
+  function addressToNiceString(ognAddress, destAddress) {
+    return(
+      [`
+          ${ognAddress.ognCity}, 
+          ${ognAddress.ognState}, 
+          ${ognAddress.ognCountry}, 
+          ${ognAddress.ognLocation ? 'sector ' + ognAddress.ognLocation : ''}
+        `,
+        `
+          ${destAddress.destCity}, 
+          ${destAddress.destState}, 
+          ${destAddress.destCountry}, 
+          ${destAddress.destLocation ? 'sector ' + destAddress.destLocation : ''}
+      `]
+    )
+  }
+
+  function newService([initLoc, finalLoc]) {
+    dispatch(createService(initLoc, finalLoc, infoForMap.date, infoForMap.bikeID, infoForMap.towID));
+    props.closeModal();
+    props.Swal.fire({
+      icon: 'success',
+      title: 'Solicitud enviada exitosamente',
+      text: `${infoForMap.supplierName} te indicará la hora de recogida y el costo del servicio`,
+      confirmButtonText: '¡Entendido!',
+    });
+  }
 
   useEffect(() => {
 
@@ -132,17 +166,31 @@ function Map() {
   return (
     <>
       <MapContainer ref={mapContainer}>
-      <Sidebar>
-        <span> lng: {lng} | lat: {lat} | zoom: {zoom}</span>
-      </Sidebar>
+        <Sidebar>
+          <span> lng: {lng} | lat: {lat} | zoom: {zoom}</span>
+        </Sidebar>
       </MapContainer>
       <ClickCont>
         <Button color='primary' onClick={getAddress}>Click</Button>
         <StyledSpan>para conocer ubicaciones de origen y destino</StyledSpan>
+        <Button onClick={() => newService(addressToNiceString(ognAddress, destAddress))}>Usar ubicaciones</Button>
       </ClickCont>
-      {ognAddress.ognCity && <StyledSpan origin>{`Tu origen es: ${ognAddress.ognCity}, ${ognAddress.ognState}, ${ognAddress.ognCountry}, sector${ognAddress.ognLocation}` }</StyledSpan>}
+      {ognAddress.ognCity && 
+      <StyledSpan origin="true">
+
+        {`
+          El inicio es: 
+          ${addressToNiceString(ognAddress, destAddress)[0]}
+        `}
+      </StyledSpan>}
       <br/>
-      {destAddress.destCity && <StyledSpan>{`Tu destino es: ${destAddress.destCity}, ${destAddress.destState}, ${destAddress.destCountry}, sector${destAddress.ognLocation}` }</StyledSpan>}
+      {destAddress.destCity && 
+      <StyledSpan>
+        {`
+          El destino es: 
+          ${addressToNiceString(ognAddress, destAddress)[1]}
+        `}
+      </StyledSpan>}
     </>
   )
 }

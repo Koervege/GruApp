@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteError } from '../../store/servicesReducer'
+import { deleteError, saveInfoForMap } from '../../store/servicesReducer'
 import { SectionList } from '../Provider/styles';
 import Stars from '../Stars'
 import CountServices from '../CountServices';
@@ -10,8 +10,6 @@ import ModalService from '../CreateServiceModal';
 import { Photo, ContainerStar, ContainerList, ContainerElement } from './styles';
 import React from 'react';
 import MapModal from '../MapModal'
-
-/* ---------------Modal------------------------------------------------ */
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -26,7 +24,6 @@ const customStyles = {
 };
 
 Modal.setAppElement('#root')
-/* --------------------------------------------------------------- */
 
 function Client({ tows }) {
   const dispatch = useDispatch();
@@ -37,16 +34,24 @@ function Client({ tows }) {
   }));
   let history = useHistory();
 
-/* ------------Modal--------------------------------------------------- */
   const [modalIsOpen,setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
   }
 
-  function closeModal(){
+  function closeModal() {
     setIsOpen(false);
   }
-/* --------------------------------------------------------------- */
+
+  async function createService(towID, dispatch, userFront, supplierName) {
+      ModalService(towID, dispatch, userFront, supplierName).then(date => {
+        if(!date) return;
+
+        dispatch(saveInfoForMap({date, towID, bikeID: userFront.bikeIDs[0], supplierName}));
+        openModal();
+      })
+
+  };
 
   if(loading) return <p>Loading...</p>
   if (errorServices) {
@@ -77,17 +82,15 @@ function Client({ tows }) {
                 <Photo src={supplierID.photo} alt={supplierID.name}></Photo>
               </ContainerElement>
               <ContainerElement>
-                <button onClick={openModal}>Open Modal</button>
                 <Modal
                   isOpen={modalIsOpen}
                   onRequestClose={closeModal}
                   style={customStyles}
                   contentLabel="Example Modal"
                 >
-                  <MapModal/>
-                  <button onClick={closeModal}>close</button>
+                  <MapModal closeModal={closeModal} Swal={Swal}/>
                 </Modal>
-                <Button color="primary" onClick={ModalService(_id, dispatch, userFront, supplierID.name)}>
+                <Button color="primary" onClick={() => createService(_id, dispatch, userFront, supplierID.name)}>
                   Pedir Grúa
                 </Button>
               </ContainerElement>
