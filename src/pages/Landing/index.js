@@ -6,7 +6,6 @@ import NavBar from '../../components/NavBar';
 import { Background } from '../../components/Background'
 import {
   StyledH2,
-  LandingMap,
   LandingP,
   LineDivider,
   ContentSection,

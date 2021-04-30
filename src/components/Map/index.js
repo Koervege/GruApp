@@ -9,7 +9,6 @@ import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 
 mapboxgl.workerClass = MapboxWorker;
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
-const btn = document.getElementsByClassName('mapboxgl-ctrl-geolocate')
 
 function Map() {
 
@@ -78,6 +77,7 @@ function Map() {
     )
     
       return () => map.remove();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
   return (

@@ -37,7 +37,6 @@ function UserInfo() {
       type:'',
       weight:'',
       photo: null,
-      vehiPhoto: null,
       image: null,
       vehicleType:'',
       editUser: false,
@@ -57,7 +56,7 @@ function UserInfo() {
 
   const handleChange = (event) => {
     let { name, value } = event.target;
-    if (name === 'photo' || name === 'vehiPhoto') {
+    if (name === 'photo') {
       value = event.target.files[0]
       readFile(event.target.files[0])
     }
@@ -105,7 +104,7 @@ function UserInfo() {
 
   useEffect(() => {
     if(!userFront.name) {
-      dispatch(getLoggedUser());
+      dispatch(getLoggedUser(history));
     };
     setState(prevState =>({
       ...prevState,
@@ -176,6 +175,7 @@ function UserInfo() {
     dataMoto.append('type', state.type);
     dataMoto.append('plateNum', state.plateNum);
     dataMoto.append('weight', state.weight);
+
     const dataTow = new FormData();
     dataTow.append('brand', state.brand);
     dataTow.append('capacity', state.capacity);
@@ -240,10 +240,10 @@ function UserInfo() {
       history.push('/listMotorcycle/')
     } else {
       history.push('/listTow/')
-    }
+    };
   };
 
-    const { name, phoneNum, brand, cc, capacity, plateNum, type, weight, image, vehiPhoto, vehicleType, editUser, editVehi } = state;
+    const { name, phoneNum, brand, cc, capacity, plateNum, type, weight, image, vehicleType, editUser, editVehi } = state;
 
     return (
       <Background>
@@ -323,15 +323,6 @@ function UserInfo() {
                 />
               )
           }
-          <StyledInput
-            value={vehiPhoto ? vehiPhoto : ''}
-            name="vehiPhoto"
-            onChange={handleChange}
-            children="Foto vehículo"
-            type="file"
-            accept="image/*"
-            disabled={!editVehi}
-          />
           <Container>
             <Button type="submit" color="primary" >Agregar {vehicleType}</Button>
           { editVehi && plateNum && <Button type="submit" color="success" onClick={updateVehi}>Actualizar {vehicleType}</Button>}
