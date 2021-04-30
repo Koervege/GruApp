@@ -8,6 +8,7 @@ const SERVICES_UPDATED = 'SERVICES_UPDATED';
 const SERVICES_FINISHED = 'SERVICES_FINISHED';
 const SERVICES_DELETE_ERROR = 'SERVICES_DELETE_ERROR';
 const SERVICES_CLEAR = 'SERVICES_CLEAR';
+const SERVICES_MAP_MODAL = 'SERVICES_MAP_MODAL';
 
 export function getServices(query='') {
   return async function (dispatch) {
@@ -100,11 +101,19 @@ export function clearServices() {
   };
 };
 
+export function saveInfoForMap(info) {
+  return {
+    type: SERVICES_MAP_MODAL,
+    payload: info,
+  }
+}
+
 const initialState = {
   loading: false,
   services: [],
   servicesHistory: [],
   userID: '',
+  infoForMap: {},
   errorServices: null,
 };
 
@@ -173,6 +182,12 @@ export function servicesReducer(state = initialState, action) {
         services: [],
         userID: '',
         errorServices: null,
+        date: '',
+      };
+    case SERVICES_MAP_MODAL:
+      return {
+        ...state,
+        infoForMap: action.payload,
       };
     default:
       return state;
