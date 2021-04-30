@@ -175,11 +175,14 @@ function UserInfo() {
     dataMoto.append('type', state.type);
     dataMoto.append('plateNum', state.plateNum);
     dataMoto.append('weight', state.weight);
+    dataMoto.append('bikeID', userFront.bikeIDs ? userFront.bikeIDs[0]._id : '')
     const dataTow = new FormData();
     dataTow.append('brand', state.brand);
     dataTow.append('capacity', state.capacity);
     dataTow.append('plateNum', state.plateNum);
     dataTow.append('status', true);
+    dataTow.append('towID', userFront.towIDs ? userFront.towIDs[0]._id : '')
+
 
     try {
       await axios({
