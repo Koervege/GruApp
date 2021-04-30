@@ -8,6 +8,25 @@ import CountServices from '../CountServices';
 import Button from '../../components/Button';
 import ModalService from '../CreateServiceModal';
 import { Photo, ContainerStar, ContainerList, ContainerElement } from './styles';
+import React from 'react';
+import MapModal from '../MapModal'
+
+/* ---------------Modal------------------------------------------------ */
+import Modal from 'react-modal';
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
+Modal.setAppElement('#root')
+/* --------------------------------------------------------------- */
 
 function Client({ tows }) {
   const dispatch = useDispatch();
@@ -17,6 +36,17 @@ function Client({ tows }) {
     errorServices: servicesReducer.errorServices,
   }));
   let history = useHistory();
+
+/* ------------Modal--------------------------------------------------- */
+  const [modalIsOpen,setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal(){
+    setIsOpen(false);
+  }
+/* --------------------------------------------------------------- */
 
   if(loading) return <p>Loading...</p>
   if (errorServices) {
@@ -47,6 +77,16 @@ function Client({ tows }) {
                 <Photo src={supplierID.photo} alt={supplierID.name}></Photo>
               </ContainerElement>
               <ContainerElement>
+                <button onClick={openModal}>Open Modal</button>
+                <Modal
+                  isOpen={modalIsOpen}
+                  onRequestClose={closeModal}
+                  style={customStyles}
+                  contentLabel="Example Modal"
+                >
+                  <MapModal/>
+                  <button onClick={closeModal}>close</button>
+                </Modal>
                 <Button color="primary" onClick={ModalService(_id, dispatch, userFront, supplierID.name)}>
                   Pedir Grúa
                 </Button>
