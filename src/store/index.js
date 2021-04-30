@@ -1,4 +1,3 @@
-import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { towsReducer } from './towsReducer';
@@ -18,7 +17,5 @@ const rootReducer = combineReducers({
 
 export const store = createStore(
   rootReducer, 
-  composeWithDevTools(
-    applyMiddleware(...middleware),
-  )
+  applyMiddleware(...middleware),
 );
