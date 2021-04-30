@@ -20,11 +20,13 @@ function Map() {
   const [destLat, setDestLat] = useState('');
   const [destLng, setDestLng] = useState('');
   const [zoom, setZoom] = useState(5.4);
-  const [address, setAddress] = useState({
+  const [ognAddress, setOgnAddress] = useState({
     ognLocation: '',
     ognCity: '',
     ognState: '',
     ognCountry: '',
+  });
+  const [destAddress, setDestAddress] = useState({
     destLocation: '',
     destCity: '',
     destState: '',
@@ -34,18 +36,34 @@ function Map() {
 
   const getAddress = async() => {
     const tokenHERE = process.env.REACT_APP_HERE_API_KEY;
-    console.log(lat);
     try {
       const { data } = await axios({
         method: 'GET',
-        url: `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat}%2C${lng}&lang=en-US&apikey=${tokenHERE}`, 
+        url: `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${ognLat}%2C${ognLng}&lang=en-US&apikey=${tokenHERE}`, 
       })
       if (data) {
-        setAddress({
+        setOgnAddress({
           ognLocation: data.items[0].address.district,
           ognCity: data.items[0].address.city,
           ognState: data.items[0].address.county,
           ognCountry: data.items[0].address.countryCode,
+        })
+      }
+    } catch (error) {
+      console.log('no pasó nada');
+    }
+
+    try {
+      const { data } = await axios({
+        method: 'GET',
+        url: `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${destLat}%2C${destLng}&lang=en-US&apikey=${tokenHERE}`, 
+      })
+      if (data) {
+        setDestAddress({
+          destLocation: data.items[0].address.district,
+          destCity: data.items[0].address.city,
+          destState: data.items[0].address.county,
+          destCountry: data.items[0].address.countryCode,
         })
       }
     } catch (error) {
@@ -77,11 +95,17 @@ function Map() {
       .addTo(map);
 
 
-      const onDragEnd= () => {
-        var lngLat = ognMarker.getLngLat();
-        setAddress(`Longitude: ${lngLat.lng} Latitude: ${lngLat.lat}`)
+      const onDragEndOgn= () => {
+        const lngLat = ognMarker.getLngLat();
+        setOgnLat(lngLat.lat);
+        setOgnLng(lngLat.lng);
       }
 
+      const onDragEndDest= () => {
+        const lngLat = destMarker.getLngLat();
+        setDestLat(lngLat.lat);
+        setDestLng(lngLat.lng);
+      }
 
     map.on('move', () => {
       setLng(map.getCenter().lng.toFixed(4));
@@ -98,7 +122,8 @@ function Map() {
       })
     )
     
-    ognMarker.on('dragend', onDragEnd);
+    ognMarker.on('dragend', onDragEndOgn);
+    destMarker.on('dragend', onDragEndDest);
 
 
       return () => map.remove();
@@ -115,8 +140,9 @@ function Map() {
         <Button color='primary' onClick={getAddress}>Click</Button>
         <StyledSpan>para conocer ubicaciones de origen y destino</StyledSpan>
       </ClickCont>
-      {address.city && <StyledSpan>{`Tu ubicación actual es ${address.city}, ${address.state}, ${address.country}` }</StyledSpan>}
-      {address.location && <StyledSpan>{`Sector ${address.location}`}</StyledSpan>}
+      {ognAddress.ognCity && <StyledSpan origin>{`Tu origen es: ${ognAddress.ognCity}, ${ognAddress.ognState}, ${ognAddress.ognCountry}, sector${ognAddress.ognLocation}` }</StyledSpan>}
+      <br/>
+      {destAddress.destCity && <StyledSpan>{`Tu destino es: ${destAddress.destCity}, ${destAddress.destState}, ${destAddress.destCountry}, sector${destAddress.ognLocation}` }</StyledSpan>}
     </>
   )
 }
